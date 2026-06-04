@@ -1,0 +1,45 @@
+﻿<Window x:Class="Pc_parts_lister.Add_part"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pc_parts_lister"
+        mc:Ignorable="d"
+        Title="Add_part" Height="500" Width="300">
+    <Grid Margin="10">
+        <StackPanel>
+
+            <TextBlock x:Name="TypeText" Text="Typ:"/>
+            <ComboBox x:Name="TypeBox" SelectionChanged="TypeBox_SelectionChanged" Text="Vyber, nebo napiš vlastní"/>
+
+            <TextBlock x:Name="TypeText2" Text="Typ:"/>
+            <ComboBox x:Name="TypeBox2" SelectionChanged="TypeBox2_SelectionChanged" IsEditable="False" Text="Vyber, nebo napiš vlastní"/>
+
+            <TextBlock x:Name="StatusText" Text="Stav:"/>
+            <ComboBox x:Name="StatusBox" SelectionChanged="StatusBox_SelectionChanged" IsEditable="False" Text="Vyber"/>
+
+            <TextBlock x:Name="Manufacturertext" Text="Výrobce:"/>
+            <ComboBox x:Name="ManufacturerBox" SelectionChanged="ManufacturerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
+
+            <TextBlock x:Name="SerText" Text="Série:"/>
+            <ComboBox x:Name="SerBox" SelectionChanged="SerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
+
+            <TextBlock x:Name="SubSerText" Text="Řada:"/>
+            <ComboBox x:Name="SubSerBox" SelectionChanged="SubSerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
+
+            <TextBlock x:Name="ModelText" Text="Model:"/>
+            <TextBox x:Name="ModelBox"/>
+
+            <TextBlock x:Name="CapacityText" Text="Velikost v GB:"/>
+            <TextBox x:Name="CapacitylBox"/>
+
+            <TextBlock x:Name="Powertext" Text="Výkon (W):"/>
+            <TextBox x:Name="PowerBox"/>
+
+            <TextBlock x:Name="Qttext" Text="Množství:"/>
+            <TextBox x:Name="QtBox"/>
+
+            <Button Content="Uložit" Click="Save_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,139 @@
+﻿<Window x:Class="Pc_parts_lister.Lookup_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pc_parts_lister"
+        mc:Ignorable="d"
+        Title="Lookup_window" Height="450" Width="800">
+    <Grid>
+        <Grid x:Name="Lookup">
+        <Button Click="Hledat_click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="20">
+            <Button.Background>
+                <ImageBrush ImageSource="/search_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Psu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="60">
+            <Button.Background>
+                <ImageBrush ImageSource="/psu_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Gpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,60,200,0">
+            <Button.Background>
+                <ImageBrush ImageSource="/gpu_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Ram_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="60">
+            <Button.Background>
+                <ImageBrush ImageSource="/ram_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Mb_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60">
+            <Button.Background>
+                <ImageBrush ImageSource="/mb_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Cpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,60,0,0">
+            <Button.Background>
+                <ImageBrush ImageSource="/cpu_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,200,60,0"  Visibility="Hidden">
+            <Button.Background>
+                <ImageBrush ImageSource="/search_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,200,200,0"  Visibility="Hidden">
+            <Button.Background>
+                <ImageBrush ImageSource="/search_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,200,0,0" Visibility="Hidden">
+            <Button.Background>
+                <ImageBrush ImageSource="/search_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Case_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,200,0,0">
+            <Button.Background>
+                <ImageBrush ImageSource="/case_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Click="Other_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,200,0,0">
+            <Button.Background>
+                <ImageBrush ImageSource="/other_button.png"/>
+            </Button.Background>
+        </Button>
+    </Grid>
+    <Grid x:Name="Search" Visibility="Collapsed">
+            <ComboBox x:Name="TypeFilterBox"
+          SelectionChanged="TypeFilterBox_SelectionChanged"
+          Width="200"
+          Margin="10">
+                <ComboBoxItem Content="CPU"/>
+                <ComboBoxItem Content="GPU"/>
+                <ComboBoxItem Content="RAM"/>
+                <ComboBoxItem Content="PSU"/>
+                <ComboBoxItem Content="Motherboard"/>
+                <ComboBoxItem Content="Other"/>
+            </ComboBox>
+
+            <DataGrid ItemsSource="{Binding ComponentsView}"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Název" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Typ" Binding="{Binding Type}" />
+                    <DataGridTextColumn Header="Výrobce" Binding="{Binding Manufacturer}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Click="Back_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="20">
+                <Button.Background>
+                    <ImageBrush ImageSource="/search_button.png"/>
+                </Button.Background>
+            </Button>
+            <DataGrid ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Název"
+                  Binding="{Binding Name}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="Typ"
+                  Binding="{Binding Type}" IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="Výrobce"
+                  Binding="{Binding Manufacturer}" IsReadOnly="True"/>
+
+                <!-- Tlačítka -->
+                <DataGridTemplateColumn Header="Akce">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                                <Button Content="Detail"
+                      Margin="2"
+                      Click="DetailButton_Click"/>
+
+                                <Button Content="Upravit"
+                      Margin="2"
+                      Background="DarkBlue"
+                      Foreground="White"
+                      Click="EditButton_Click"/>
+
+                                <Button Content="Smazat"
+                      Margin="2"
+                      Background="DarkRed"
+                      Foreground="White"
+                      Click="DeleteButton_Click"/>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+    </Grid>
+    
+</Window>

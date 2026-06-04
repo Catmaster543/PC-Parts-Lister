@@ -1,0 +1,90 @@
+﻿<Window x:Class="Pc_parts_lister.Edit_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pc_parts_lister"
+        mc:Ignorable="d"
+        Title="Edit_window" Height="450" Width="800">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Margin="10" Grid.Column="0">
+
+            <TextBlock Text="Název"
+                       x:Name="NameText"/>
+            <TextBox Text="{Binding Name}"
+                     x:Name="NameBox"/>
+
+            <TextBlock Text="Typ"
+                       x:Name="TypeText"/>
+            <TextBox Text="{Binding Type}"
+                     x:Name="TypeBox"/>
+
+            <TextBlock Text="Subtyp"
+                       x:Name="TypeText2"/>
+            <TextBox Text="{Binding SubType}"
+                     x:Name="TypeBox2"/>
+
+            <TextBlock Text="Série"
+                       x:Name="SerText"/>
+            <TextBox Text="{Binding Series}"
+                     x:Name="SerBox"/>
+
+            <TextBlock Text="SubSérie"
+                       x:Name="SubSerText"/>
+            <TextBox Text="{Binding SubSeries}"
+                     x:Name="SubSerBox"/>
+
+            <TextBlock Text="Model"
+                       x:Name="ModelText"/>
+            <TextBox Text="{Binding Model}"
+                     x:Name="ModelBox"/>
+
+            <TextBlock Text="Paměť"
+                       x:Name="CapacityText"/>
+            <TextBox Text="{Binding Space}"
+                     x:Name="CapacityBox"/>
+
+            <TextBlock Text="Výkon ve w"
+                       x:Name="PowerText"/>
+            <TextBox Text="{Binding Power}"
+                     x:Name="PowerBox"/>
+
+            <TextBlock Text="Výrobce"
+                       x:Name="ManufacturerText"/>
+            <TextBox Text="{Binding Manufacturer}"
+                     x:Name="ManufacturerBox"/>
+
+            <TextBlock Text="Množství"
+                       x:Name="QtText"/>
+            <TextBox Text="{Binding Quantity}"
+                     x:Name="QtBox"/>
+
+            <Button Content="Uložit"
+            Margin="0,5,0,0"
+            HorizontalAlignment="Right"
+            Click="Save_Click"/>
+
+            <Button Content="Zpět"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Right"
+            Click="Close_Click"/>
+
+        </StackPanel>
+
+        <StackPanel Margin="10" Grid.Column="1">
+            <Image Source="{Binding FullImagePath}"
+               Height="200"
+               Stretch="Uniform" x:Name="Main_pic"/>
+            <Button Content="Vybrat obrázek"
+            Click="SelectImage_Click"/>
+        </StackPanel>
+                    
+
+    </Grid>
+</Window>
