@@ -64,34 +64,14 @@
             </Button.Background>
         </Button>
     </Grid>
-    <Grid x:Name="Search" Visibility="Collapsed">
-            <ComboBox x:Name="TypeFilterBox"
-          SelectionChanged="TypeFilterBox_SelectionChanged"
-          Width="200"
-          Margin="10">
-                <ComboBoxItem Content="CPU"/>
-                <ComboBoxItem Content="GPU"/>
-                <ComboBoxItem Content="RAM"/>
-                <ComboBoxItem Content="PSU"/>
-                <ComboBoxItem Content="Motherboard"/>
-                <ComboBoxItem Content="Other"/>
-            </ComboBox>
+        <Grid x:Name="Search" Visibility="Collapsed">
 
-            <DataGrid ItemsSource="{Binding ComponentsView}"
-          AutoGenerateColumns="False"
-          CanUserAddRows="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Název" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="Typ" Binding="{Binding Type}" />
-                    <DataGridTextColumn Header="Výrobce" Binding="{Binding Manufacturer}" />
-                </DataGrid.Columns>
-            </DataGrid>
             <Button Click="Back_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="20">
                 <Button.Background>
                     <ImageBrush ImageSource="/search_button.png"/>
                 </Button.Background>
             </Button>
-            <DataGrid ItemsSource="{Binding Components}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50">
+            <DataGrid ItemsSource="{Binding ComponentsView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50">
 
             <DataGrid.Columns>
 

@@ -32,8 +32,11 @@ namespace Pc_parts_lister
             ComponentsView.Filter = FilterComponents;
 
             DataContext = this;
+
+            
         }
 
+        string selectedType;
         private bool FilterComponents(object obj)
         {
             if (obj == null)
@@ -43,57 +46,74 @@ namespace Pc_parts_lister
             if (component == null)
                 return false;
 
-            if (TypeFilterBox.SelectedItem == null)
+            if (selectedType == "all")
                 return true;
 
-            string selectedType = TypeFilterBox.SelectedItem.ToString();
             return component.Type == selectedType;
-        }
-
-        private void TypeFilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComponentsView.Refresh();
         }
 
         private void Hledat_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "all";
+            ComponentsView.Refresh();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Mb_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "Mb";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void Cpu_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "CPU";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void Ram_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "RAM";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void Gpu_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "GPU";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void Psu_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "PSU";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void Case_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "Case";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void Other_click(object sender, RoutedEventArgs e)
         {
-
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "Jiné";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
