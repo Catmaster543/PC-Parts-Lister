@@ -100,6 +100,14 @@ namespace Pc_parts_lister
             Search.Visibility = Visibility.Visible;
         }
 
+        private void Disk_click(object sender, RoutedEventArgs e)
+        {
+            Lookup.Visibility = Visibility.Collapsed;
+            selectedType = "Disk";
+            ComponentsView.Refresh();
+            Search.Visibility = Visibility.Visible;
+        }
+
         private void Case_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;

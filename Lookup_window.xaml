@@ -38,9 +38,9 @@
                 <ImageBrush ImageSource="/cpu_button.png"/>
             </Button.Background>
         </Button>
-        <Button Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,200,60,0"  Visibility="Hidden">
+        <Button Click="Disk_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,200,0,0">
             <Button.Background>
-                <ImageBrush ImageSource="/search_button.png"/>
+                <ImageBrush ImageSource="/disk_button.png"/>
             </Button.Background>
         </Button>
         <Button Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,200,200,0"  Visibility="Hidden">
@@ -53,12 +53,12 @@
                 <ImageBrush ImageSource="/search_button.png"/>
             </Button.Background>
         </Button>
-        <Button Click="Case_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,200,0,0">
+            <Button Click="Case_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,200,0,0">
             <Button.Background>
                 <ImageBrush ImageSource="/case_button.png"/>
             </Button.Background>
         </Button>
-        <Button Click="Other_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,200,0,0">
+            <Button Click="Other_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,200,0,0">
             <Button.Background>
                 <ImageBrush ImageSource="/other_button.png"/>
             </Button.Background>
