@@ -29,7 +29,8 @@ namespace Pc_parts_lister
             
             Components = components;
             ComponentsView = CollectionViewSource.GetDefaultView(Components);
-            ComponentsView.Filter = FilterComponents;
+            ComponentsView.Filter = FilterComponentsByType;
+            ComponentsView.Filter = FilterComponentsByName;
 
             DataContext = this;
 
@@ -37,7 +38,7 @@ namespace Pc_parts_lister
         }
 
         string selectedType;
-        private bool FilterComponents(object obj)
+        private bool FilterComponentsByType(object obj)
         {
             if (obj == null)
                 return false;
@@ -50,6 +51,28 @@ namespace Pc_parts_lister
                 return true;
 
             return component.Type == selectedType;
+        }
+
+        string inputText;
+        private bool FilterComponentsByName(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            Component component = obj as Component;
+            if (component == null)
+                return false;
+
+            if (inputText == "" || inputText == null)
+                return true;
+            
+            return component.Name.ToLower().Contains(inputText.ToLower());
+        }
+
+        private void Filtering_Changed(object sender, RoutedEventArgs e)
+        {
+            inputText = Search_Box.Text;
+            ComponentsView.Refresh();
         }
 
         private void Hledat_click(object sender, RoutedEventArgs e)
@@ -166,6 +189,11 @@ namespace Pc_parts_lister
         {
             Search.Visibility = Visibility.Collapsed;
             Lookup.Visibility = Visibility.Visible;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
