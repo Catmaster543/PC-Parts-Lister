@@ -25,19 +25,20 @@ namespace Pc_parts_lister
         public Lookup_window(ObservableCollection<Component> components)
         {
             InitializeComponent();
-            
-            
+
+
             Components = components;
             ComponentsView = CollectionViewSource.GetDefaultView(Components);
-            ComponentsView.Filter = FilterComponentsByType;
-            ComponentsView.Filter = FilterComponentsByName;
+            //ComponentsView.Filter = FilterComponentsByType;
+            ComponentsView.Filter = FilterComponents;
 
             DataContext = this;
 
-            
+
         }
 
         string selectedType;
+        /*
         private bool FilterComponentsByType(object obj)
         {
             if (obj == null)
@@ -52,10 +53,15 @@ namespace Pc_parts_lister
 
             return component.Type == selectedType;
         }
+        */
 
         string inputText;
-        private bool FilterComponentsByName(object obj)
+        bool searchBool;
+        bool typeBool;
+        private bool FilterComponents(object obj)   //Main method for filtering components
         {
+            searchBool = false;
+            typeBool = false;
             if (obj == null)
                 return false;
 
@@ -63,10 +69,29 @@ namespace Pc_parts_lister
             if (component == null)
                 return false;
 
-            if (inputText == "" || inputText == null)
+            if (selectedType == "all" && (inputText == "" || inputText == null))
+            {
                 return true;
-            
-            return component.Name.ToLower().Contains(inputText.ToLower());
+            }
+
+            if (inputText != null)
+            {
+                if (component.Name.ToLower().Contains(inputText.ToLower()))
+                {
+                    searchBool = true;
+                }
+            }
+            if (inputText == null || inputText == "")
+            {
+                searchBool = true;
+            }
+
+            if (selectedType == component.Type)
+            {
+                typeBool = true;
+            }
+
+            return searchBool && typeBool;
         }
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)
