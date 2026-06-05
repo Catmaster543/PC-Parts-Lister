@@ -80,6 +80,10 @@ namespace Pc_parts_lister
                 {
                     searchBool = true;
                 }
+                if (selectedType == "all")
+                {
+                    typeBool = true;
+                }
             }
             if (inputText == null || inputText == "")
             {
