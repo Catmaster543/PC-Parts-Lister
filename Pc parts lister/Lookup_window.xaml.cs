@@ -38,22 +38,6 @@ namespace Pc_parts_lister
         }
 
         string selectedType;
-        /*
-        private bool FilterComponentsByType(object obj)
-        {
-            if (obj == null)
-                return false;
-
-            Component component = obj as Component;
-            if (component == null)
-                return false;
-
-            if (selectedType == "all")
-                return true;
-
-            return component.Type == selectedType;
-        }
-        */
 
         string inputText;
         bool searchBool;

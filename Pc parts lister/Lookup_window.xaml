@@ -91,20 +91,20 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
                                 <Button Content="Detail"
-                      Margin="2"
-                      Click="DetailButton_Click"/>
+                                    Margin="2"
+                                    Click="DetailButton_Click"/>
 
                                 <Button Content="Upravit"
-                      Margin="2"
-                      Background="DarkBlue"
-                      Foreground="White"
-                      Click="EditButton_Click"/>
+                                    Margin="2"
+                                    Background="DarkBlue"
+                                    Foreground="White"
+                                    Click="EditButton_Click"/>
 
                                 <Button Content="Smazat"
-                      Margin="2"
-                      Background="DarkRed"
-                      Foreground="White"
-                      Click="DeleteButton_Click"/>
+                                    Margin="2"
+                                    Background="DarkRed"
+                                    Foreground="White"
+                                    Click="DeleteButton_Click"/>
 
                             </StackPanel>
                         </DataTemplate>
