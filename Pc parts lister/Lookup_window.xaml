@@ -71,7 +71,8 @@
                     <ImageBrush ImageSource="/back_button.png"/>
                 </Button.Background>
             </Button>
-            <DataGrid ItemsSource="{Binding ComponentsView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50">
+            <Button Click="Filter_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" VerticalAlignment="Top" Margin="20"/>
+            <DataGrid ItemsSource="{Binding ComponentsView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50" Name="Component_grid">
 
             <DataGrid.Columns>
 
@@ -113,7 +114,8 @@
 
             </DataGrid.Columns>
         </DataGrid>
-    </Grid>
+            <TextBlock Text="Nic takového tu není." Name="EmptyGrid_Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        </Grid>
     </Grid>
     
 </Window>

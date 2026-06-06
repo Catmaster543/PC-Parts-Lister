@@ -39,6 +39,7 @@ namespace Pc_parts_lister
 
         string selectedType;
 
+
         string inputText;
         bool searchBool;
         bool typeBool;
@@ -86,6 +87,16 @@ namespace Pc_parts_lister
         {
             inputText = Search_Box.Text;
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Hledat_click(object sender, RoutedEventArgs e)
@@ -93,6 +104,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "all";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -101,6 +122,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "Mb";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -109,6 +140,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "CPU";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -117,6 +158,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "RAM";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -125,6 +176,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "GPU";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -133,6 +194,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "PSU";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -141,6 +212,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "Disk";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -149,6 +230,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "Case";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -157,6 +248,16 @@ namespace Pc_parts_lister
             Lookup.Visibility = Visibility.Collapsed;
             selectedType = "Jiné";
             ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
             Search.Visibility = Visibility.Visible;
         }
 
@@ -203,10 +304,11 @@ namespace Pc_parts_lister
             Search.Visibility = Visibility.Collapsed;
             Lookup.Visibility = Visibility.Visible;
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        
+        private void Filter_Click(object sender, RoutedEventArgs e)
         {
 
         }
+        
     }
 }
