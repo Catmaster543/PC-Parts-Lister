@@ -30,7 +30,7 @@
             <TextBox x:Name="ModelBox"/>
 
             <TextBlock x:Name="CapacityText" Text="Velikost v GB:"/>
-            <TextBox x:Name="CapacitylBox"/>
+            <TextBox x:Name="CapacityBox" TextChanged="Capacity_TextChanged"/>
 
             <TextBlock x:Name="Powertext" Text="Výkon (W):"/>
             <TextBox x:Name="PowerBox" TextChanged="Power_TextChanged"/>

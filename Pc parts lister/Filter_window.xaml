@@ -27,7 +27,7 @@
             <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber"/>
 
             <TextBlock x:Name="CountText" Text="Množství:"/>
-            <Grid x:Name="CountGrid">
+            <Grid x:Name="CountGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="20"/>
@@ -35,9 +35,21 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Click="Count_Smaller_Click" Grid.Column="0" BorderBrush="Red" Background="#FFD6CACA"/>
-                <Button Click="Count_Bigger_Click" Grid.Column="1" Background="#FFD6E8CF" BorderBrush="#FF4EFF00"/>
-                <Button Click="Count_Same_Click" Grid.Column="2"/>
+                <Button Click="Count_Smaller_Click" Grid.Column="0" BorderBrush="Red">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/smaller_button.png" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="Count_Bigger_Click" Grid.Column="1" BorderBrush="#FF4EFF00">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/bigger_button.png" Stretch="UniformToFill"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="Count_Same_Click" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/equals_button.png"/>
+                    </Button.Background>
+                </Button>
                 <TextBox x:Name="CountBox" Grid.Column="3" TextChanged="Count_TextChanged" BorderBrush="#FFB3ABAB"/>
             </Grid>
         </StackPanel>
@@ -55,7 +67,7 @@
             <TextBox x:Name="ModelBox"/>
 
             <TextBlock x:Name="Powertext" Text="Výkon (W):"/>
-            <Grid x:Name="PowerGrid">
+            <Grid x:Name="PowerGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="20"/>
@@ -63,18 +75,53 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Click="Power_Smaller_Click" Grid.Column="0" BorderBrush="Red" Background="#FFD6CACA"/>
-                <Button Click="Power_Bigger_Click" Grid.Column="1" Background="#FFD6E8CF" BorderBrush="#FF4EFF00"/>
-                <Button Click="Power_Same_Click" Grid.Column="2"/>
+                <Button Click="Power_Smaller_Click" Grid.Column="0" BorderBrush="Red">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/smaller_button.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="Power_Bigger_Click" Grid.Column="1" BorderBrush="#FF4EFF00">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/bigger_button.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="Power_Same_Click" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/equals_button.png"/>
+                    </Button.Background>
+                </Button>
                 <TextBox x:Name="PowerBox" Grid.Column="3" TextChanged="Power_TextChanged" BorderBrush="#FFB3ABAB"/>
             </Grid>
 
             <TextBlock x:Name="CapacityText" Text="Velikost v GB:"/>
-            <TextBox x:Name="CapacitylBox"/>
+            <Grid x:Name="CapacityGrid" Height="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Click="Capacity_Smaller_Click" Grid.Column="0" BorderBrush="Red">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/smaller_button.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="Capacity_Bigger_Click" Grid.Column="1" BorderBrush="#FF4EFF00">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/bigger_button.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="Capacity_Same_Click" Grid.Column="2">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/equals_button.png"/>
+                    </Button.Background>
+                </Button>
+                <TextBox x:Name="CapacityBox" Grid.Column="3" TextChanged="Capacity_TextChanged" BorderBrush="#FFB3ABAB"/>
+            </Grid>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Name="SaveNErrorPanel">
             <Button Content="Uložit filtr" Click="Save_Filter_Click" Margin="10" FontWeight="Bold" Background="SpringGreen"/>
-            <TextBlock Text="" x:Name="Error_Text" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Red"/>
         </StackPanel>
     </Grid>
 </Window>

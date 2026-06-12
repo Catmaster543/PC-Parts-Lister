@@ -20,6 +20,8 @@ namespace Pc_parts_lister
         public int powerIntT;
         public bool countIsLegit = true;
         public int countIntT;
+        public bool capacityIsLegit = true;
+        public int capacityIntT;
         public Add_part()
         {
             
@@ -38,7 +40,7 @@ namespace Pc_parts_lister
             Powertext.Visibility = Visibility.Collapsed;
             PowerBox.Visibility = Visibility.Collapsed;
             CapacityText.Visibility = Visibility.Collapsed;
-            CapacitylBox.Visibility = Visibility.Collapsed;
+            CapacityBox.Visibility = Visibility.Collapsed;
             TypeText2.Visibility = Visibility.Collapsed;
             TypeBox2.Visibility = Visibility.Collapsed;
             #endregion
@@ -98,7 +100,7 @@ namespace Pc_parts_lister
                 TypeText2.Visibility = Visibility.Visible;
                 TypeBox2.Visibility = Visibility.Visible;
                 CapacityText.Visibility= Visibility.Visible;
-                CapacitylBox.Visibility= Visibility.Visible;
+                CapacityBox.Visibility= Visibility.Visible;
                 ModelText.Visibility = Visibility.Visible;
                 ModelBox.Visibility = Visibility.Visible;
                 #endregion
@@ -138,7 +140,7 @@ namespace Pc_parts_lister
                 TypeText2.Visibility = Visibility.Visible;
                 TypeBox2.Visibility = Visibility.Visible;
                 CapacityText.Visibility = Visibility.Visible;
-                CapacitylBox.Visibility = Visibility.Visible;
+                CapacityBox.Visibility = Visibility.Visible;
                 SerText.Visibility = Visibility.Visible;
                 SerBox.Visibility = Visibility.Visible;
                 ModelText.Visibility = Visibility.Visible;
@@ -536,11 +538,33 @@ namespace Pc_parts_lister
             }
         }
 
+        private void Capacity_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(CapacityBox.Text, out int i))
+            {
+                capacityIsLegit = true;
+                capacityIntT = i;
+                CapacityText.Foreground = new SolidColorBrush(Colors.Black);
+                CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else if (CapacityBox.Text == null || CapacityBox.Text == "")
+            {
+                capacityIsLegit = true;
+                CapacityText.Foreground = new SolidColorBrush(Colors.Black);
+                CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else
+            {
+                capacityIsLegit = false;
+                CapacityText.Foreground = new SolidColorBrush(Colors.Red);
+                CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
+            }
+        }
 
         // Saving the component
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if (powerIsLegit && countIsLegit)
+            if (powerIsLegit && countIsLegit && capacityIsLegit)
             {
                 if (TypeBox.Text == "CPU")
                 {
@@ -566,11 +590,11 @@ namespace Pc_parts_lister
                         SubType = TypeBox2.SelectedItem?.ToString(),
                         Manufacturer = ManufacturerBox.Text,
                         Model = ModelBox.Text,
-                        Space = CapacitylBox.Text,
+                        Capacity = capacityIntT,
                         Quantity = countIntT,
                         Status = StatusBox.Text,
 
-                        Name = ManufacturerBox.Text + " " + ModelBox.Text + " - " + CapacitylBox.Text + "Gb",
+                        Name = ManufacturerBox.Text + " " + ModelBox.Text + " - " + CapacityBox.Text + "Gb",
                     };
                 }
                 else if (TypeBox.Text == "GPU")
@@ -587,7 +611,7 @@ namespace Pc_parts_lister
                                 Series = SerBox?.SelectedItem?.ToString(),
                                 SubSeries = SubSerBox?.SelectedItem?.ToString(),
                                 Model = ModelBox.Text,
-                                Space = CapacitylBox.Text,
+                                Capacity = capacityIntT,
                                 Quantity = countIntT,
                                 Status = StatusBox.Text,
 
@@ -604,7 +628,7 @@ namespace Pc_parts_lister
                                 Series = SerBox?.SelectedItem?.ToString(),
                                 SubSeries = SubSerBox?.SelectedItem?.ToString(),
                                 Model = ModelBox.Text,
-                                Space = CapacitylBox.Text,
+                                Capacity = capacityIntT,
                                 Quantity = countIntT,
                                 Status = StatusBox.Text,
 
@@ -622,7 +646,7 @@ namespace Pc_parts_lister
                             Series = SerBox?.SelectedItem?.ToString(),
                             SubSeries = SubSerBox?.SelectedItem?.ToString(),
                             Model = ModelBox.Text,
-                            Space = CapacitylBox.Text,
+                            Capacity = capacityIntT,
                             Quantity = countIntT,
                             Status = StatusBox.Text,
 
@@ -642,11 +666,11 @@ namespace Pc_parts_lister
                             Series = SerBox?.SelectedItem?.ToString(),
                             Manufacturer = ManufacturerBox.Text,
                             Model = ModelBox.Text,
-                            Space = CapacitylBox.Text,
+                            Capacity = capacityIntT,
                             Quantity = countIntT,
                             Status = StatusBox.Text,
 
-                            Name = ManufacturerBox.Text + " " + ModelBox.Text + " (" + CapacitylBox.Text + "Gb)",
+                            Name = ManufacturerBox.Text + " " + ModelBox.Text + " (" + CapacityBox.Text + "Gb)",
                         };
                     }
                     else if (TypeBox2.Text == "SODIMM")
@@ -658,11 +682,11 @@ namespace Pc_parts_lister
                             Series = SerBox?.SelectedItem?.ToString(),
                             Manufacturer = ManufacturerBox.Text,
                             Model = ModelBox.Text,
-                            Space = CapacitylBox.Text,
+                            Capacity = capacityIntT,
                             Quantity = countIntT,
                             Status = StatusBox.Text,
 
-                            Name = ManufacturerBox.Text + " " + TypeBox2.Text + " " + ModelBox.Text + " (" + CapacitylBox.Text + "Gb)",
+                            Name = ManufacturerBox.Text + " " + TypeBox2.Text + " " + ModelBox.Text + " (" + CapacityBox.Text + "Gb)",
                         };
                     }
 
@@ -721,7 +745,7 @@ namespace Pc_parts_lister
                         Series = SerBox?.SelectedItem?.ToString(),
                         SubSeries = SubSerBox?.SelectedItem?.ToString(),
                         Model = ModelBox.Text,
-                        Space = CapacitylBox.Text,
+                        Capacity = capacityIntT,
                         Quantity = countIntT,
                         Status = StatusBox.Text,
                     };
@@ -756,6 +780,11 @@ namespace Pc_parts_lister
                 MessageBoxImage.Warning);
                 return;
             }
+        }
+
+        private void CapacityBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

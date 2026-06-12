@@ -48,6 +48,8 @@ namespace Pc_parts_lister
             public int power {  get; set; }
             public string countCompMode { get; set; }
             public int count { get; set; }
+            public string capacityCompMode { get; set; }
+            public int capacity { get; set; }
         }
 
         string inputText;
@@ -61,6 +63,7 @@ namespace Pc_parts_lister
         bool modelBool;
         bool powerBool;
         bool countBool;
+        bool capacityBool;
         private bool FilterComponents(object obj)   //Main method for filtering components
         {
             searchBool = false;
@@ -72,6 +75,7 @@ namespace Pc_parts_lister
             modelBool = false;
             powerBool = false;
             countBool = false;
+            capacityBool = false;
 
             if (obj == null)
                 return false;
@@ -239,7 +243,52 @@ namespace Pc_parts_lister
                 countBool = true;
             }
 
-            return searchBool && typeBool && manuBool && statusBool && serBool && type2Bool && modelBool && powerBool && countBool;
+            if (Filters.capacity != 0 && component.Capacity != 0)
+            {
+                if (Filters.capacityCompMode == "<")
+                {
+                    if (component.Capacity <= Filters.capacity)
+                    {
+                        capacityBool = true;
+                    }
+                    else
+                    {
+                        capacityBool = false;
+                    }
+                }
+                else if (Filters.capacityCompMode == ">")
+                {
+                    if (component.Capacity >= Filters.capacity)
+                    {
+                        capacityBool = true;
+                    }
+                    else
+                    {
+                        capacityBool = false;
+                    }
+                }
+                else if (Filters.capacityCompMode == "=")
+                {
+                    if (component.Capacity == Filters.capacity)
+                    {
+                        capacityBool = true;
+                    }
+                    else
+                    {
+                        capacityBool = false;
+                    }
+                }
+                else
+                {
+                    capacityBool = false;
+                }
+            }
+            else
+            {
+                capacityBool = true;
+            }
+
+            return searchBool && typeBool && manuBool && statusBool && serBool && type2Bool && modelBool && powerBool && countBool && capacityBool;
         }
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)

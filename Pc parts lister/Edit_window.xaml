@@ -47,7 +47,7 @@
 
             <TextBlock Text="Paměť"
                        x:Name="CapacityText"/>
-            <TextBox Text="{Binding Space}"
+            <TextBox Text="{Binding Capacity}"
                      x:Name="CapacityBox"/>
 
             <TextBlock Text="Výkon ve w"

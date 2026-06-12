@@ -40,7 +40,7 @@
             <TextBlock Text="{Binding Model, StringFormat=Model: {0}}"
              x:Name="ModelBox"/>
 
-            <TextBlock Text="{Binding Space, StringFormat=Paměť: {0} GB}"
+            <TextBlock Text="{Binding Capacity, StringFormat=Paměť: {0} GB}"
              x:Name="CapacityBox"/>
 
             <TextBlock Text="{Binding Power, StringFormat=Výkon: {0}}"

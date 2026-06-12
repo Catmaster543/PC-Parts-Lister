@@ -8,7 +8,7 @@
         Title="Component lookup" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Grid>
         <Viewbox Stretch="Uniform">
-            <Grid x:Name="Lookup">
+            <Grid x:Name="Lookup" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -64,7 +64,7 @@
                 </StackPanel>
             </Grid>
         </Viewbox>
-        <Grid x:Name="Search" Visibility="Collapsed">
+        <Grid x:Name="Search">
             <TextBox TextChanged="Filtering_Changed" Name="Search_Box" Height="30" Width="300" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Button Click="Back_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="20">
                 <Button.Background>
@@ -72,54 +72,62 @@
                 </Button.Background>
             </Button>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20">
-                <Button Click="Filter_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold"/>
-                <Button Click="ClearF_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" Background="Red" Margin="100, -30, 0, 0"/>
+                <Button Click="Filter_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/filter_button.png"/>
+                    </Button.Background>
+                </Button>
+                <Button Click="ClearF_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" Margin="100, -30, 0, 0">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
             </StackPanel>
-            
+
             <DataGrid ItemsSource="{Binding ComponentsView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50" Name="Component_grid">
 
-            <DataGrid.Columns>
+                <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Název"
+                    <DataGridTextColumn Header="Název"
                   Binding="{Binding Name}" IsReadOnly="True"/>
 
-                <DataGridTextColumn Header="Typ"
+                    <DataGridTextColumn Header="Typ"
                   Binding="{Binding Type}" IsReadOnly="True"/>
 
-                <DataGridTextColumn Header="Výrobce"
+                    <DataGridTextColumn Header="Výrobce"
                   Binding="{Binding Manufacturer}" IsReadOnly="True"/>
 
-                <!-- Tlačítka -->
-                <DataGridTemplateColumn Header="Akce">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <!-- Tlačítka -->
+                    <DataGridTemplateColumn Header="Akce">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                                <Button Content="Detail"
+                                    <Button Content="Detail"
                                     Margin="2"
                                     Click="DetailButton_Click"/>
 
-                                <Button Content="Upravit"
+                                    <Button Content="Upravit"
                                     Margin="2"
                                     Background="DarkBlue"
                                     Foreground="White"
                                     Click="EditButton_Click"/>
 
-                                <Button Content="Smazat"
+                                    <Button Content="Smazat"
                                     Margin="2"
                                     Background="DarkRed"
                                     Foreground="White"
                                     Click="DeleteButton_Click"/>
 
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>
+                </DataGrid.Columns>
+            </DataGrid>
             <TextBlock Text="Nic takového tu není." Name="EmptyGrid_Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
     </Grid>
-    
+
 </Window>

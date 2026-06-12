@@ -63,7 +63,7 @@ namespace Pc_parts_lister
         public string Series { get; set; }
         public string SubSeries { get; set; }
         public string Model { get; set; }
-        public string Space { get; set; }
+        public int Capacity { get; set; }
         public string SubType { get; set; }
         public int Power { get; set; }
         public int Quantity {  get; set; }

@@ -40,7 +40,7 @@ namespace Pc_parts_lister
             Powertext.Visibility = Visibility.Collapsed;
             PowerGrid.Visibility = Visibility.Collapsed;
             CapacityText.Visibility = Visibility.Collapsed;
-            CapacitylBox.Visibility = Visibility.Collapsed;
+            CapacityGrid.Visibility = Visibility.Collapsed;
             TypeText2.Visibility = Visibility.Collapsed;
             TypeBox2.Visibility = Visibility.Collapsed;
             #endregion
@@ -96,7 +96,7 @@ namespace Pc_parts_lister
                 TypeText2.Visibility = Visibility.Visible;
                 TypeBox2.Visibility = Visibility.Visible;
                 CapacityText.Visibility = Visibility.Visible;
-                CapacitylBox.Visibility = Visibility.Visible;
+                CapacityGrid.Visibility = Visibility.Visible;
                 ModelText.Visibility = Visibility.Visible;
                 ModelBox.Visibility = Visibility.Visible;
                 #endregion
@@ -136,7 +136,7 @@ namespace Pc_parts_lister
                 TypeText2.Visibility = Visibility.Visible;
                 TypeBox2.Visibility = Visibility.Visible;
                 CapacityText.Visibility = Visibility.Visible;
-                CapacitylBox.Visibility = Visibility.Visible;
+                CapacityGrid.Visibility = Visibility.Visible;
                 SerText.Visibility = Visibility.Visible;
                 SerBox.Visibility = Visibility.Visible;
                 ModelText.Visibility = Visibility.Visible;
@@ -487,13 +487,19 @@ namespace Pc_parts_lister
         #region Power section
 
         bool powerIsValid = true;
+        int powerCompErrorInt;
+        int powerErrorInt;
         private void Power_TextChanged(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(PowerBox.Text, out int pwCislo))
             {
-                if (Filters.powerCompMode == null)
+                if (Filters.powerCompMode == null && powerCompErrorInt == 0)
                 {
-                    Error_Text.Text = "Zvolte prosím režim pro hledání zdroje podle W, jinak bude použit defaultní: \"=\"";
+                    powerCompErrorInt = WriteAnError($"Zvolte prosím režim pro hledání zdroje podle W, jinak bude použit defaultní: \"=\"", Colors.Orange);
+                }
+                if (powerErrorInt != 0)
+                {
+                    ClearAnError(ref powerErrorInt);
                 }
                 powerIsValid = true;
                 Filters.power = pwCislo;
@@ -503,12 +509,24 @@ namespace Pc_parts_lister
             else if (PowerBox.Text == null || PowerBox.Text == "")
             {
                 powerIsValid = true;
+                if (powerErrorInt != 0)
+                {
+                    ClearAnError(ref powerErrorInt);
+                }
                 Powertext.Foreground = new SolidColorBrush(Colors.Black);
                 PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
             else
             {
                 powerIsValid = false;
+                if (powerErrorInt == 0)
+                {
+                    powerErrorInt = WriteAnError($"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
+                }
+                else if (powerErrorInt != 0)
+                {
+                    AlterAnError(powerErrorInt, $"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.");
+                }
                 Powertext.Foreground = new SolidColorBrush(Colors.Red);
                 PowerBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
@@ -516,29 +534,44 @@ namespace Pc_parts_lister
         private void Power_Smaller_Click(object sender, RoutedEventArgs e)
         {
             Filters.powerCompMode = "<";
-            Error_Text.Text = null;
+            if (powerCompErrorInt != 0)
+            {
+                ClearAnError(ref powerCompErrorInt);
+            }
         }
         private void Power_Bigger_Click(object sender, RoutedEventArgs e)
         {
             Filters.powerCompMode = ">";
-            Error_Text.Text = null;
+            if (powerCompErrorInt != 0)
+            {
+                ClearAnError(ref powerCompErrorInt);
+            }
         }
         private void Power_Same_Click(object sender, RoutedEventArgs e)
         {
             Filters.powerCompMode = "=";
-            Error_Text.Text = null;
+            if (powerCompErrorInt != 0)
+            {
+                ClearAnError(ref powerCompErrorInt);
+            }
         }
         #endregion
 
         #region Count region
         bool countIsValid = true;
+        int countCompErrorInt;
+        int countErrorInt;
         private void Count_TextChanged(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(CountBox.Text, out int ctCislo))
             {
-                if (Filters.countCompMode == null)
+                if (Filters.countCompMode == null && countCompErrorInt == 0)
                 {
-                    Error_Text.Text = "Zvolte prosím režim pro hledání počtu, jinak bude použit defaultní: \"=\"";
+                    countCompErrorInt = WriteAnError("Zvolte prosím režim pro hledání počtu, jinak bude použit defaultní: \"=\"", Colors.Orange);
+                }
+                if (countErrorInt != 0)
+                {
+                    ClearAnError(ref countErrorInt);
                 }
                 countIsValid = true;
                 Filters.count = ctCislo;
@@ -547,6 +580,10 @@ namespace Pc_parts_lister
             }
             else if (CountBox.Text == null || CountBox.Text == "")
             {
+                if (countErrorInt != 0)
+                {
+                    ClearAnError(ref countErrorInt);
+                }
                 countIsValid = true;
                 CountText.Foreground = new SolidColorBrush(Colors.Black);
                 CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
@@ -554,6 +591,14 @@ namespace Pc_parts_lister
             else
             {
                 countIsValid = false;
+                if (countErrorInt == 0)
+                {
+                    countErrorInt = WriteAnError($"{ CountBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
+                }
+                else if (countErrorInt != 0)
+                {
+                    AlterAnError(countErrorInt, $"{CountBox.Text} není platná hodnota počtu, použijte kladné číslo.");
+                }
                 CountText.Foreground = new SolidColorBrush(Colors.Red);
                 CountBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
@@ -561,19 +606,175 @@ namespace Pc_parts_lister
         private void Count_Smaller_Click(object sender, RoutedEventArgs e)
         {
             Filters.countCompMode = "<";
-            Error_Text.Text = null;
+            if (countCompErrorInt != 0)
+            {
+                ClearAnError(ref countCompErrorInt);
+            }
         }
         private void Count_Bigger_Click(object sender, RoutedEventArgs e)
         {
             Filters.countCompMode = ">";
-            Error_Text.Text = null;
+            if (countCompErrorInt != 0)
+            {
+                ClearAnError(ref countCompErrorInt);
+            }
         }
         private void Count_Same_Click(object sender, RoutedEventArgs e)
         {
             Filters.countCompMode = "=";
-            Error_Text.Text = null;
+            if (countCompErrorInt != 0)
+            {
+                ClearAnError(ref countCompErrorInt);
+            }
         }
         #endregion
+
+        #region Capacity section
+
+        bool capacityIsValid = true;
+        int capacityCompErrorInt;
+        int capacityErrorInt;
+        private void Capacity_TextChanged(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(CapacityBox.Text, out int cpCislo))
+            {
+                if (Filters.capacityCompMode == null && capacityCompErrorInt == 0)
+                {
+                    capacityCompErrorInt = WriteAnError($"Zvolte prosím režim pro hledání disků podle množství GB, jinak bude použit defaultní: \"=\"", Colors.Orange);
+                }
+                if (capacityErrorInt != 0)
+                {
+                    ClearAnError(ref capacityErrorInt);
+                }
+                capacityIsValid = true;
+                Filters.capacity = cpCislo;
+                CapacityText.Foreground = new SolidColorBrush(Colors.Black);
+                CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else if (CapacityBox.Text == null || CapacityBox.Text == "")
+            {
+                capacityIsValid = true;
+                if (capacityErrorInt != 0)
+                {
+                    ClearAnError(ref capacityErrorInt);
+                }
+                CapacityText.Foreground = new SolidColorBrush(Colors.Black);
+                CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else
+            {
+                capacityIsValid = false;
+                if (capacityErrorInt == 0)
+                {
+                    capacityErrorInt = WriteAnError($"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.", Colors.Red);
+                }
+                else if (capacityErrorInt != 0)
+                {
+                    AlterAnError(capacityErrorInt, $"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.");
+                }
+                CapacityText.Foreground = new SolidColorBrush(Colors.Red);
+                CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
+            }
+        }
+        private void Capacity_Smaller_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.capacityCompMode = "<";
+            if (capacityCompErrorInt != 0)
+            {
+                ClearAnError(ref capacityCompErrorInt);
+            }
+        }
+        private void Capacity_Bigger_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.capacityCompMode = ">";
+            if (capacityCompErrorInt != 0)
+            {
+                ClearAnError(ref capacityCompErrorInt);
+            }
+        }
+        private void Capacity_Same_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.capacityCompMode = "=";
+            if (capacityCompErrorInt != 0)
+            {
+                ClearAnError(ref capacityCompErrorInt);
+            }
+        }
+        #endregion
+
+        int currentErrorId = 1;
+        int WriteAnError(string message, Color color)
+        {
+            int tempErrorId = currentErrorId;
+            TextBlock errorTextBlock = new TextBlock();
+            SaveNErrorPanel.Children.Add(errorTextBlock);
+            errorTextBlock.Name = $"ErrorText{tempErrorId}";
+            errorTextBlock.HorizontalAlignment = HorizontalAlignment.Center;
+            errorTextBlock.FontWeight = FontWeights.Bold;
+            errorTextBlock.TextWrapping = TextWrapping.Wrap;
+            errorTextBlock.Text = message;
+            errorTextBlock.Foreground = new SolidColorBrush(color);
+            CalculateIndex();
+            return tempErrorId;
+        }
+
+        bool AlterAnError(int errorId, string messageAlt = null)
+        {
+            TextBlock Error = (TextBlock)SaveNErrorPanel.Children[errorId];
+            if (messageAlt != null)
+            {
+                Error.Text = messageAlt;
+                return true;
+            }
+            return false;
+        }
+
+        bool ClearAnError(ref int errorId)
+        {
+            if (errorId < powerErrorInt)
+            {
+                powerErrorInt--;
+            }
+            if (errorId < powerCompErrorInt)
+            {
+                powerCompErrorInt--;
+            }
+            if (errorId < countErrorInt)
+            {
+                countErrorInt--;
+            }
+            if (errorId < countCompErrorInt)
+            {
+                countCompErrorInt--;
+            }
+            if (errorId < capacityErrorInt)
+            {
+                capacityErrorInt--;
+            }
+            if (errorId < capacityCompErrorInt)
+            {
+                capacityCompErrorInt--;
+            }
+            SaveNErrorPanel.Children.RemoveAt(errorId);
+            errorId = 0;
+            CalculateIndex();
+            return true;
+        }
+
+        void CalculateIndex()
+        {
+            for (int i = 0; i < SaveNErrorPanel.Children.Count + 1; i++)
+            {
+                if (i == SaveNErrorPanel.Children.Count)
+                {
+                    currentErrorId = i;
+                }
+                else if (SaveNErrorPanel.Children[i] == null)
+                {
+                    currentErrorId = i;
+                }
+            }
+        }
 
         private void Save_Filter_Click(object sender, RoutedEventArgs e)
         {
@@ -619,6 +820,16 @@ namespace Pc_parts_lister
             if (Filters.powerCompMode == null)
             {
                 Filters.powerCompMode = "=";
+            }
+
+            if (Filters.countCompMode == null)
+            {
+                Filters.countCompMode = "=";
+            }
+
+            if (Filters.capacityCompMode == null)
+            {
+                Filters.capacityCompMode = "=";
             }
 
             if (!powerIsValid)
