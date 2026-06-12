@@ -53,48 +53,6 @@ namespace Pc_parts_lister
         {
             DataStorage.Save(Components);
         }
-
-        
-        /* private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button &&
-                button.DataContext is Component komponenta)
-            {
-                var result = MessageBox.Show(
-                $"Opravdu chceš smazat {komponenta.Name}?",
-                "Potvrzení smazání",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    Components.Remove(komponenta);
-                }
-            }
-        }
-        */
-
-        /*private void DetailButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button &&
-        button.DataContext is Component komponenta)
-            {
-                DetailWindow Dwindow = new DetailWindow(komponenta);
-                Dwindow.ShowDialog();
-            }
-        }
-        */
-
-        /*private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button &&
-        button.DataContext is Component komponenta)
-            {
-                Edit_window Ewindow = new Edit_window(komponenta);
-                Ewindow.ShowDialog();
-            }
-        }
-        */
     }
 
     public class Component
@@ -107,8 +65,9 @@ namespace Pc_parts_lister
         public string Model { get; set; }
         public string Space { get; set; }
         public string SubType { get; set; }
-        public string Power { get; set; }
-        public string Quantity {  get; set; }
+        public int Power { get; set; }
+        public int Quantity {  get; set; }
+        public string Status { get; set; }
 
         private string imagePath;
         public string ImagePath

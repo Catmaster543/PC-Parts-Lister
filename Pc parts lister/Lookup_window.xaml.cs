@@ -22,31 +22,57 @@ namespace Pc_parts_lister
         public ObservableCollection<Component> Components { get; }
         public ICollectionView ComponentsView { get; }
 
+        private SearchFilters Filters = new SearchFilters();
+
         public Lookup_window(ObservableCollection<Component> components)
         {
             InitializeComponent();
 
-
             Components = components;
             ComponentsView = CollectionViewSource.GetDefaultView(Components);
-            //ComponentsView.Filter = FilterComponentsByType;
+            
             ComponentsView.Filter = FilterComponents;
 
             DataContext = this;
-
-
         }
 
-        string selectedType;
-
+        public class SearchFilters
+        {
+            public string type { get; set; }
+            public string manufacturer {  get; set; }
+            public string status { get; set; }
+            public string series { get; set; }
+            public string type2 { get; set; }
+            public string model { get; set; }
+            public string powerCompMode { get; set; }
+            public int power {  get; set; }
+            public string countCompMode { get; set; }
+            public int count { get; set; }
+        }
 
         string inputText;
+        string selectedType;
         bool searchBool;
         bool typeBool;
+        bool manuBool;
+        bool statusBool;
+        bool serBool;
+        bool type2Bool;
+        bool modelBool;
+        bool powerBool;
+        bool countBool;
         private bool FilterComponents(object obj)   //Main method for filtering components
         {
             searchBool = false;
             typeBool = false;
+            manuBool = false;
+            statusBool = false;
+            serBool = false;
+            type2Bool = false;
+            modelBool = false;
+            powerBool = false;
+            countBool = false;
+
             if (obj == null)
                 return false;
 
@@ -54,7 +80,7 @@ namespace Pc_parts_lister
             if (component == null)
                 return false;
 
-            if (selectedType == "all" && (inputText == "" || inputText == null))
+            if (Filters.type == "all" && (inputText == "" || inputText == null))
             {
                 return true;
             }
@@ -65,7 +91,7 @@ namespace Pc_parts_lister
                 {
                     searchBool = true;
                 }
-                if (selectedType == "all")
+                if (Filters.type == "all")
                 {
                     typeBool = true;
                 }
@@ -75,189 +101,222 @@ namespace Pc_parts_lister
                 searchBool = true;
             }
 
-            if (selectedType == component.Type)
+            if (Filters.type == component.Type)
+            {
+                typeBool = true;
+            }
+            else if (Filters.type == null)
             {
                 typeBool = true;
             }
 
-            return searchBool && typeBool;
+            if (Filters.manufacturer != null)
+            {
+                if (component.Manufacturer.ToLower().Contains(Filters.manufacturer.ToLower()))
+                {
+                    manuBool = true;
+                }
+            }
+            else if (Filters.manufacturer == null)
+            {
+                manuBool = true;
+            }
+
+            if (Filters.status == component.Status || Filters.status == null)
+            {
+                statusBool = true;
+            }
+
+            if (Filters.series == component.Series || Filters.series == null)
+            {
+                serBool = true;
+            }
+
+            if (Filters.type2 == component.SubType || Filters.type2 == null)
+            {
+                type2Bool = true;
+            }
+
+            if (Filters.model != null)
+            {
+                if (component.Model.ToLower().Contains(Filters.model.ToLower()))
+                {
+                    modelBool = true;
+                }
+            }
+            else if (Filters.model == null)
+            {
+                modelBool = true;
+            }
+
+            if (Filters.power != 0 && component.Power != 0)
+            {
+                if (Filters.powerCompMode == "<")
+                {
+                    if (component.Power <= Filters.power)
+                    {
+                        powerBool = true;
+                    }
+                    else 
+                    {
+                        powerBool = false; 
+                    }
+                }
+                else if (Filters.powerCompMode == ">")
+                {
+                    if (component.Power >= Filters.power)
+                    {
+                        powerBool = true;
+                    }
+                    else
+                    {
+                        powerBool = false;
+                    }
+                }
+                else if (Filters.powerCompMode == "=")
+                {
+                    if (component.Power == Filters.power)
+                    {
+                        powerBool = true;
+                    }
+                    else
+                    {
+                        powerBool = false;
+                    }
+                }
+                else
+                {
+                    powerBool = false;
+                }
+            }
+            else 
+            {
+                powerBool = true;
+            }
+
+            if (Filters.count != 0 && component.Quantity != 0)
+            {
+                if (Filters.countCompMode == "<")
+                {
+                    if (component.Quantity <= Filters.count)
+                    {
+                        countBool = true;
+                    }
+                    else
+                    {
+                        countBool = false;
+                    }
+                }
+                else if (Filters.countCompMode == ">")
+                {
+                    if (component.Quantity >= Filters.count)
+                    {
+                        countBool = true;
+                    }
+                    else
+                    {
+                        countBool = false;
+                    }
+                }
+                else if (Filters.countCompMode == "=")
+                {
+                    if (component.Quantity == Filters.count)
+                    {
+                        countBool = true;
+                    }
+                    else
+                    {
+                        countBool = false;
+                    }
+                }
+                else
+                {
+                    countBool = false;
+                }
+            }
+            else
+            {
+                countBool = true;
+            }
+
+            return searchBool && typeBool && manuBool && statusBool && serBool && type2Bool && modelBool && powerBool && countBool;
         }
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)
         {
             inputText = Search_Box.Text;
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            CheckComponentsViewForNull();
         }
 
         private void Hledat_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "all";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "all";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Mb_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "Mb";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "Mb";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Cpu_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "CPU";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "CPU";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Ram_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "RAM";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "RAM";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Gpu_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "GPU";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "GPU";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Psu_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "PSU";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "PSU";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Disk_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "Disk";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "Disk";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Case_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "Case";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "Case";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
         private void Other_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            selectedType = "Jiné";
-            ComponentsView.Refresh();
-            if (ComponentsView.IsEmpty)
-            {
-                Component_grid.Visibility = Visibility.Collapsed;
-                EmptyGrid_Text.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Component_grid.Visibility = Visibility.Visible;
-                EmptyGrid_Text.Visibility = Visibility.Collapsed;
-            }
+            Filters.type = "Jiné";
+            CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
 
@@ -273,13 +332,12 @@ namespace Pc_parts_lister
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    //MainWindow.Remove(komponenta);
                     Components.Remove(komponenta);
                 }
             }
         }
 
-        //Search section
+        
         private void DetailButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is Component komponenta)
@@ -307,8 +365,43 @@ namespace Pc_parts_lister
         
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
+            Filter_window Fwindow = new Filter_window(Filters);
 
+            if (Fwindow.ShowDialog() == true)
+            {
+                CheckComponentsViewForNull();
+            }
         }
-        
+
+        private void ClearF_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.type = null;
+            Filters.status = null;
+            Filters.manufacturer = null;
+            Filters.series = null;
+            Filters.type2 = null;
+            Filters.model = null;
+            Filters.power = 0;
+            Filters.powerCompMode = null;
+            Filters.count = 0;
+            Filters.countCompMode = null;
+
+            CheckComponentsViewForNull();
+        }
+
+        private void CheckComponentsViewForNull()
+        {
+            ComponentsView.Refresh();
+            if (ComponentsView.IsEmpty)
+            {
+                Component_grid.Visibility = Visibility.Collapsed;
+                EmptyGrid_Text.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Component_grid.Visibility = Visibility.Visible;
+                EmptyGrid_Text.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

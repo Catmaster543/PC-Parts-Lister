@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,36 +16,34 @@ using System.Windows.Shapes;
 
 namespace Pc_parts_lister
 {
-    public partial class Add_part : Window
+    /// <summary>
+    /// Interakční logika pro Filter_window.xaml
+    /// </summary>
+    public partial class Filter_window : Window
     {
-        public bool powerIsLegit = true;
-        public int powerIntT;
-        public bool countIsLegit = true;
-        public int countIntT;
-        public Add_part()
+        public Lookup_window.SearchFilters Filters { get; }
+        public Filter_window(Lookup_window.SearchFilters filters)
         {
-            
-            //Intitial hiding of everything
+            InitializeComponent();
+
+            Filters = filters;
+            DataContext = Filters;
 
             #region Hiding
             InitializeComponent();
-            Manufacturertext.Visibility = Visibility.Collapsed;
-            ManufacturerBox.Visibility = Visibility.Collapsed;
             SerText.Visibility = Visibility.Collapsed;
             SerBox.Visibility = Visibility.Collapsed;
-            SubSerText.Visibility= Visibility.Collapsed;
+            SubSerText.Visibility = Visibility.Collapsed;
             SubSerBox.Visibility = Visibility.Collapsed;
             ModelText.Visibility = Visibility.Collapsed;
             ModelBox.Visibility = Visibility.Collapsed;
             Powertext.Visibility = Visibility.Collapsed;
-            PowerBox.Visibility = Visibility.Collapsed;
+            PowerGrid.Visibility = Visibility.Collapsed;
             CapacityText.Visibility = Visibility.Collapsed;
             CapacitylBox.Visibility = Visibility.Collapsed;
             TypeText2.Visibility = Visibility.Collapsed;
             TypeBox2.Visibility = Visibility.Collapsed;
             #endregion
-
-            //Default options for what is it
 
             TypeBox.ItemsSource = new[]
             {
@@ -66,8 +66,6 @@ namespace Pc_parts_lister
                 "Opravený"
             };
         }
-
-        //Making component public
 
         public Component Component { get; private set; }
 
@@ -97,8 +95,8 @@ namespace Pc_parts_lister
                 #region Visibility
                 TypeText2.Visibility = Visibility.Visible;
                 TypeBox2.Visibility = Visibility.Visible;
-                CapacityText.Visibility= Visibility.Visible;
-                CapacitylBox.Visibility= Visibility.Visible;
+                CapacityText.Visibility = Visibility.Visible;
+                CapacitylBox.Visibility = Visibility.Visible;
                 ModelText.Visibility = Visibility.Visible;
                 ModelBox.Visibility = Visibility.Visible;
                 #endregion
@@ -211,7 +209,7 @@ namespace Pc_parts_lister
                 ModelText.Visibility = Visibility.Visible;
                 ModelBox.Visibility = Visibility.Visible;
                 Powertext.Visibility = Visibility.Visible;
-                PowerBox.Visibility = Visibility.Visible;
+                PowerGrid.Visibility = Visibility.Visible;
                 #endregion
 
 
@@ -290,6 +288,7 @@ namespace Pc_parts_lister
         private void TypeBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var Type2 = TypeBox2.SelectedItem?.ToString();
+
             #region Disk options 
             if (TypeBox.Text == "Disk")
             {
@@ -365,11 +364,6 @@ namespace Pc_parts_lister
             }
             #endregion
 
-        }
-
-        private void StatusBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
         }
 
         private void ManufacturerBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -474,8 +468,8 @@ namespace Pc_parts_lister
 
                     SubSerBox.ItemsSource = null;
                 }
-                else 
-                { 
+                else
+                {
                     SubSerBox.ItemsSource = null;
                 }
             }
@@ -490,258 +484,147 @@ namespace Pc_parts_lister
         }
         #endregion
 
+        #region Power section
+
+        bool powerIsValid = true;
         private void Power_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(PowerBox.Text, out int i))
+            if (int.TryParse(PowerBox.Text, out int pwCislo))
             {
-                powerIsLegit = true;
-                powerIntT = i;
+                if (Filters.powerCompMode == null)
+                {
+                    Error_Text.Text = "Zvolte prosím režim pro hledání zdroje podle W, jinak bude použit defaultní: \"=\"";
+                }
+                powerIsValid = true;
+                Filters.power = pwCislo;
                 Powertext.Foreground = new SolidColorBrush(Colors.Black);
                 PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
             else if (PowerBox.Text == null || PowerBox.Text == "")
             {
-                powerIsLegit = true;
+                powerIsValid = true;
                 Powertext.Foreground = new SolidColorBrush(Colors.Black);
                 PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
             else
             {
-                powerIsLegit = false;
+                powerIsValid = false;
                 Powertext.Foreground = new SolidColorBrush(Colors.Red);
                 PowerBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
         }
+        private void Power_Smaller_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.powerCompMode = "<";
+            Error_Text.Text = null;
+        }
+        private void Power_Bigger_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.powerCompMode = ">";
+            Error_Text.Text = null;
+        }
+        private void Power_Same_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.powerCompMode = "=";
+            Error_Text.Text = null;
+        }
+        #endregion
 
+        #region Count region
+        bool countIsValid = true;
         private void Count_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(QtBox.Text, out int i))
+            if (int.TryParse(CountBox.Text, out int ctCislo))
             {
-                countIsLegit = true;
-                countIntT = i;
-                Qttext.Foreground = new SolidColorBrush(Colors.Black);
-                QtBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                if (Filters.countCompMode == null)
+                {
+                    Error_Text.Text = "Zvolte prosím režim pro hledání počtu, jinak bude použit defaultní: \"=\"";
+                }
+                countIsValid = true;
+                Filters.count = ctCislo;
+                CountText.Foreground = new SolidColorBrush(Colors.Black);
+                CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
-            else if (QtBox.Text == null || QtBox.Text == "")
+            else if (CountBox.Text == null || CountBox.Text == "")
             {
-                countIsLegit = true;
-                Qttext.Foreground = new SolidColorBrush(Colors.Black);
-                QtBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                countIsValid = true;
+                CountText.Foreground = new SolidColorBrush(Colors.Black);
+                CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
             else
             {
-                countIsLegit = false;
-                Qttext.Foreground = new SolidColorBrush(Colors.Red);
-                QtBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                countIsValid = false;
+                CountText.Foreground = new SolidColorBrush(Colors.Red);
+                CountBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
         }
-
-
-        // Saving the component
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Count_Smaller_Click(object sender, RoutedEventArgs e)
         {
-            if (powerIsLegit && countIsLegit)
+            Filters.countCompMode = "<";
+            Error_Text.Text = null;
+        }
+        private void Count_Bigger_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.countCompMode = ">";
+            Error_Text.Text = null;
+        }
+        private void Count_Same_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.countCompMode = "=";
+            Error_Text.Text = null;
+        }
+        #endregion
+
+        private void Save_Filter_Click(object sender, RoutedEventArgs e)
+        {
+            if (TypeBox.Text == "CPU")
             {
-                if (TypeBox.Text == "CPU")
-                {
-                    Component = new Component
-                    {
-                        Type = TypeBox.SelectedItem?.ToString(),
-                        SubType = TypeBox2.SelectedItem?.ToString(),
-                        Manufacturer = ManufacturerBox.Text,
-                        Series = SerBox?.SelectedItem?.ToString(),
-                        SubSeries = SubSerBox?.SelectedItem?.ToString(),
-                        Model = ModelBox.Text,
-                        Quantity = countIntT,
-                        Status = StatusBox.Text,
-
-                        Name = ManufacturerBox.Text + " " + SerBox.Text + " " + SubSerBox.Text + " " + ModelBox.Text,
-                    };
-                }
-                else if (TypeBox.Text == "Disk")
-                {
-                    Component = new Component
-                    {
-                        Type = TypeBox.SelectedItem?.ToString(),
-                        SubType = TypeBox2.SelectedItem?.ToString(),
-                        Manufacturer = ManufacturerBox.Text,
-                        Model = ModelBox.Text,
-                        Space = CapacitylBox.Text,
-                        Quantity = countIntT,
-                        Status = StatusBox.Text,
-
-                        Name = ManufacturerBox.Text + " " + ModelBox.Text + " - " + CapacitylBox.Text + "Gb",
-                    };
-                }
-                else if (TypeBox.Text == "GPU")
-                {
-                    if (TypeBox2.Text == "Nvidia")
-                    {
-                        if (SerBox.Text == "RTX" || SerBox.Text == "GTX")
-                        {
-                            Component = new Component
-                            {
-                                Type = TypeBox.SelectedItem?.ToString(),
-                                SubType = TypeBox2.SelectedItem?.ToString(),
-                                Manufacturer = ManufacturerBox.Text,
-                                Series = SerBox?.SelectedItem?.ToString(),
-                                SubSeries = SubSerBox?.SelectedItem?.ToString(),
-                                Model = ModelBox.Text,
-                                Space = CapacitylBox.Text,
-                                Quantity = countIntT,
-                                Status = StatusBox.Text,
-
-                                Name = ManufacturerBox.Text + " GeForce " + SerBox.Text + " " + ModelBox.Text,
-                            };
-                        }
-                        else
-                        {
-                            Component = new Component
-                            {
-                                Type = TypeBox.SelectedItem?.ToString(),
-                                SubType = TypeBox2.SelectedItem?.ToString(),
-                                Manufacturer = ManufacturerBox.Text,
-                                Series = SerBox?.SelectedItem?.ToString(),
-                                SubSeries = SubSerBox?.SelectedItem?.ToString(),
-                                Model = ModelBox.Text,
-                                Space = CapacitylBox.Text,
-                                Quantity = countIntT,
-                                Status = StatusBox.Text,
-
-                                Name = ManufacturerBox.Text + " " + TypeBox.Text + " " + SerBox.Text + " " + ModelBox.Text,
-                            };
-                        }
-                    }
-                    else
-                    {
-                        Component = new Component
-                        {
-                            Type = TypeBox.SelectedItem?.ToString(),
-                            SubType = TypeBox2.SelectedItem?.ToString(),
-                            Manufacturer = ManufacturerBox.Text,
-                            Series = SerBox?.SelectedItem?.ToString(),
-                            SubSeries = SubSerBox?.SelectedItem?.ToString(),
-                            Model = ModelBox.Text,
-                            Space = CapacitylBox.Text,
-                            Quantity = countIntT,
-                            Status = StatusBox.Text,
-
-                            Name = ManufacturerBox.Text + " " + TypeBox2.Text + " " + ModelBox.Text,
-                        };
-                    }
-
-                }
-                else if (TypeBox.Text == "RAM")
-                {
-                    if (TypeBox2.Text == "DIMM")
-                    {
-                        Component = new Component
-                        {
-                            Type = TypeBox.SelectedItem?.ToString(),
-                            SubType = TypeBox2.SelectedItem?.ToString(),
-                            Series = SerBox?.SelectedItem?.ToString(),
-                            Manufacturer = ManufacturerBox.Text,
-                            Model = ModelBox.Text,
-                            Space = CapacitylBox.Text,
-                            Quantity = countIntT,
-                            Status = StatusBox.Text,
-
-                            Name = ManufacturerBox.Text + " " + ModelBox.Text + " (" + CapacitylBox.Text + "Gb)",
-                        };
-                    }
-                    else if (TypeBox2.Text == "SODIMM")
-                    {
-                        Component = new Component
-                        {
-                            Type = TypeBox.SelectedItem?.ToString(),
-                            SubType = TypeBox2.SelectedItem?.ToString(),
-                            Series = SerBox?.SelectedItem?.ToString(),
-                            Manufacturer = ManufacturerBox.Text,
-                            Model = ModelBox.Text,
-                            Space = CapacitylBox.Text,
-                            Quantity = countIntT,
-                            Status = StatusBox.Text,
-
-                            Name = ManufacturerBox.Text + " " + TypeBox2.Text + " " + ModelBox.Text + " (" + CapacitylBox.Text + "Gb)",
-                        };
-                    }
-
-                }
-                else if (TypeBox.Text == "Mb")
-                {
-                    Component = new Component
-                    {
-                        Type = TypeBox.SelectedItem?.ToString(),
-                        SubType = TypeBox2.SelectedItem?.ToString(),
-                        Manufacturer = ManufacturerBox.Text,
-                        Model = ModelBox.Text,
-                        Quantity = countIntT,
-                        Status = StatusBox.Text,
-
-                        Name = ManufacturerBox.Text + " " + ModelBox.Text,
-                    };
-                }
-                else if (TypeBox.Text == "PSU")
-                {
-                    Component = new Component
-                    {
-                        Type = TypeBox.SelectedItem?.ToString(),
-                        SubType = TypeBox2.SelectedItem?.ToString(),
-                        Manufacturer = ManufacturerBox.Text,
-                        Model = ModelBox.Text,
-                        Power = powerIntT,
-                        Quantity = countIntT,
-                        Status = StatusBox.Text,
-
-                        Name = ManufacturerBox.Text + " " + ModelBox.Text + " " + PowerBox.Text + "w",
-                    };
-                }
-                else if (TypeBox.Text == "Case")
-                {
-                    Component = new Component
-                    {
-                        Type = TypeBox.SelectedItem?.ToString(),
-                        SubType = TypeBox2.SelectedItem?.ToString(),
-                        Manufacturer = ManufacturerBox.Text,
-                        Model = ModelBox.Text,
-                        Power = powerIntT,
-                        Quantity = countIntT,
-                        Status = StatusBox.Text,
-
-                        Name = ManufacturerBox.Text + " " + ModelBox.Text,
-                    };
-                }
-                else
-                {
-                    Component = new Component
-                    {
-                        Type = TypeBox.SelectedItem?.ToString(),
-                        SubType = TypeBox2.SelectedItem?.ToString(),
-                        Manufacturer = ManufacturerBox.Text,
-                        Series = SerBox?.SelectedItem?.ToString(),
-                        SubSeries = SubSerBox?.SelectedItem?.ToString(),
-                        Model = ModelBox.Text,
-                        Space = CapacitylBox.Text,
-                        Quantity = countIntT,
-                        Status = StatusBox.Text,
-                    };
-                }
-                this.DialogResult = true;
-                this.Close();
+                Filters.type = TypeBox.SelectedItem.ToString();
+                Filters.manufacturer = ManufacturerBox.SelectedItem.ToString();
             }
-            else if (!powerIsLegit)
+            else if (TypeBox.SelectedItem == null)
+            {
+                Filters.type = null;
+            }
+            else
+            {
+                Filters.type = TypeBox.SelectedItem.ToString();
+            }
+
+            if (ManufacturerBox.Text != null && ManufacturerBox.Text != "Vyber, nebo napiš vlastní")
+            {
+                Filters.manufacturer = ManufacturerBox.Text;
+            }
+
+            if (StatusBox.SelectedItem != null)
+            {
+                Filters.status = StatusBox.SelectedItem.ToString();
+            }
+
+            if (SerBox.Text != null && SerBox.Text != "Vyber, nebo napiš vlastní")
+            {
+                Filters.series = SerBox.Text;
+            }
+
+            if (TypeBox2.SelectedItem != null)
+            {
+                Filters.type2 = TypeBox2.SelectedItem.ToString();
+            }
+
+            if (ModelBox.Text != null || ModelBox.Text == "")
+            {
+                Filters.model = ModelBox.Text;
+            }
+
+            if (Filters.powerCompMode == null)
+            {
+                Filters.powerCompMode = "=";
+            }
+
+            if (!powerIsValid)
             {
                 var result = MessageBox.Show(
-                $"Nelze přidat součástku; {PowerBox.Text} není platná hodnota ve W. Použijte prosím kladné číslo",
-                "Chyba",
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning);
-                return;
-            }
-            else if (!countIsLegit)
-            {
-                var result = MessageBox.Show(
-                $"Nelze přidat součástku; {QtBox.Text} není platná hodnota pro množství. Použijte prosím kladné číslo",
+                $"Nelze uložit filtr; {PowerBox.Text} není platná hodnota ve W. Použijte prosím kladné číslo",
                 "Chyba",
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
@@ -749,12 +632,7 @@ namespace Pc_parts_lister
             }
             else
             {
-                var result = MessageBox.Show(
-                $"Nelze přidat součástku; něco je špatně, I just can't prove it yet",
-                "Chyba",
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning);
-                return;
+                DialogResult = true;
             }
         }
     }

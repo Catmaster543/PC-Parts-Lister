@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="DetailWindow" Height="450" Width="600">
+        Title="Detail Window" Height="450" Width="600">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -51,6 +51,9 @@
 
             <TextBlock Text="{Binding Quantity, StringFormat=Množství: {0}}"
              x:Name="QtBox"/>
+
+            <TextBlock Text="{Binding Status, StringFormat=Stav: {0}}"
+             x:Name="StatusBox"/>
 
             <Button Content="Uložit"
     Margin="0,5,0,0"

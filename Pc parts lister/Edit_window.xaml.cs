@@ -26,6 +26,20 @@ namespace Pc_parts_lister
             Komponenta = komponenta;
             DataContext = Komponenta;
 
+            if (komponenta.Status != null)
+            {
+                StatusBox.SelectedItem = komponenta.Status;
+            }
+
+            StatusBox.ItemsSource = new[]
+            {
+                "Funkční",
+                "Ok",
+                "Kritický",
+                "Nefunkční",
+                "Opravený"
+            };
+
             #region Hiding
             PowerText.Visibility = Visibility.Collapsed;
             PowerBox.Visibility = Visibility.Collapsed;
@@ -92,6 +106,10 @@ namespace Pc_parts_lister
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            if (StatusBox.SelectedItem != null)
+            {
+                Komponenta.Status = StatusBox.SelectedItem.ToString();
+            }
             Close();
         }
 

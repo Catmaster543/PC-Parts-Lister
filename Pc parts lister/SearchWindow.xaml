@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="SearchWindow" Height="450" Width="800">
+        Title="Search Window" Height="450" Width="800">
     <Grid>
         <DataGrid ItemsSource="{Binding Components}"
   AutoGenerateColumns="False"

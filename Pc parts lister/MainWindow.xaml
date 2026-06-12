@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Main" Height="450" Width="800"
-        Closing="Window_Closing">
+        Title="PC Parts Lister" Height="450" Width="800"
+        Closing="Window_Closing" ResizeMode="CanMinimize">
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>

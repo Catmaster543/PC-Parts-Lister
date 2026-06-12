@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Add_part" Height="500" Width="300">
+        Title="Add Part" Height="500" Width="300" ResizeMode="NoResize">
     <Grid Margin="10">
         <StackPanel>
-
             <TextBlock x:Name="TypeText" Text="Typ:"/>
             <ComboBox x:Name="TypeBox" SelectionChanged="TypeBox_SelectionChanged" Text="Vyber, nebo napiš vlastní"/>
 
@@ -34,12 +33,12 @@
             <TextBox x:Name="CapacitylBox"/>
 
             <TextBlock x:Name="Powertext" Text="Výkon (W):"/>
-            <TextBox x:Name="PowerBox"/>
+            <TextBox x:Name="PowerBox" TextChanged="Power_TextChanged"/>
 
             <TextBlock x:Name="Qttext" Text="Množství:"/>
-            <TextBox x:Name="QtBox"/>
+            <TextBox x:Name="QtBox" TextChanged="Count_TextChanged"/>
 
-            <Button Content="Uložit" Click="Save_Click"/>
+            <Button Content="Uložit" Click="Save_Click" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

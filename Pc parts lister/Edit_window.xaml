@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Edit_window" Height="450" Width="800">
+        Title="Edit Window" Height="500" Width="800">
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -64,6 +64,8 @@
                        x:Name="QtText"/>
             <TextBox Text="{Binding Quantity}"
                      x:Name="QtBox"/>
+            <TextBlock x:Name="StatusText" Text="Stav:"/>
+            <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber"/>
 
             <Button Content="Uložit"
             Margin="0,5,0,0"
