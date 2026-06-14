@@ -17,16 +17,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Name="Stack_Panel_L" Grid.Column="0">
-            <TextBlock x:Name="TypeText" Text="Typ:"/>
+            <TextBlock x:Name="TypeText" Text="Typ:" FontWeight="SemiBold"/>
             <ComboBox x:Name="TypeBox" SelectionChanged="TypeBox_SelectionChanged" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="Manufacturertext" Text="Výrobce:"/>
+            <TextBlock x:Name="Manufacturertext" Text="Výrobce:" FontWeight="SemiBold"/>
             <ComboBox x:Name="ManufacturerBox" SelectionChanged="ManufacturerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="StatusText" Text="Stav:"/>
+            <TextBlock x:Name="StatusText" Text="Stav:" FontWeight="SemiBold"/>
             <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber"/>
 
-            <TextBlock x:Name="CountText" Text="Množství:"/>
+            <TextBlock x:Name="CountText" Text="Množství:" FontWeight="SemiBold"/>
             <Grid x:Name="CountGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
@@ -35,17 +35,17 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Click="Count_Smaller_Click" Grid.Column="0" BorderBrush="Red">
+                <Button x:Name="SmallerCountComp_Button" Click="Count_Smaller_Click" Grid.Column="0">
                     <Button.Background>
                         <ImageBrush ImageSource="/smaller_button.png" Stretch="UniformToFill"/>
                     </Button.Background>
                 </Button>
-                <Button Click="Count_Bigger_Click" Grid.Column="1" BorderBrush="#FF4EFF00">
+                <Button x:Name="BiggerCountComp_Button" Click="Count_Bigger_Click" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="/bigger_button.png" Stretch="UniformToFill"/>
                     </Button.Background>
                 </Button>
-                <Button Click="Count_Same_Click" Grid.Column="2">
+                <Button x:Name="EqualCountComp_Button" Click="Count_Same_Click" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/equals_button.png"/>
                     </Button.Background>
@@ -54,19 +54,19 @@
             </Grid>
         </StackPanel>
         <StackPanel Name="Stack_Panel_R" Grid.Column="2">
-            <TextBlock x:Name="TypeText2" Text="Typ:"/>
+            <TextBlock x:Name="TypeText2" Text="Typ:" FontWeight="SemiBold"/>
             <ComboBox x:Name="TypeBox2" SelectionChanged="TypeBox2_SelectionChanged" IsEditable="False" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="SerText" Text="Série:"/>
+            <TextBlock x:Name="SerText" Text="Série:" FontWeight="SemiBold"/>
             <ComboBox x:Name="SerBox" SelectionChanged="SerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="SubSerText" Text="Řada:"/>
+            <TextBlock x:Name="SubSerText" Text="Řada:" FontWeight="SemiBold"/>
             <ComboBox x:Name="SubSerBox" SelectionChanged="SubSerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="ModelText" Text="Model:"/>
+            <TextBlock x:Name="ModelText" Text="Model:" FontWeight="SemiBold"/>
             <TextBox x:Name="ModelBox"/>
 
-            <TextBlock x:Name="Powertext" Text="Výkon (W):"/>
+            <TextBlock x:Name="Powertext" Text="Výkon (W):" FontWeight="SemiBold"/>
             <Grid x:Name="PowerGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
@@ -75,17 +75,17 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Click="Power_Smaller_Click" Grid.Column="0" BorderBrush="Red">
+                <Button x:Name="SmallerPowerComp_Button" Click="Power_Smaller_Click" Grid.Column="0">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/smaller_button.png"/>
                     </Button.Background>
                 </Button>
-                <Button Click="Power_Bigger_Click" Grid.Column="1" BorderBrush="#FF4EFF00">
+                <Button x:Name="BiggerPowerComp_Button" Click="Power_Bigger_Click" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/bigger_button.png"/>
                     </Button.Background>
                 </Button>
-                <Button Click="Power_Same_Click" Grid.Column="2">
+                <Button x:Name="EqualPowerComp_Button" Click="Power_Same_Click" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/equals_button.png"/>
                     </Button.Background>
@@ -93,7 +93,7 @@
                 <TextBox x:Name="PowerBox" Grid.Column="3" TextChanged="Power_TextChanged" BorderBrush="#FFB3ABAB"/>
             </Grid>
 
-            <TextBlock x:Name="CapacityText" Text="Velikost v GB:"/>
+            <TextBlock x:Name="CapacityText" Text="Velikost v GB:" FontWeight="SemiBold"/>
             <Grid x:Name="CapacityGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
@@ -102,17 +102,17 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Click="Capacity_Smaller_Click" Grid.Column="0" BorderBrush="Red">
+                <Button x:Name="SmallerCapacityComp_Button" Click="Capacity_Smaller_Click" Grid.Column="0">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/smaller_button.png"/>
                     </Button.Background>
                 </Button>
-                <Button Click="Capacity_Bigger_Click" Grid.Column="1" BorderBrush="#FF4EFF00">
+                <Button x:Name="BiggerCapacityComp_Button" Click="Capacity_Bigger_Click" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/bigger_button.png"/>
                     </Button.Background>
                 </Button>
-                <Button Click="Capacity_Same_Click" Grid.Column="2">
+                <Button x:Name="EqualCapacityComp_Button" Click="Capacity_Same_Click" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush Stretch="UniformToFill" ImageSource="/equals_button.png"/>
                     </Button.Background>

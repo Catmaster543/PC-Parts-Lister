@@ -538,6 +538,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref powerCompErrorInt);
             }
+            SmallerPowerComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            BiggerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            EqualPowerComp_Button.BorderBrush= new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         private void Power_Bigger_Click(object sender, RoutedEventArgs e)
         {
@@ -546,6 +549,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref powerCompErrorInt);
             }
+            BiggerPowerComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            SmallerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            EqualPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         private void Power_Same_Click(object sender, RoutedEventArgs e)
         {
@@ -554,6 +560,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref powerCompErrorInt);
             }
+            EqualPowerComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            BiggerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SmallerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         #endregion
 
@@ -610,6 +619,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref countCompErrorInt);
             }
+            SmallerCountComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            BiggerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            EqualCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         private void Count_Bigger_Click(object sender, RoutedEventArgs e)
         {
@@ -618,6 +630,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref countCompErrorInt);
             }
+            BiggerCountComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            SmallerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            EqualCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         private void Count_Same_Click(object sender, RoutedEventArgs e)
         {
@@ -626,6 +641,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref countCompErrorInt);
             }
+            EqualCountComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            BiggerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SmallerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         #endregion
 
@@ -683,6 +701,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref capacityCompErrorInt);
             }
+            SmallerCapacityComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            BiggerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            EqualCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         private void Capacity_Bigger_Click(object sender, RoutedEventArgs e)
         {
@@ -691,6 +712,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref capacityCompErrorInt);
             }
+            BiggerCapacityComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            SmallerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            EqualCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         private void Capacity_Same_Click(object sender, RoutedEventArgs e)
         {
@@ -699,6 +723,9 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref capacityCompErrorInt);
             }
+            EqualCapacityComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+            BiggerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SmallerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
         }
         #endregion
 
@@ -775,7 +802,6 @@ namespace Pc_parts_lister
                 }
             }
         }
-
         private void Save_Filter_Click(object sender, RoutedEventArgs e)
         {
             if (TypeBox.Text == "CPU")
@@ -838,7 +864,25 @@ namespace Pc_parts_lister
                 $"Nelze uložit filtr; {PowerBox.Text} není platná hodnota ve W. Použijte prosím kladné číslo",
                 "Chyba",
                 MessageBoxButton.OK,
-                MessageBoxImage.Warning);
+                MessageBoxImage.Error);
+                return;
+            }
+            else if (!countIsValid)
+            {
+                var result = MessageBox.Show(
+                $"Nelze uložit filtr; {CountBox.Text} není platná hodnota množství. Použijte prosím kladné číslo",
+                "Chyba",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+                return;
+            }
+            else if (!capacityIsValid)
+            {
+                var result = MessageBox.Show(
+                $"Nelze uložit filtr; {CapacityBox.Text} není platná hodnota velikosti úložiště v GB. Použijte prosím kladné číslo",
+                "Chyba",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
                 return;
             }
             else

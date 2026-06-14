@@ -8,7 +8,7 @@
         Title="Component lookup" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Grid>
         <Viewbox Stretch="Uniform">
-            <Grid x:Name="Lookup" Visibility="Collapsed">
+            <Grid x:Name="Lookup">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -64,7 +64,7 @@
                 </StackPanel>
             </Grid>
         </Viewbox>
-        <Grid x:Name="Search">
+        <Grid x:Name="Search" Visibility="Collapsed">
             <TextBox TextChanged="Filtering_Changed" Name="Search_Box" Height="30" Width="300" Margin="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Button Click="Back_Click" Height="30" Width="30" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Margin="20">
                 <Button.Background>
