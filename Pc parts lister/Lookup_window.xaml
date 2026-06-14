@@ -19,48 +19,72 @@
                     </Button.Background>
                 </Button>
                 <StackPanel Orientation="Horizontal" Margin="20,0,20,0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Click="Gpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/gpu_button.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button Click="Ram_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/ram_button.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button Click="Mb_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/mb_button.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button Click="Cpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/cpu_button.png"/>
-                        </Button.Background>
-                    </Button>
+                    <StackPanel Margin="30">
+                        <Button Click="Cpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/cpu_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Procesory" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Margin="30">
+                        <Button Click="Ram_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/ram_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="RAMky" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Margin="30">
+                        <Button Click="Mb_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/mb_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Základní desky" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Margin="30">
+                        <Button Click="Gpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/gpu_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Grafické karty" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="20,0,20,0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Click="Disk_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/disk_button.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button Click="Psu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/psu_button.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button Click="Case_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/case_button.png"/>
-                        </Button.Background>
-                    </Button>
-                    <Button Click="Other_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="50">
-                        <Button.Background>
-                            <ImageBrush ImageSource="/other_button.png"/>
-                        </Button.Background>
-                    </Button>
+                    <StackPanel Margin="30">
+                        <Button Click="Disk_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/disk_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Disky" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Margin="30">
+                        <Button Click="Psu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/psu_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Zdroje" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Margin="30">
+                        <Button Click="Case_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/case_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Skříně" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Margin="30">
+                        <Button Click="Other_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/other_button.png"/>
+                            </Button.Background>
+                        </Button>
+                        <TextBlock Text="Ostatní" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Viewbox>
