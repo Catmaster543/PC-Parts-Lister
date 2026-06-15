@@ -28,71 +28,48 @@ namespace Pc_parts_lister
             DataContext = Komponenta;
 
             #region Hiding
-            //PowerText.Visibility = Visibility.Collapsed;
             PowerBox.Visibility = Visibility.Collapsed;
-            //CapacityText.Visibility = Visibility.Collapsed;
             CapacityBox.Visibility = Visibility.Collapsed;
             #endregion
 
             if (Komponenta.Type == "CPU")
             {
-                //TypeText2.Visibility = Visibility.Collapsed;
                 TypeBox2.Visibility = Visibility.Collapsed;
             }
             else if (Komponenta.Type == "Disk")
             {
-                //CapacityText.Visibility = Visibility.Visible;
                 CapacityBox.Visibility = Visibility.Visible;
-                //SerText.Visibility = Visibility.Collapsed;
                 SerBox.Visibility = Visibility.Collapsed;
-                //SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
-                //TypeText2.Text = "Typ disku:";
             }
             else if (Komponenta.Type == "GPU")
             {
-                //SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
-                //TypeText2.Text = "Výrobce čipu:";
             }
             else if (komponenta.Type == "RAM")
             {
-                //SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
             }
             else if (komponenta.Type == "Mb")
             {
-                //SerText.Visibility = Visibility.Collapsed;
                 SerBox.Visibility = Visibility.Collapsed;
-                //SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
-                //TypeText2.Text = "Pro jaké procesory?";
             }
             else if (komponenta.Type == "PSU")
             {
-                //TypeText2.Visibility = Visibility.Collapsed;
                 TypeBox2.Visibility = Visibility.Collapsed;
-                //SerText.Visibility = Visibility.Collapsed;
                 SerBox.Visibility = Visibility.Collapsed;
-                //SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
-                //PowerText.Visibility = Visibility.Visible;
                 PowerBox.Visibility = Visibility.Visible;
             }
             else if (komponenta.Type == "Case")
             {
-                //SerText.Visibility = Visibility.Collapsed;
                 SerBox.Visibility = Visibility.Collapsed;
-                //SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
             }
         }
         
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
