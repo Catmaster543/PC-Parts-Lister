@@ -121,7 +121,7 @@
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Name="SaveNErrorPanel">
-            <Button Content="Uložit filtr" Click="Save_Filter_Click" Margin="10" FontWeight="Bold" Background="SpringGreen"/>
+            <Button Content="Uložit filtr" Name="Save_Button" Click="Save_Filter_Click" Margin="10" FontWeight="Bold" Background="SpringGreen"/>
         </StackPanel>
     </Grid>
 </Window>

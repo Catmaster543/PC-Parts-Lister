@@ -511,7 +511,7 @@ namespace Pc_parts_lister
                 powerIsValid = true;
                 if (powerErrorInt != 0)
                 {
-                    ClearAnError(ref powerErrorInt);
+                    ClearAnError(ref powerErrorInt, true);
                 }
                 Powertext.Foreground = new SolidColorBrush(Colors.Black);
                 PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
@@ -521,7 +521,7 @@ namespace Pc_parts_lister
                 powerIsValid = false;
                 if (powerErrorInt == 0)
                 {
-                    powerErrorInt = WriteAnError($"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
+                    powerErrorInt = WriteAnError($"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red, true);
                 }
                 else if (powerErrorInt != 0)
                 {
@@ -580,7 +580,7 @@ namespace Pc_parts_lister
                 }
                 if (countErrorInt != 0)
                 {
-                    ClearAnError(ref countErrorInt);
+                    ClearAnError(ref countErrorInt, true);
                 }
                 countIsValid = true;
                 Filters.count = ctCislo;
@@ -602,7 +602,7 @@ namespace Pc_parts_lister
                 countIsValid = false;
                 if (countErrorInt == 0)
                 {
-                    countErrorInt = WriteAnError($"{ CountBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
+                    countErrorInt = WriteAnError($"{ CountBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red, true);
                 }
                 else if (countErrorInt != 0)
                 {
@@ -662,7 +662,7 @@ namespace Pc_parts_lister
                 }
                 if (capacityErrorInt != 0)
                 {
-                    ClearAnError(ref capacityErrorInt);
+                    ClearAnError(ref capacityErrorInt, true);
                 }
                 capacityIsValid = true;
                 Filters.capacity = cpCislo;
@@ -674,7 +674,7 @@ namespace Pc_parts_lister
                 capacityIsValid = true;
                 if (capacityErrorInt != 0)
                 {
-                    ClearAnError(ref capacityErrorInt);
+                    ClearAnError(ref capacityErrorInt, true);
                 }
                 CapacityText.Foreground = new SolidColorBrush(Colors.Black);
                 CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
@@ -684,7 +684,7 @@ namespace Pc_parts_lister
                 capacityIsValid = false;
                 if (capacityErrorInt == 0)
                 {
-                    capacityErrorInt = WriteAnError($"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.", Colors.Red);
+                    capacityErrorInt = WriteAnError($"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.", Colors.Red, true);
                 }
                 else if (capacityErrorInt != 0)
                 {
@@ -730,9 +730,15 @@ namespace Pc_parts_lister
         #endregion
 
         int currentErrorId = 1;
-        int WriteAnError(string message, Color color)
+        int critErrors = 0;
+        int WriteAnError(string message, Color color, bool IsCritical = false)
         {
             int tempErrorId = currentErrorId;
+            if (IsCritical)
+            {
+                critErrors++;
+                Save_Button.IsEnabled = false;
+            }
             TextBlock errorTextBlock = new TextBlock();
             SaveNErrorPanel.Children.Add(errorTextBlock);
             errorTextBlock.Name = $"ErrorText{tempErrorId}";
@@ -756,7 +762,7 @@ namespace Pc_parts_lister
             return false;
         }
 
-        bool ClearAnError(ref int errorId)
+        bool ClearAnError(ref int errorId, bool IsCritical = false)
         {
             if (errorId < powerErrorInt)
             {
@@ -785,6 +791,14 @@ namespace Pc_parts_lister
             SaveNErrorPanel.Children.RemoveAt(errorId);
             errorId = 0;
             CalculateIndex();
+            if (IsCritical)
+            {
+                critErrors--;   
+            }
+            if (critErrors == 0)
+            {
+                Save_Button.IsEnabled = true;
+            }
             return true;
         }
 
