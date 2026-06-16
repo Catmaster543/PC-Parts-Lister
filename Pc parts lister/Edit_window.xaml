@@ -26,7 +26,7 @@
                         <ImageBrush Stretch="UniformToFill" ImageSource="/back_button.png"/>
                     </Button.Background>
                 </Button>
-                <TextBox Text="{Binding Name}" FontSize="36" FontWeight="Bold"/>
+                <TextBox Text="{Binding Name}" FontSize="36" FontWeight="Bold" BorderThickness="0"/>
             </StackPanel>
         </Border>
 
@@ -35,7 +35,7 @@
             <Grid Margin="10">
                 <StackPanel x:Name="Type_Panel" Orientation="Horizontal">
                     <TextBlock Text="Typ" x:Name="TypeText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <ComboBox Name="Type_Box" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20"/>
+                    <ComboBox Name="Type_Box" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
                 </StackPanel>
             </Grid>
 
@@ -47,12 +47,12 @@
                 
                 <StackPanel Name="SubType_Panel" Orientation="Horizontal" Grid.Column="0">
                     <TextBlock Text="Subtyp" x:Name="TypeText2" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding SubType}" x:Name="TypeBox2" Margin="10,0,0,0" FontSize="20"/>
+                    <TextBox Text="{Binding SubType}" x:Name="TypeBox2" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
                 </StackPanel>
                 
                 <StackPanel Name="Series_Panel" Orientation="Horizontal" Grid.Column="1" Margin="20,0,0,0">
                     <TextBlock Text="Série" x:Name="SerText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding Series}" x:Name="SerBox" Margin="10,0,0,0" FontSize="20"/>
+                    <TextBox Text="{Binding Series}" x:Name="SerBox" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
                 </StackPanel>
                 
                 <StackPanel Name="SubSeries_Panel" Orientation="Horizontal" Grid.Column="1" Visibility="Collapsed" Margin="20,0,0,0">
@@ -63,17 +63,19 @@
 
             <StackPanel Margin="10" Name="Model_Panel" Orientation="Horizontal">
                 <TextBlock Text="Model" x:Name="ModelText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                <TextBox Text="{Binding Model}" x:Name="ModelBox" Margin="10,0,0,0" FontSize="20"/>
+                <TextBox Text="{Binding Model}" x:Name="ModelBox" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
             </StackPanel>
 
             <Grid Margin="10" Name="Etc_Grid" Visibility="Collapsed">
                 <StackPanel Name="Capacity_Panel" Orientation="Horizontal" Visibility="Collapsed">
                     <TextBlock Text="Paměť" x:Name="CapacityText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding Capacity}" x:Name="CapacityBox" Margin="10,0,0,0" FontSize="20" TextChanged="Capacity_TextChanged"/>
+                    <TextBox Text="{Binding Capacity}" x:Name="CapacityBox" Margin="10,0,0,0" FontSize="20" TextChanged="Capacity_TextChanged" BorderThickness="0"/>
+                    <TextBlock Text="GB" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Margin="5,0,0,0"/>
                 </StackPanel>
                 <StackPanel Name="Power_Panel" Orientation="Horizontal" Visibility="Collapsed">
                     <TextBlock Text="Výkon ve w" x:Name="PowerText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding Power}" x:Name="PowerBox" Margin="10,0,0,0" FontSize="20" TextChanged="Power_TextChanged"/>
+                    <TextBox Text="{Binding Power}" x:Name="PowerBox" Margin="10,0,0,0" FontSize="20" TextChanged="Power_TextChanged" BorderThickness="0"/>
+                    <TextBlock Text="W" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Margin="5,0,0,0"/>
                 </StackPanel>
             </Grid>
 
@@ -85,18 +87,18 @@
 
                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                     <TextBlock Text="Výrobce" x:Name="ManufacturerText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding Manufacturer}" x:Name="ManufacturerBox" Margin="10,0,0,0" FontSize="20"/>
+                    <TextBox Text="{Binding Manufacturer}" x:Name="ManufacturerBox" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,0,0,0">
                     <TextBlock Text="Množství" x:Name="CountText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding Quantity}" x:Name="CountBox" Margin="10,0,0,0" FontSize="20" TextChanged="Count_TextChanged"/>
+                    <TextBox Text="{Binding Quantity}" x:Name="CountBox" Margin="10,0,0,0" FontSize="20" TextChanged="Count_TextChanged" BorderThickness="0"/>
                 </StackPanel>
             </Grid>
 
             <StackPanel Margin="10" Orientation="Horizontal">
                 <TextBlock x:Name="StatusText" Text="Stav" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20"/>
+                <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
             </StackPanel>
         </StackPanel>
 
