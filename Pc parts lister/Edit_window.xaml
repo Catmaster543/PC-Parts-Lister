@@ -57,7 +57,7 @@
                 
                 <StackPanel Name="SubSeries_Panel" Orientation="Horizontal" Grid.Column="1" Visibility="Collapsed" Margin="20,0,0,0">
                     <TextBlock Text="SubSérie" x:Name="SubSerText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                    <TextBox Text="{Binding SubSeries}" x:Name="SubSerBox" Margin="10,0,0,0" FontSize="20"/>
+                    <TextBox Text="{Binding SubSeries}" x:Name="SubSerBox" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
                 </StackPanel>
             </Grid>
 
