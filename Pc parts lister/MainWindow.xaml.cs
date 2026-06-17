@@ -58,6 +58,7 @@ namespace Pc_parts_lister
     public class Component
     {
         public string Name { get; set; }
+        public bool Favorited { get; set; }
         public string Type { get; set; }
         public string Manufacturer { get; set; }
         public string Series { get; set; }
@@ -93,9 +94,22 @@ namespace Pc_parts_lister
                     ImagePath);
             }
         }
+        public string favoriteIcon
+        {
+            get
+            {
+                if (Favorited)
+                {
+                    return "pack://application:,,,/favorite_button_on.png";
+                }
+                else
+                {
+                    return "pack://application:,,,/favorite_button.png";
+                }
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        protected void OnPropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
     public static class DataStorage

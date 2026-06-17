@@ -111,22 +111,31 @@
             <DataGrid ItemsSource="{Binding ComponentsView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50" Name="Component_grid">
 
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button x:Name="Favorite_Button" Height="25" Width="25" Click="Favorite_Click" BorderThickness="0">
+                                        <Button.Background>
+                                            <ImageBrush Stretch="Uniform" ImageSource="{Binding favoriteIcon}"/>
+                                        </Button.Background>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="Název"
-                  Binding="{Binding Name}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
 
-                    <DataGridTextColumn Header="Typ"
-                  Binding="{Binding Type}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Typ" Binding="{Binding Type}" IsReadOnly="True"/>
 
-                    <DataGridTextColumn Header="Výrobce"
-                  Binding="{Binding Manufacturer}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Výrobce" Binding="{Binding Manufacturer}" IsReadOnly="True"/>
 
                     <!-- Tlačítka -->
                     <DataGridTemplateColumn Header="Akce">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
                                     <Button Content="Detail"
                                     Margin="2"
                                     Click="DetailButton_Click"/>

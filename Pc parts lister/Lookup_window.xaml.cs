@@ -452,5 +452,26 @@ namespace Pc_parts_lister
                 EmptyGrid_Text.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void Favorite_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button) sender;
+
+            if (button.DataContext is Component komponenta && komponenta.Favorited == false)
+            {
+                komponenta.Favorited = true;
+                ChangeButtonBg(button, komponenta.favoriteIcon);
+            }
+            else if (button.DataContext is Component komponentaa && komponentaa.Favorited == true)
+            {
+                komponentaa.Favorited = false;
+                ChangeButtonBg(button, komponentaa.favoriteIcon);
+            }
+        }
+
+        private void ChangeButtonBg(Button button, string path)
+        {
+            button.Background = new ImageBrush(new BitmapImage(new Uri(path)));
+        }
     }
 }

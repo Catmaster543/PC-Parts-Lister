@@ -246,6 +246,12 @@
   <ItemGroup>
     <Resource Include="cancel_button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="favorite_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="favorite_button_on.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
