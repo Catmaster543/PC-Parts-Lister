@@ -45,11 +45,27 @@ namespace Pc_parts_lister
             public string type2 { get; set; }
             public string model { get; set; }
             public string powerCompMode { get; set; }
-            public int power {  get; set; }
+            public int power { get; set; }
             public string countCompMode { get; set; }
             public int count { get; set; }
             public string capacityCompMode { get; set; }
             public int capacity { get; set; }
+            public bool favorite { get; set; }
+            public string favoriteIconPath
+            {
+                get
+                {
+                    if (favorite)
+                    {
+                        return "pack://application:,,,/favorite_button_on.png";
+                    }
+                    else
+                    {
+                        return "pack://application:,,,/favorite_button.png";
+                    }
+                }
+            }
+            public bool filterFavorite {  get; set; }
         }
 
         string inputText;
@@ -64,6 +80,7 @@ namespace Pc_parts_lister
         bool powerBool;
         bool countBool;
         bool capacityBool;
+        bool favoriteBool;
         private bool FilterComponents(object obj)   //Main method for filtering components
         {
             searchBool = false;
@@ -76,6 +93,7 @@ namespace Pc_parts_lister
             powerBool = false;
             countBool = false;
             capacityBool = false;
+            favoriteBool = false;
 
             if (obj == null)
                 return false;
@@ -288,7 +306,24 @@ namespace Pc_parts_lister
                 capacityBool = true;
             }
 
-            return searchBool && typeBool && manuBool && statusBool && serBool && type2Bool && modelBool && powerBool && countBool && capacityBool;
+            if (Filters.filterFavorite)
+            {
+                if (Filters.favorite == component.Favorited)
+                {
+                    favoriteBool = true;
+                }
+                else if (Filters.favorite != component.Favorited)
+                {
+                    favoriteBool = false;
+                }
+            }
+            else
+            {
+                favoriteBool = true;
+            }
+
+
+                return searchBool && typeBool && manuBool && statusBool && serBool && type2Bool && modelBool && powerBool && countBool && capacityBool && favoriteBool;
         }
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)

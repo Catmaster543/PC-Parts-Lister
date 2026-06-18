@@ -52,6 +52,11 @@
                 </Button>
                 <TextBox x:Name="CountBox" Grid.Column="3" TextChanged="Count_TextChanged" BorderBrush="#FFB3ABAB"/>
             </Grid>
+            <Button Margin="7" Width="30" Height="30" BorderThickness="0" HorizontalAlignment="Left" Click="Favorite_ButtonClick">
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" ImageSource="{Binding favoriteIconPath}"/>
+                </Button.Background>
+            </Button>
         </StackPanel>
         <StackPanel Name="Stack_Panel_R" Grid.Column="2">
             <TextBlock x:Name="TypeText2" Text="Typ:" FontWeight="SemiBold"/>

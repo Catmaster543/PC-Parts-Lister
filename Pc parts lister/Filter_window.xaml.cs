@@ -816,6 +816,22 @@ namespace Pc_parts_lister
                 }
             }
         }
+
+        private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            Filters.filterFavorite = true;
+            if (Filters.favorite)
+            {
+                Filters.favorite = false;
+            }
+            else if (!Filters.favorite)
+            {
+                Filters.favorite = true;
+            }
+                ChangeButtonBg(button, Filters.favoriteIconPath);
+        }
+
         private void Save_Filter_Click(object sender, RoutedEventArgs e)
         {
             if (TypeBox.Text == "CPU")
@@ -903,6 +919,10 @@ namespace Pc_parts_lister
             {
                 DialogResult = true;
             }
+        }
+        private void ChangeButtonBg(Button button, string path)
+        {
+            button.Background = new ImageBrush(new BitmapImage(new Uri(path)));
         }
     }
 }

@@ -162,5 +162,4 @@
             <TextBlock Text="Nic takového tu není." Name="EmptyGrid_Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
     </Grid>
-
 </Window>
