@@ -469,6 +469,10 @@ namespace Pc_parts_lister
             Filters.powerCompMode = null;
             Filters.count = 0;
             Filters.countCompMode = null;
+            Filters.capacity = 0;
+            Filters.capacityCompMode = null;
+            Filters.filterFavorite = false;
+            Filters.favorite = false;
 
             CheckComponentsViewForNull();
         }

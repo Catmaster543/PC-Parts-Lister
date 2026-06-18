@@ -821,6 +821,8 @@ namespace Pc_parts_lister
         {
             Button button = (Button)sender;
             Filters.filterFavorite = true;
+            UnFilterFavorite_Button.Visibility = Visibility.Visible;
+            Favorite_Button.BorderBrush = new SolidColorBrush(Colors.Green);
             if (Filters.favorite)
             {
                 Filters.favorite = false;
@@ -829,7 +831,16 @@ namespace Pc_parts_lister
             {
                 Filters.favorite = true;
             }
-                ChangeButtonBg(button, Filters.favoriteIconPath);
+            ChangeButtonBg(button, Filters.favoriteIconPath);
+        }
+
+        private void UnFilterFavorite_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.filterFavorite = false;
+            Filters.favorite = false;
+            Favorite_Button.BorderBrush = null;
+            UnFilterFavorite_Button.Visibility = Visibility.Collapsed;
+            ChangeButtonBg(Favorite_Button, Filters.favoriteIconPath);
         }
 
         private void Save_Filter_Click(object sender, RoutedEventArgs e)
