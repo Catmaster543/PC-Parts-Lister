@@ -111,7 +111,7 @@
             <DataGrid ItemsSource="{Binding ComponentsView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50" Name="Component_grid">
 
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn SortMemberPath="Favorited">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
