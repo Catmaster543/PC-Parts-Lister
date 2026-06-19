@@ -17,16 +17,43 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Name="Stack_Panel_L" Grid.Column="0">
-            <TextBlock x:Name="TypeText" Text="Typ:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="TypeText" Text="Typ:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterType_Click" Name="UnFilterType_Button" Width="10" Height="10" BorderThickness="0" Margin="5,0,0,0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <ComboBox x:Name="TypeBox" SelectionChanged="TypeBox_SelectionChanged" Text="Vyber, nebo napiš vlastní"/>
-
-            <TextBlock x:Name="Manufacturertext" Text="Výrobce:" FontWeight="SemiBold"/>
+            
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="Manufacturertext" Text="Výrobce:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterManufacturer_Click" Name="UnFilterManufacturer_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <ComboBox x:Name="ManufacturerBox" SelectionChanged="ManufacturerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="StatusText" Text="Stav:" FontWeight="SemiBold"/>
-            <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber"/>
-
-            <TextBlock x:Name="CountText" Text="Množství:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="StatusText" Text="Stav:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterStatus_Click" Name="UnFilterStatus_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" SelectionChanged="StatusBox_SelectionChanged"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="CountText" Text="Množství:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterCount_Click" Name="UnFilterCount_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <Grid x:Name="CountGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
@@ -62,24 +89,58 @@
                     <Button.Background>
                         <ImageBrush ImageSource="/cancel_button.png"/>
                     </Button.Background>
-
                 </Button>
             </StackPanel>
         </StackPanel>
         <StackPanel Name="Stack_Panel_R" Grid.Column="2">
-            <TextBlock x:Name="TypeText2" Text="Typ:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="TypeText2" Text="Typ:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterType2_Click" Name="UnFilterType2_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <ComboBox x:Name="TypeBox2" SelectionChanged="TypeBox2_SelectionChanged" IsEditable="False" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="SerText" Text="Série:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="SerText" Text="Série:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterSeries_Click" Name="UnFilterSeries_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <ComboBox x:Name="SerBox" SelectionChanged="SerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="SubSerText" Text="Řada:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="SubSerText" Text="Řada:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterSubSer_Click" Name="UnFilterSubSer_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <ComboBox x:Name="SubSerBox" SelectionChanged="SubSerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="ModelText" Text="Model:" FontWeight="SemiBold"/>
-            <TextBox x:Name="ModelBox"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="ModelText" Text="Model:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterModel_Click" Name="UnFilterModel_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <TextBox x:Name="ModelBox" TextChanged="ModelBox_TextChanged"/>
 
-            <TextBlock x:Name="Powertext" Text="Výkon (W):" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="Powertext" Text="Výkon (W):" FontWeight="SemiBold"/>
+                <Button Click="UnFilterPower_Click" Name="UnFilterPower_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <Grid x:Name="PowerGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>
@@ -106,7 +167,14 @@
                 <TextBox x:Name="PowerBox" Grid.Column="3" TextChanged="Power_TextChanged" BorderBrush="#FFB3ABAB"/>
             </Grid>
 
-            <TextBlock x:Name="CapacityText" Text="Velikost v GB:" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="CapacityText" Text="Velikost v GB:" FontWeight="SemiBold"/>
+                <Button Click="UnFilterCapacity_Click" Name="UnFilterCapacity_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/cancel_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
             <Grid x:Name="CapacityGrid" Height="20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20"/>

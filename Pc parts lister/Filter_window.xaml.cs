@@ -70,22 +70,54 @@ namespace Pc_parts_lister
 
             #region Loading filter values to keep the previous filters
             TypeBox.SelectedItem = filters.type;
+            if (filters.type != null && filters.type != "all")
+            {
+                UnFilterType_Button.Visibility = Visibility.Visible;
+            }
             StatusBox.SelectedItem = filters.status;
+            if (filters.status != null)
+            {
+                UnFilterStatus_Button.Visibility = Visibility.Visible;
+            }
             TypeBox2.SelectedItem = filters.type2;
-            ManufacturerBox.SelectedItem = filters.manufacturer;
+            if (filters.type2 != null)
+            {
+                UnFilterType2_Button.Visibility = Visibility.Visible;
+            }
+            ManufacturerBox.Text = filters.manufacturer;
+            if (filters.manufacturer != null)
+            {
+                UnFilterManufacturer_Button.Visibility = Visibility.Visible;
+            }
             SerBox.SelectedItem = filters.series;
+            if (filters.series != null)
+            {
+                UnFilterSeries_Button.Visibility = Visibility.Visible;
+            }
+            SubSerBox.SelectedItem = filters.subseries;
+            if (filters.subseries != null)
+            {
+                UnFilterSubSer_Button.Visibility = Visibility.Visible;
+            }
             ModelBox.Text = filters.model;
+            if (filters.model != null)
+            {
+                UnFilterModel_Button.Visibility = Visibility.Visible;
+            }
             if (filters.count != 0)
             {
                 CountBox.Text = filters.count.ToString();
+                UnFilterCount_Button.Visibility = Visibility.Visible;
             }
             if (filters.power != 0)
             {
                 PowerBox.Text = filters.power.ToString();
+                UnFilterPower_Button.Visibility = Visibility.Visible;
             }
             if (filters.capacity != 0)
             {
                 CapacityBox.Text = filters.capacity.ToString();
+                UnFilterCapacity_Button.Visibility = Visibility.Visible;
             }
 
             SetCompButtonOutline(CountGrid, filters.countCompMode);
@@ -107,6 +139,7 @@ namespace Pc_parts_lister
             Manufacturertext.Visibility = Visibility.Visible;
             ManufacturerBox.Visibility = Visibility.Visible;
 
+            UnFilterType_Button.Visibility = Visibility.Visible;
 
             #region Cpu options 
             if (type == "CPU")
@@ -321,6 +354,8 @@ namespace Pc_parts_lister
         {
             var Type2 = TypeBox2.SelectedItem?.ToString();
 
+            UnFilterType2_Button.Visibility = Visibility.Visible;
+
             #region Disk options 
             if (TypeBox.Text == "Disk")
             {
@@ -402,6 +437,8 @@ namespace Pc_parts_lister
         {
             var manufacturer = ManufacturerBox.SelectedItem?.ToString();
 
+            UnFilterManufacturer_Button.Visibility = Visibility.Visible;
+
             #region Cpu options
             if (TypeBox.Text == "CPU")
             {
@@ -454,9 +491,11 @@ namespace Pc_parts_lister
             #endregion
         }
 
-        private void SerBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
+        private void SerBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var Series = SerBox.SelectedItem?.ToString();
+
+            UnFilterSeries_Button.Visibility = Visibility.Visible;
 
             #region Cpu options
             if (TypeBox.Text == "CPU")
@@ -508,11 +547,23 @@ namespace Pc_parts_lister
             #endregion
         }
 
+        private void ModelBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            UnFilterModel_Button.Visibility = Visibility.Visible;
+        }
+
+        private void StatusBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UnFilterStatus_Button.Visibility = Visibility.Visible;
+        }
+
         #region Cpu parameters
         private void SubSerBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
             ModelText.Visibility = Visibility.Visible;
             ModelBox.Visibility = Visibility.Visible;
+
+            UnFilterSubSer_Button.Visibility = Visibility.Visible;
         }
         #endregion
 
@@ -531,7 +582,7 @@ namespace Pc_parts_lister
                 }
                 if (powerErrorInt != 0)
                 {
-                    ClearAnError(ref powerErrorInt);
+                    ClearAnError(ref powerErrorInt, true);
                 }
                 powerIsValid = true;
                 Filters.power = pwCislo;
@@ -562,6 +613,7 @@ namespace Pc_parts_lister
                 Powertext.Foreground = new SolidColorBrush(Colors.Red);
                 PowerBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
+            UnFilterPower_Button.Visibility = Visibility.Visible;
         }
         private void Power_Smaller_Click(object sender, RoutedEventArgs e)
         {
@@ -617,7 +669,7 @@ namespace Pc_parts_lister
             {
                 if (countErrorInt != 0)
                 {
-                    ClearAnError(ref countErrorInt);
+                    ClearAnError(ref countErrorInt, true);
                 }
                 countIsValid = true;
                 CountText.Foreground = new SolidColorBrush(Colors.Black);
@@ -632,11 +684,12 @@ namespace Pc_parts_lister
                 }
                 else if (countErrorInt != 0)
                 {
-                    AlterAnError(countErrorInt, $"{CountBox.Text} není platná hodnota počtu, použijte kladné číslo.");
+                    AlterAnError(countErrorInt, $"{ CountBox.Text} není platná hodnota počtu, použijte kladné číslo.");
                 }
                 CountText.Foreground = new SolidColorBrush(Colors.Red);
                 CountBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
+            UnFilterCount_Button.Visibility = Visibility.Visible;
         }
         private void Count_Smaller_Click(object sender, RoutedEventArgs e)
         {
@@ -713,6 +766,7 @@ namespace Pc_parts_lister
                 CapacityText.Foreground = new SolidColorBrush(Colors.Red);
                 CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
+            UnFilterCapacity_Button.Visibility = Visibility.Visible;
         }
         private void Capacity_Smaller_Click(object sender, RoutedEventArgs e)
         {
@@ -848,6 +902,7 @@ namespace Pc_parts_lister
             ChangeButtonBg(button, Filters.favoriteIconPath);
         }
 
+        #region Clearing specified filters reacts
         private void UnFilterFavorite_Click(object sender, RoutedEventArgs e)
         {
             Filters.filterFavorite = false;
@@ -856,7 +911,78 @@ namespace Pc_parts_lister
             UnFilterFavorite_Button.Visibility = Visibility.Collapsed;
             ChangeButtonBg(Favorite_Button, Filters.favoriteIconPath);
         }
-        
+
+        private void UnFilterType_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.type = null;
+            TypeBox.SelectedItem = null;
+            UnFilterType_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterManufacturer_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.manufacturer = null;
+            ManufacturerBox.Text = null;
+            UnFilterManufacturer_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterStatus_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.status = null;
+            StatusBox.SelectedItem = null;
+            UnFilterStatus_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterCount_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.count = 0;
+            CountBox.Text = null;
+            UnFilterCount_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterType2_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.type2 = null;
+            TypeBox2.Text = null;
+            UnFilterType2_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterSeries_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.series = null;
+            SerBox.SelectedItem = null;
+            UnFilterSeries_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterSubSer_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.subseries = null;
+            SubSerBox.SelectedItem = null;
+            UnFilterSubSer_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterModel_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.model = null;
+            ModelBox.Text = null;
+            UnFilterModel_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterPower_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.power = 0;
+            PowerBox.Text = null;
+            UnFilterPower_Button.Visibility = Visibility.Collapsed;
+        }
+
+        private void UnFilterCapacity_Click(object sender, RoutedEventArgs e)
+        {
+            Filters.capacity = 0;
+            CapacityBox.Text = null;
+            UnFilterCapacity_Button.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
         private void SetCompButtonOutline(Grid grid, string sourceCompareMode)
         {
             for (int i = 0; i < grid.Children.Count; i++)
@@ -917,6 +1043,11 @@ namespace Pc_parts_lister
             if (SerBox.Text != null && SerBox.Text != "Vyber, nebo napiš vlastní")
             {
                 Filters.series = SerBox.Text;
+            }
+
+            if (SubSerBox.Text != null && SubSerBox.Text != "Vyber, nebo napiš vlastní")
+            {
+                Filters.subseries = SubSerBox.Text;
             }
 
             if (TypeBox2.SelectedItem != null)

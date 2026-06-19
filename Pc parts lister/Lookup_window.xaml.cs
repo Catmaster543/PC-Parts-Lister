@@ -42,6 +42,7 @@ namespace Pc_parts_lister
             public string manufacturer {  get; set; }
             public string status { get; set; }
             public string series { get; set; }
+            public string subseries { get; set; }
             public string type2 { get; set; }
             public string model { get; set; }
             public string powerCompMode { get; set; }
@@ -81,6 +82,7 @@ namespace Pc_parts_lister
         bool countBool;
         bool capacityBool;
         bool favoriteBool;
+        bool subSerBool;
         private bool FilterComponents(object obj)   //Main method for filtering components
         {
             searchBool = false;
@@ -94,6 +96,7 @@ namespace Pc_parts_lister
             countBool = false;
             capacityBool = false;
             favoriteBool = false;
+            subSerBool = false;
 
             if (obj == null)
                 return false;
@@ -152,6 +155,11 @@ namespace Pc_parts_lister
             if (Filters.series == component.Series || Filters.series == null)
             {
                 serBool = true;
+            }
+
+            if (Filters.subseries == component.SubSeries || Filters.subseries == null)
+            {
+                subSerBool = true;
             }
 
             if (Filters.type2 == component.SubType || Filters.type2 == null)
@@ -323,7 +331,7 @@ namespace Pc_parts_lister
             }
 
 
-                return searchBool && typeBool && manuBool && statusBool && serBool && type2Bool && modelBool && powerBool && countBool && capacityBool && favoriteBool;
+                return searchBool && typeBool && manuBool && statusBool && serBool && subSerBool && type2Bool && modelBool && powerBool && countBool && capacityBool && favoriteBool;
         }
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)
