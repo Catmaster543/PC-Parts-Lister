@@ -45,6 +45,7 @@ namespace Pc_parts_lister
             TypeBox2.Visibility = Visibility.Collapsed;
             #endregion
 
+            #region Setting default values to main boxes
             TypeBox.ItemsSource = new[]
             {
                 "CPU",
@@ -65,6 +66,37 @@ namespace Pc_parts_lister
                 "Nefunkční",
                 "Opravený"
             };
+            #endregion
+
+            #region Loading filter values to keep the previous filters
+            TypeBox.SelectedItem = filters.type;
+            StatusBox.SelectedItem = filters.status;
+            TypeBox2.SelectedItem = filters.type2;
+            ManufacturerBox.SelectedItem = filters.manufacturer;
+            SerBox.SelectedItem = filters.series;
+            ModelBox.Text = filters.model;
+            if (filters.count != 0)
+            {
+                CountBox.Text = filters.count.ToString();
+            }
+            if (filters.power != 0)
+            {
+                PowerBox.Text = filters.power.ToString();
+            }
+            if (filters.capacity != 0)
+            {
+                CapacityBox.Text = filters.capacity.ToString();
+            }
+
+            SetCompButtonOutline(CountGrid, filters.countCompMode);
+            SetCompButtonOutline(PowerGrid, filters.powerCompMode);
+            SetCompButtonOutline(CapacityGrid, filters.capacityCompMode);
+
+            if (filters.filterFavorite)
+            {
+                UnFilterFavorite_Button.Visibility = Visibility.Visible;
+            }
+            #endregion
         }
 
         public Component Component { get; private set; }
@@ -538,9 +570,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref powerCompErrorInt);
             }
-            SmallerPowerComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            BiggerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            EqualPowerComp_Button.BorderBrush= new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(PowerGrid, Filters.powerCompMode);
         }
         private void Power_Bigger_Click(object sender, RoutedEventArgs e)
         {
@@ -549,9 +579,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref powerCompErrorInt);
             }
-            BiggerPowerComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            SmallerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            EqualPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(PowerGrid, Filters.powerCompMode);
         }
         private void Power_Same_Click(object sender, RoutedEventArgs e)
         {
@@ -560,9 +588,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref powerCompErrorInt);
             }
-            EqualPowerComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            BiggerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            SmallerPowerComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(PowerGrid, Filters.powerCompMode);
         }
         #endregion
 
@@ -619,9 +645,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref countCompErrorInt);
             }
-            SmallerCountComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            BiggerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            EqualCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(CountGrid, Filters.countCompMode);
         }
         private void Count_Bigger_Click(object sender, RoutedEventArgs e)
         {
@@ -630,9 +654,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref countCompErrorInt);
             }
-            BiggerCountComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            SmallerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            EqualCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(CountGrid, Filters.countCompMode);
         }
         private void Count_Same_Click(object sender, RoutedEventArgs e)
         {
@@ -641,9 +663,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref countCompErrorInt);
             }
-            EqualCountComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            BiggerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            SmallerCountComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(CountGrid, Filters.countCompMode);
         }
         #endregion
 
@@ -701,9 +721,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref capacityCompErrorInt);
             }
-            SmallerCapacityComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            BiggerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            EqualCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(CapacityGrid, Filters.capacityCompMode);
         }
         private void Capacity_Bigger_Click(object sender, RoutedEventArgs e)
         {
@@ -712,9 +730,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref capacityCompErrorInt);
             }
-            BiggerCapacityComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            SmallerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            EqualCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(CapacityGrid, Filters.capacityCompMode);
         }
         private void Capacity_Same_Click(object sender, RoutedEventArgs e)
         {
@@ -723,9 +739,7 @@ namespace Pc_parts_lister
             {
                 ClearAnError(ref capacityCompErrorInt);
             }
-            EqualCapacityComp_Button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
-            BiggerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
-            SmallerCapacityComp_Button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+            SetCompButtonOutline(CapacityGrid, Filters.capacityCompMode);
         }
         #endregion
 
@@ -842,13 +856,44 @@ namespace Pc_parts_lister
             UnFilterFavorite_Button.Visibility = Visibility.Collapsed;
             ChangeButtonBg(Favorite_Button, Filters.favoriteIconPath);
         }
+        
+        private void SetCompButtonOutline(Grid grid, string sourceCompareMode)
+        {
+            for (int i = 0; i < grid.Children.Count; i++)
+            {
+                if (grid.Children[i] is Button)
+                {
+                    Button button = grid.Children[i] as Button;
 
+                    if (button.Name.Contains("Smaller") && sourceCompareMode == "<")
+                    {
+                        button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+                    }
+                    else if (button.Name.Contains("Bigger") && sourceCompareMode == ">")
+                    {
+                        button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+                    }
+                    else if (button.Name.Contains("Equal") && sourceCompareMode == "=")
+                    {
+                        button.BorderBrush = new SolidColorBrush(Colors.GreenYellow);
+                    }
+                    else
+                    {
+                        button.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF707070"));
+                    }
+                }
+            }
+        }
+        
         private void Save_Filter_Click(object sender, RoutedEventArgs e)
         {
             if (TypeBox.Text == "CPU")
             {
                 Filters.type = TypeBox.SelectedItem.ToString();
-                Filters.manufacturer = ManufacturerBox.SelectedItem.ToString();
+                if (ManufacturerBox.SelectedItem != null)
+                {
+                    Filters.manufacturer = ManufacturerBox.SelectedItem.ToString();
+                }
             }
             else if (TypeBox.SelectedItem == null)
             {
@@ -884,17 +929,17 @@ namespace Pc_parts_lister
                 Filters.model = ModelBox.Text;
             }
 
-            if (Filters.powerCompMode == null)
+            if (Filters.powerCompMode == null && PowerBox.Text != "")
             {
                 Filters.powerCompMode = "=";
             }
 
-            if (Filters.countCompMode == null)
+            if (Filters.countCompMode == null && CountBox.Text != "")
             {
                 Filters.countCompMode = "=";
             }
 
-            if (Filters.capacityCompMode == null)
+            if (Filters.capacityCompMode == null &&  CapacityBox.Text != "")
             {
                 Filters.capacityCompMode = "=";
             }
@@ -931,6 +976,7 @@ namespace Pc_parts_lister
                 DialogResult = true;
             }
         }
+
         private void ChangeButtonBg(Button button, string path)
         {
             button.Background = new ImageBrush(new BitmapImage(new Uri(path)));
