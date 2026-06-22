@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Edit Window" Height="600" Width="800">
+        Title="Edit Window" Height="800" Width="800">
     
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*" />
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.7*"/>
         </Grid.RowDefinitions>
@@ -106,12 +107,16 @@
             <Image Source="{Binding FullImagePath}" Stretch="Uniform" x:Name="Main_pic" MaxHeight="250"/>
             <Button Content="Vybrat obrázek" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold"/>
         </StackPanel>
+
+        <StackPanel Margin="10" Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBox Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
+        </StackPanel>
         
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="2">
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="3">
             <Button Content="Uložit" Name="Save_Button" Margin="10" Click="Save_Click" FontWeight="Bold" FontSize="25" Background="SpringGreen"/>
         </StackPanel>
 
-        <StackPanel x:Name="ErrorPanel" Grid.Row="3" Grid.ColumnSpan="2">
+        <StackPanel x:Name="ErrorPanel" Grid.Row="4" Grid.ColumnSpan="2">
             
         </StackPanel>
     </Grid>
