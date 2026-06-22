@@ -20,12 +20,14 @@ namespace Pc_parts_lister
 {
     public partial class Edit_window : Window
     {
-        public Component Komponenta { get; }
+        public Component Komponenta { get; set; }
         public Edit_window(Component komponenta)
         {
             InitializeComponent();
             Komponenta = komponenta;
             DataContext = Komponenta;
+
+            ReloadAllImages();
 
             if (komponenta.Status != null)
             {
@@ -354,6 +356,54 @@ namespace Pc_parts_lister
                 else if (ErrorPanel.Children[i] == null)
                 {
                     currentErrorId = i;
+                }
+            }
+        }
+
+        void AddImage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+
+            if (dialog.ShowDialog() == true)
+            {
+                string imagesFolder = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "Images");
+
+                Directory.CreateDirectory(imagesFolder);
+
+                string fileName = Path.GetFileName(dialog.FileName);
+
+                // Aby se nepřepisovaly soubory se stejným názvem
+                string uniqueName = Guid.NewGuid().ToString() + Path.GetExtension(fileName);
+
+                string newPath = Path.Combine(imagesFolder, uniqueName);
+
+                File.Copy(dialog.FileName, newPath, true);
+
+                // Uložíme RELATIVNÍ cestu
+                Komponenta.imagePaths.Add(Path.Combine("Images", uniqueName));
+            }
+            ReloadAllImages();
+        }
+
+        void ReloadAllImages()
+        {
+            if (Komponenta.imagePaths != null)
+            {
+                for (int i = 0; i < Komponenta.imagePaths.Count; i++)
+                {
+                    if (Komponenta.imagePaths[i] != null)
+                    {
+                        Image image = new Image();
+                        string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,Komponenta.imagePaths[i]);
+                        image.Source = new BitmapImage(new Uri(fullPath, UriKind.Absolute));
+                        image.MaxHeight = 60;
+                        image.MaxWidth = 60;
+                        image.Stretch = Stretch.UniformToFill;
+                        ImagesPanel.Children.Add(image);
+                    }
                 }
             }
         }

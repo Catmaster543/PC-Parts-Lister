@@ -109,6 +109,7 @@ namespace Pc_parts_lister
                 }
             }
         }
+        public List<string> imagePaths { get; set; } = new List<string>(1);
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }

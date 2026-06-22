@@ -103,9 +103,14 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Margin="10" Grid.Column="0" Grid.Row="1">
+        <StackPanel Name="ImagesPanel" Margin="10" Grid.Column="0" Grid.Row="1" CanVerticallyScroll="True">
             <Image Source="{Binding FullImagePath}" Stretch="Uniform" x:Name="Main_pic" MaxHeight="250"/>
             <Button Content="Vybrat obrázek" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold"/>
+            <Button Click="AddImage_Click" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button.Background>
+                    <ImageBrush ImageSource="/add_button.png"/>
+                </Button.Background>
+            </Button>
         </StackPanel>
 
         <StackPanel Margin="10" Grid.Row="2" Grid.ColumnSpan="2">
