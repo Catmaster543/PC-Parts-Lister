@@ -937,6 +937,8 @@ namespace Pc_parts_lister
         {
             Filters.count = 0;
             CountBox.Text = null;
+            Filters.countCompMode = null;
+            SetCompButtonOutline(CountGrid, Filters.countCompMode);
             UnFilterCount_Button.Visibility = Visibility.Collapsed;
         }
 
@@ -972,6 +974,8 @@ namespace Pc_parts_lister
         {
             Filters.power = 0;
             PowerBox.Text = null;
+            Filters.powerCompMode = null;
+            SetCompButtonOutline(PowerGrid, Filters.powerCompMode);
             UnFilterPower_Button.Visibility = Visibility.Collapsed;
         }
 
@@ -979,6 +983,8 @@ namespace Pc_parts_lister
         {
             Filters.capacity = 0;
             CapacityBox.Text = null;
+            Filters.capacityCompMode = null;
+            SetCompButtonOutline(CapacityGrid, Filters.capacityCompMode);
             UnFilterCapacity_Button.Visibility = Visibility.Collapsed;
         }
         #endregion

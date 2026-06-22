@@ -330,8 +330,7 @@ namespace Pc_parts_lister
                 favoriteBool = true;
             }
 
-
-                return searchBool && typeBool && manuBool && statusBool && serBool && subSerBool && type2Bool && modelBool && powerBool && countBool && capacityBool && favoriteBool;
+            return searchBool && typeBool && manuBool && statusBool && serBool && subSerBool && type2Bool && modelBool && powerBool && countBool && capacityBool && favoriteBool;
         }
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)
