@@ -39,6 +39,11 @@ namespace Pc_parts_lister
                 Type_Box.SelectedItem = komponenta.Type;
             }
 
+            if (komponenta.FullImagePath  != null)
+            {
+                EditMainPic_Button.Visibility = Visibility.Visible;
+            }
+
             Type_Box.ItemsSource = new[]
             {
                 "CPU",
@@ -132,14 +137,22 @@ namespace Pc_parts_lister
 
         private void SelectImage_Click(object sender, RoutedEventArgs e)
         {
+            EditMainPic();
+        }
+
+        private void EditMainPic_Click(object sender, RoutedEventArgs e)
+        {
+            EditMainPic();
+        }
+
+        void EditMainPic()
+        {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
 
             if (dialog.ShowDialog() == true)
             {
-                string imagesFolder = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    "Images");
+                string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
 
                 Directory.CreateDirectory(imagesFolder);
 
@@ -155,6 +168,7 @@ namespace Pc_parts_lister
                 // Uložíme RELATIVNÍ cestu
                 Komponenta.ImagePath = Path.Combine("Images", uniqueName);
             }
+            Main_pic.Source = new BitmapImage(new Uri(Komponenta.FullImagePath, UriKind.Absolute));
         }
 
         #region Cpu parameters
@@ -390,22 +404,108 @@ namespace Pc_parts_lister
 
         void ReloadAllImages()
         {
+            for (int i = 0; i < ImagesPanel.Children.Count; i++)
+            {
+                var imagesToRemove = ImagesPanel.Children.OfType<Grid>().ToList();
+                foreach (Grid grid in imagesToRemove)
+                {
+                    ImagesPanel.Children.Remove(grid);
+                }
+                }
             if (Komponenta.imagePaths != null)
             {
                 for (int i = 0; i < Komponenta.imagePaths.Count; i++)
                 {
-                    if (Komponenta.imagePaths[i] != null)
+                    if (Komponenta.imagePaths[i] != null && File.Exists(Komponenta.imagePaths[i]))
                     {
+                        ConstructAnImageFrame(Komponenta.imagePaths[i]);
+                        /*
                         Image image = new Image();
                         string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,Komponenta.imagePaths[i]);
                         image.Source = new BitmapImage(new Uri(fullPath, UriKind.Absolute));
                         image.MaxHeight = 60;
                         image.MaxWidth = 60;
                         image.Stretch = Stretch.UniformToFill;
-                        ImagesPanel.Children.Add(image);
+                        ImagesPanel.Children.Insert(ImagesPanel.Children.Count -1, image);
+                        */
+                    }
+                    else if (!File.Exists(Komponenta.imagePaths[i]))
+                    {
+                        Komponenta.imagePaths.Remove(Komponenta.imagePaths[i]);
                     }
                 }
             }
+        }
+
+        void ConstructAnImageFrame(string imagePath)
+        {
+            Grid grid = new Grid();
+            Button deleteButton = new Button();
+            Button imageButton = new Button();
+
+            ImagesPanel.Children.Insert(ImagesPanel.Children.Count -1, grid);
+            grid.Margin = new Thickness(7);
+            grid.Width = 60;
+            grid.Height = 60;
+
+            ImageBrush imageBrush = new ImageBrush(LoadImage(imagePath)); 
+            imageBrush.Stretch = Stretch.Uniform;
+            imageButton.Background = imageBrush;
+            imageButton.Width = 60;
+            imageButton.Height = 60;
+            imageButton.Tag = imagePath;
+            imageButton.Click += OpenImage_Click;
+            grid.Children.Add(imageButton);
+
+            deleteButton.Margin = new Thickness(1);
+            deleteButton.BorderThickness = new Thickness(0);
+            deleteButton.Width = 10;
+            deleteButton.Height = 10;
+            deleteButton.HorizontalAlignment = HorizontalAlignment.Left;
+            deleteButton.VerticalAlignment = VerticalAlignment.Top;
+            deleteButton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/cancel_button.png")));
+            deleteButton.Click += DeleteImage_Click;
+            grid.Children.Add(deleteButton);
+        }
+
+        private void DeleteImage_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            Grid grid = button.Parent as Grid;
+            Button imageButton = (Button)grid.Children[0];
+            foreach (string path in Komponenta.imagePaths)
+            {
+                if (path == imageButton.Tag.ToString())
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                    Komponenta.imagePaths.Remove(path);
+                    break;
+                }
+            }
+            ImagesPanel.Children.Remove(grid);
+        }
+
+        private void OpenImage_Click(Object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            
+            Photo_View Photo_Page = new Photo_View(button.Tag.ToString());
+            Photo_Page.ShowDialog();
+        }
+
+        BitmapImage LoadImage(string path)
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(path, UriKind.Relative);
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            return bitmap;
         }
     }
 }
