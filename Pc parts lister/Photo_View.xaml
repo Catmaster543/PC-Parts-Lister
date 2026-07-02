@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="Photo_View" Height="450" Width="800">
     <Grid>
-        <Image Name="mainImage" Source="/add_button.png" MaxHeight="450" MaxWidth="800"/>
+        <Button Name="Previous_Image_Button" Click="PreviousImage_Click" Width="40" Height="100" Margin="7" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Button.Background>
+                <ImageBrush ImageSource="/previous_image_button.png"/>
+            </Button.Background>
+        </Button>
+        <Button Name="Next_Image_Button" Click="NextImage_Click" Width="40" Height="100" Margin="7" BorderThickness="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <Button.Background>
+                <ImageBrush ImageSource="/next_image_button.png"/>
+            </Button.Background>
+        </Button>
+        <Image Name="mainImage" Source="/cancel_button.png" MaxHeight="450" MaxWidth="800"/>
     </Grid>
 </Window>

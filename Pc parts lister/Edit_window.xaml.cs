@@ -27,6 +27,14 @@ namespace Pc_parts_lister
             Komponenta = komponenta;
             DataContext = Komponenta;
 
+            MainPicButton.Click += OpenImage_Click;
+
+            if (komponenta.FullImagePath != null || komponenta.FullImagePath != "")
+            {
+                SelectMainPic_Button.Visibility = Visibility.Collapsed;
+                MainPicButton.Height = 250;
+            }
+
             ReloadAllImages();
 
             if (komponenta.Status != null)
@@ -150,6 +158,8 @@ namespace Pc_parts_lister
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
 
+            File.Delete(Komponenta.FullImagePath);
+
             if (dialog.ShowDialog() == true)
             {
                 string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
@@ -168,7 +178,18 @@ namespace Pc_parts_lister
                 // Uložíme RELATIVNÍ cestu
                 Komponenta.ImagePath = Path.Combine("Images", uniqueName);
             }
-            Main_pic.Source = new BitmapImage(new Uri(Komponenta.FullImagePath, UriKind.Absolute));
+
+            if (File.Exists(Komponenta.FullImagePath))
+            {
+                SelectMainPic_Button.Visibility = Visibility.Collapsed;
+                MainPicButton.Height = 250;
+                MainPicButton.Tag = Komponenta.FullImagePath;
+                Main_Pic.Source = LoadImage(Komponenta.FullImagePath);
+            }
+            else
+            {
+                return;
+            }
         }
 
         #region Cpu parameters
@@ -411,7 +432,7 @@ namespace Pc_parts_lister
                 {
                     ImagesPanel.Children.Remove(grid);
                 }
-                }
+            }
             if (Komponenta.imagePaths != null)
             {
                 for (int i = 0; i < Komponenta.imagePaths.Count; i++)
@@ -419,15 +440,6 @@ namespace Pc_parts_lister
                     if (Komponenta.imagePaths[i] != null && File.Exists(Komponenta.imagePaths[i]))
                     {
                         ConstructAnImageFrame(Komponenta.imagePaths[i]);
-                        /*
-                        Image image = new Image();
-                        string fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,Komponenta.imagePaths[i]);
-                        image.Source = new BitmapImage(new Uri(fullPath, UriKind.Absolute));
-                        image.MaxHeight = 60;
-                        image.MaxWidth = 60;
-                        image.Stretch = Stretch.UniformToFill;
-                        ImagesPanel.Children.Insert(ImagesPanel.Children.Count -1, image);
-                        */
                     }
                     else if (!File.Exists(Komponenta.imagePaths[i]))
                     {
@@ -448,11 +460,19 @@ namespace Pc_parts_lister
             grid.Width = 60;
             grid.Height = 60;
 
-            ImageBrush imageBrush = new ImageBrush(LoadImage(imagePath)); 
-            imageBrush.Stretch = Stretch.Uniform;
-            imageButton.Background = imageBrush;
+            if (File.Exists(imagePath))
+            {
+                ImageBrush imageBrush = new ImageBrush(LoadImage(imagePath));
+                imageBrush.Stretch = Stretch.Uniform;
+                imageButton.Background = imageBrush;
+            }
+            else if (!File.Exists(imagePath))
+            {
+                return;
+            }
             imageButton.Width = 60;
             imageButton.Height = 60;
+            imageButton.BorderThickness = new Thickness(0);
             imageButton.Tag = imagePath;
             imageButton.Click += OpenImage_Click;
             grid.Children.Add(imageButton);
@@ -492,7 +512,7 @@ namespace Pc_parts_lister
         {
             Button button = (Button)sender;
             
-            Photo_View Photo_Page = new Photo_View(button.Tag.ToString());
+            Photo_View Photo_Page = new Photo_View(button.Tag.ToString(), Komponenta);
             Photo_Page.ShowDialog();
         }
 

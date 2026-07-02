@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Detail Window" Height="500" Width="600" ResizeMode="NoResize">
+        Title="Detail Window" Height="600" Width="600" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -13,7 +13,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="0.9*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Gray" Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="0,0,0,2">
@@ -27,8 +28,12 @@
             </StackPanel>
         </Border>
         <StackPanel Grid.Column="0" Grid.Row="1">
-            <Image Source="{Binding FullImagePath}" Stretch="Uniform" Margin="10"/>
+            
+            <Button x:Name="MainPicButton" Height="270" Tag="{Binding FullImagePath}" BorderThickness="0" Background="{x:Null}">
+                <Image Name="Main_Pic" Source="{Binding FullImagePath}" Stretch="Uniform"/>
+            </Button>
         </StackPanel>
+        <TextBlock Name="Null_Main_Pic_TextBlock" Text="Komponenta nemá fotku." HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="23"/>
 
         <StackPanel Margin="10" Grid.Column="1" Grid.Row="1">
 
@@ -52,7 +57,13 @@
 
             <TextBlock Text="{Binding Status, StringFormat=Stav: {0}}" x:Name="StatusBox" FontSize="20" FontWeight="Bold"/>
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="5">
+        <!-- Původ z Edit window! -->
+        <ScrollViewer Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">
+            <StackPanel Name="ImagesPanel" Margin="7" CanVerticallyScroll="False" Orientation="Horizontal">
+                <TextBlock Name="Null_Photos_TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Text="Součástka zatím nemá fotky." FontWeight="Bold"/>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="5">
             <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Width="auto" Height="auto"/>
         </StackPanel>
     </Grid>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -26,6 +27,16 @@ namespace Pc_parts_lister
 
             Komponenta = komponenta;
             DataContext = Komponenta;
+
+            if (komponenta.imagePaths.Count > 0)
+            {
+                Null_Photos_TextBlock.Visibility = Visibility.Collapsed;
+            }
+
+            if (komponenta.FullImagePath != null)
+            {
+                Null_Main_Pic_TextBlock.Visibility = Visibility.Collapsed;
+            }
 
             #region Hiding
             PowerBox.Visibility = Visibility.Collapsed;
@@ -67,8 +78,77 @@ namespace Pc_parts_lister
                 SerBox.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
             }
+
+            MainPicButton.Click += OpenImage_Click;
+
+            if (Komponenta.imagePaths != null)
+            {
+                for (int i = 0; i < Komponenta.imagePaths.Count; i++)
+                {
+                    if (Komponenta.imagePaths[i] != null && File.Exists(Komponenta.imagePaths[i]))
+                    {
+                        ConstructAnImageFrame(Komponenta.imagePaths[i]);
+                    }
+                    else if (!File.Exists(Komponenta.imagePaths[i]))
+                    {
+                        Komponenta.imagePaths.Remove(Komponenta.imagePaths[i]);
+                    }
+                }
+            }
         }
-        
+
+
+
+        // Původ z Edit window
+        void ConstructAnImageFrame(string imagePath)
+        {
+            Grid grid = new Grid();
+            Button deleteButton = new Button();
+            Button imageButton = new Button();
+
+            ImagesPanel.Children.Insert(ImagesPanel.Children.Count - 1, grid);
+            grid.Margin = new Thickness(7);
+            grid.Width = 60;
+            grid.Height = 60;
+
+            if (File.Exists(imagePath))
+            {
+                ImageBrush imageBrush = new ImageBrush(LoadImage(imagePath));
+                imageBrush.Stretch = Stretch.Uniform;
+                imageButton.Background = imageBrush;
+            }
+            else if (!File.Exists(imagePath))
+            {
+                return;
+            }
+            imageButton.Width = 60;
+            imageButton.Height = 60;
+            imageButton.BorderThickness = new Thickness(0);
+            imageButton.Tag = imagePath;
+            imageButton.Click += OpenImage_Click;
+            grid.Children.Add(imageButton);
+        }
+
+        private void OpenImage_Click(Object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+
+            Photo_View Photo_Page = new Photo_View(button.Tag.ToString(), Komponenta);
+            Photo_Page.ShowDialog();
+        }
+
+        BitmapImage LoadImage(string path)
+        {
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(path, UriKind.Relative);
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            return bitmap;
+        }
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();

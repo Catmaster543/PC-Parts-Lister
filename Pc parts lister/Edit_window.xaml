@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Edit Window" Height="800" Width="800">
+        Title="Edit Window" Height="900" Width="800">
     
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="3*" />
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.9*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.7*"/>
         </Grid.RowDefinitions>
@@ -104,19 +104,28 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Name="MainImagePanel" Margin="10" Grid.Column="0" Grid.Row="1">
-            <Image Source="{Binding FullImagePath}" Stretch="Uniform" x:Name="Main_pic" MaxHeight="250"/>
-            <Button Content="Vybrat obrázek" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold"/>
-        </StackPanel>
-        <Button Name="EditMainPic_Button" Content="Upravit" Click="EditMainPic_Click" Grid.Column="0" Grid.Row="1" Margin="7" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="0" FontSize="20" FontWeight="Bold" Visibility="Collapsed"/>
-
-
-        <StackPanel Name="ImagesPanel" Margin="10" Grid.Column="0" Grid.Row="2" CanVerticallyScroll="True" CanHorizontallyScroll="True" Orientation="Horizontal">
-            <Button Click="AddImage_Click" Width="60" Height="60" Margin="7,0,0,0">
-                <Button.Background>
-                    <ImageBrush ImageSource="/add_button.png"/>
-                </Button.Background>
+            <Button x:Name="MainPicButton" Height="270" Tag="{Binding FullImagePath}" BorderThickness="0" Background="{x:Null}">
+                <Image Name="Main_Pic" Source="{Binding FullImagePath}" Stretch="Uniform"/>
             </Button>
+            <Button Name="SelectMainPic_Button" Content="Vybrat obrázek" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold" Height="29"/>
         </StackPanel>
+        <Button Name="EditMainPic_Button" Click="EditMainPic_Click" Grid.Column="0" Grid.Row="1" Margin="7" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="0" FontSize="20" FontWeight="Bold" Visibility="Collapsed">
+            <Button.Background>
+                <ImageBrush ImageSource="/edit_button.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+
+
+        <ScrollViewer Grid.Column="0" Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">
+            <StackPanel Name="ImagesPanel" Margin="7" CanVerticallyScroll="False" Orientation="Horizontal">
+                <Button Click="AddImage_Click" Width="60" Height="60" Margin="7,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/add_button.png"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        
 
         <StackPanel Margin="10" Grid.Row="3" Grid.ColumnSpan="2">
             <TextBox Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
