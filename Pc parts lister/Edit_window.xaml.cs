@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -140,57 +141,11 @@ namespace Pc_parts_lister
             {
                 Komponenta.Status = StatusBox.SelectedItem.ToString();
             }
+            Komponenta.Description = ConvertFlowDocumentToString(Description_RTextBox.Document);
             Close();
         }
 
-        private void SelectImage_Click(object sender, RoutedEventArgs e)
-        {
-            EditMainPic();
-        }
-
-        private void EditMainPic_Click(object sender, RoutedEventArgs e)
-        {
-            EditMainPic();
-        }
-
-        void EditMainPic()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
-
-            File.Delete(Komponenta.FullImagePath);
-
-            if (dialog.ShowDialog() == true)
-            {
-                string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
-
-                Directory.CreateDirectory(imagesFolder);
-
-                string fileName = Path.GetFileName(dialog.FileName);
-
-                // Aby se nepřepisovaly soubory se stejným názvem
-                string uniqueName = Guid.NewGuid().ToString() + Path.GetExtension(fileName);
-
-                string newPath = Path.Combine(imagesFolder, uniqueName);
-
-                File.Copy(dialog.FileName, newPath, true);
-
-                // Uložíme RELATIVNÍ cestu
-                Komponenta.ImagePath = Path.Combine("Images", uniqueName);
-            }
-
-            if (File.Exists(Komponenta.FullImagePath))
-            {
-                SelectMainPic_Button.Visibility = Visibility.Collapsed;
-                MainPicButton.Height = 250;
-                MainPicButton.Tag = Komponenta.FullImagePath;
-                Main_Pic.Source = LoadImage(Komponenta.FullImagePath);
-            }
-            else
-            {
-                return;
-            }
-        }
+        int currentErrorId = 0;
 
         #region Cpu parameters
         private void SubSerBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
@@ -328,7 +283,56 @@ namespace Pc_parts_lister
         }
         #endregion
 
-        int currentErrorId = 0;
+        #region Picture Methods
+        private void SelectImage_Click(object sender, RoutedEventArgs e)
+        {
+            EditMainPic();
+        }
+
+        private void EditMainPic_Click(object sender, RoutedEventArgs e)
+        {
+            EditMainPic();
+        }
+
+        void EditMainPic()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+
+            File.Delete(Komponenta.FullImagePath);
+
+            if (dialog.ShowDialog() == true)
+            {
+                string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+
+                Directory.CreateDirectory(imagesFolder);
+
+                string fileName = Path.GetFileName(dialog.FileName);
+
+                // Aby se nepřepisovaly soubory se stejným názvem
+                string uniqueName = Guid.NewGuid().ToString() + Path.GetExtension(fileName);
+
+                string newPath = Path.Combine(imagesFolder, uniqueName);
+
+                File.Copy(dialog.FileName, newPath, true);
+
+                // Uložíme RELATIVNÍ cestu
+                Komponenta.ImagePath = Path.Combine("Images", uniqueName);
+            }
+
+            if (File.Exists(Komponenta.FullImagePath))
+            {
+                SelectMainPic_Button.Visibility = Visibility.Collapsed;
+                MainPicButton.Height = 250;
+                MainPicButton.Tag = Komponenta.FullImagePath;
+                Main_Pic.Source = LoadImage(Komponenta.FullImagePath);
+            }
+            else
+            {
+                return;
+            }
+        }
+        
         int WriteAnError(string message, Color color)
         {
             int tempErrorId = currentErrorId;
@@ -527,5 +531,95 @@ namespace Pc_parts_lister
 
             return bitmap;
         }
+        #endregion
+
+        #region MarkDown Editor
+
+        bool triggered = false;
+        private void DescriptionRTextBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+
+
+            /*
+            FlowDocument flowDocument = Description_RTextBox.Document;
+            if (triggered)
+            {
+                triggered = false;
+                return;
+            }
+            else if (!triggered)
+            {
+                foreach (Block block in flowDocument.Blocks)
+                {
+                    if (block is Paragraph paragraph)
+                    {
+                        foreach (Inline inline in paragraph.Inlines)
+                        {
+                            if (inline is Run run)
+                            {
+                                //int starInRowCount;
+                                bool italicYet = false;
+                                string italicText = "";
+                                for (int i = 0; i < run.Text.Length; i++)
+                                {
+                                    if (run.Text[i] == '*')
+                                    {
+                                        if (!italicYet)
+                                        {
+                                            italicYet = true;
+                                        }
+                                        else if (italicYet)
+                                        {
+                                            Italic italic = new Italic();
+                                            italic.Inlines.Add(italicText);
+                                            paragraph.Inlines.Add(italic);
+                                            triggered = true;
+                                            break;
+                                        }
+                                    }
+                                    else if (run.Text[i] != '*' && italicYet)
+                                    {
+                                        italicText += run.Text[i];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            */
+        }
+
+        private string ConvertFlowDocumentToString(FlowDocument flowDocument)
+        {
+            string resultString = "";
+            foreach (Block block in flowDocument.Blocks)
+            {
+                if (block is Paragraph paragraph)
+                {
+                    foreach (Inline inline in paragraph.Inlines)
+                    {
+                        
+                    }
+                }
+            }
+
+            return resultString;
+        }
+
+        private string SerializeInline(Inline inline)
+        {
+            if (inline is Run run)
+            {
+                return run.Text;
+            }
+            else if (inline is Bold bold)
+            {
+                return "**" + SerializeInline(inline) + "**";
+            }
+            else return null;
+        }
+
+        #endregion
     }
 }

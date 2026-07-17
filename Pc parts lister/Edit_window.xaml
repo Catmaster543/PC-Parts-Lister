@@ -129,6 +129,7 @@
 
         <StackPanel Margin="10" Grid.Row="3" Grid.ColumnSpan="2">
             <TextBox Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
+            <RichTextBox Name="Description_RTextBox" TextChanged="DescriptionRTextBox_TextChanged"/>
         </StackPanel>
         
         <StackPanel Grid.ColumnSpan="2" Grid.Row="4">

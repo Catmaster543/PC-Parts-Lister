@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Pc_parts_lister;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -13,6 +15,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 
 namespace Pc_parts_lister
@@ -27,6 +30,16 @@ namespace Pc_parts_lister
 
             Komponenta = komponenta;
             DataContext = Komponenta;
+
+            MarkDownRenderer markDownRenderer = new MarkDownRenderer();
+
+
+            string testString = @"ahoj, jsem testovaci string pripraven na 
+*nekolik*
+
+casto **prazdnych**
+# radku.";
+            Description_FlowDocument.Document = markDownRenderer.Render(testString);
 
             if (komponenta.imagePaths.Count > 0)
             {
@@ -95,6 +108,13 @@ namespace Pc_parts_lister
                     }
                 }
             }
+            /* FlowDoc testground
+            FlowDocument document = new FlowDocument();
+            Paragraph paragraph = new Paragraph();
+            paragraph.Inlines.Add(new Run("Hello stupid FlowDoctor"));
+            document.Blocks.Add(paragraph);
+            Description_FlowDocument.Document = document;
+            */
         }
 
 
@@ -154,4 +174,192 @@ namespace Pc_parts_lister
             Close();
         }
     }
+
+
+
+    public class MarkDownRenderer
+    {
+        public Component Komponenta { get; }
+
+        public FlowDocument Render(string markdown)
+        {
+            FlowDocument flowDocument = new FlowDocument();
+            string[] lines = BreakDownStringToLines(markdown);
+            Paragraph[] paragraphs = InspectLines(lines);
+            foreach (Paragraph paragraph in paragraphs)
+            {
+                flowDocument.Blocks.Add(paragraph);
+            }
+            return flowDocument;
+        }
+
+        public string[] BreakDownStringToLines(string text)
+        {
+            string[] lines = text.Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+            return lines;
+        }
+
+        public Paragraph[] InspectLines(string[] lines)
+        {
+            Paragraph[] paragraphs = new Paragraph[lines.Count()];
+            int i = 0;
+            foreach (string line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    paragraphs[i] = new Paragraph();
+                }
+                else if (line[0] == '#' && line[1] != '#')
+                {
+                    paragraphs[i] = ParseHeading(line);
+                }
+                else if (line[0] == '#' && line[1] == '#')
+                {
+                    paragraphs[i] = ParseHeading2(line);
+                }
+                else
+                {
+                    paragraphs[i] = ParseParagraph(line);
+                }
+                i++;
+            }
+            return paragraphs;
+        }
+
+        public Paragraph ParseParagraph(string paragraphText)
+        {
+            Paragraph paragraph = new Paragraph();
+            List<Inline> inlines = ParseInline(paragraphText);
+            foreach (Inline inline in inlines)
+            {
+                paragraph.Inlines.Add(inline);
+            }
+            return paragraph;
+        }
+
+        public Paragraph ParseHeading(string headingText) 
+        {
+            string outHeadingText = headingText.Trim('#');
+            Paragraph paragraph = new Paragraph();
+            paragraph.FontSize = 28;
+            ParseInline(outHeadingText);
+            List<Inline> inlines = ParseInline(outHeadingText);
+            foreach (Inline inline in inlines)
+            {
+                paragraph.Inlines.Add(inline);
+            }
+            return paragraph;
+        }
+
+        public Paragraph ParseHeading2(string headingText)
+        {
+            string outHeadingText = headingText.Trim('#');
+            Paragraph paragraph = new Paragraph();
+            paragraph.FontSize = 28;
+            ParseInline(outHeadingText);
+            List<Inline> inlines = ParseInline(outHeadingText);
+            foreach (Inline inline in inlines)
+            {
+                paragraph.Inlines.Add(inline);
+            }
+            return paragraph;
+        }
+
+        public List<Inline> ParseInline(string text)
+        {
+            string buffer = "";
+            bool isItalic = false;
+            bool isBold = false;
+            List<Inline> inlines = new List<Inline>();
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (i+1 >= text.Length)
+                {
+                    if (text[i] == '*')
+                    {
+                        if (isItalic)
+                        {
+                            isItalic = false;
+
+                            Italic italic = new Italic();
+                            italic.Inlines.Add(new Run(buffer));
+                            inlines.Add(italic);
+                            ClearBuffer(ref buffer);
+                        }
+                        else if (isBold)
+                        {
+                            isBold = false;
+
+                            Bold bold = new Bold();
+                            bold.Inlines.Add(new Run(buffer));
+                            inlines.Add(bold);
+                            ClearBuffer(ref buffer);
+                        }
+                        
+                    }
+                    else
+                    {
+                        Run run = new Run(buffer);
+                        inlines.Add(run);
+                        ClearBuffer(ref buffer);
+                    }
+                }
+
+                else if (text[i] == '*' && text[i+1] != '*')
+                {
+                    if (isItalic)
+                    {
+                        isItalic = false;
+
+                        Italic italic = new Italic();
+                        italic.Inlines.Add(new Run(buffer));
+                        inlines.Add(italic);
+                        ClearBuffer(ref buffer);
+                    }
+                    else
+                    {
+                        isItalic = true;
+
+                        Run run = new Run(buffer);
+                        inlines.Add(run);
+                        ClearBuffer(ref buffer);
+                    }
+                }
+                else if (text[i] == '*' && text[i+1] == '*')
+                {
+                    i++;
+                    if (isBold)
+                    {
+                        isBold = false;
+
+                        Bold bold = new Bold();
+                        bold.Inlines.Add(new Run(buffer));
+                        inlines.Add(bold);
+                        ClearBuffer(ref buffer);
+                    }
+                    else
+                    {
+                        isBold = true;
+
+                        Run run = new Run(buffer);
+                        inlines.Add(run);
+                        ClearBuffer(ref buffer);
+                    }
+                }
+                else
+                {
+                    buffer += text[i];
+                }
+            }
+            return inlines;
+        }
+
+
+        public void ClearBuffer(ref string buffer)
+        {
+            buffer = "";
+        }
+    }
 }
+
+
