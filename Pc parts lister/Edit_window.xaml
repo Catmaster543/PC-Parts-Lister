@@ -125,13 +125,10 @@
                 </Button>
             </StackPanel>
         </ScrollViewer>
-        
 
-        <StackPanel Margin="10" Grid.Row="3" Grid.ColumnSpan="2">
-            <TextBox Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
-            <RichTextBox Name="Description_RTextBox" TextChanged="DescriptionRTextBox_TextChanged"/>
-        </StackPanel>
-        
+        <TextBox Name="Description_TextBox" TextChanged="DescriptionBox_TextChanged" Margin="10" Grid.Row="3" Grid.Column="0" Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
+        <FlowDocumentScrollViewer Name="Preview_FlowDoc" Margin="10" Grid.Row="3" Grid.Column="1" Width="auto" Height="auto"/>
+
         <StackPanel Grid.ColumnSpan="2" Grid.Row="4">
             <Button Content="Uložit" Name="Save_Button" Margin="5" Click="Save_Click" FontWeight="Bold" FontSize="25" Background="SpringGreen"/>
         </StackPanel>

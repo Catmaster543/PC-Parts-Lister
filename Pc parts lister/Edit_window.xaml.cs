@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace Pc_parts_lister
 {
@@ -141,7 +143,7 @@ namespace Pc_parts_lister
             {
                 Komponenta.Status = StatusBox.SelectedItem.ToString();
             }
-            Komponenta.Description = ConvertFlowDocumentToString(Description_RTextBox.Document);
+            Komponenta.Description = Description_TextBox.Text;
             Close();
         }
 
@@ -534,92 +536,24 @@ namespace Pc_parts_lister
         #endregion
 
         #region MarkDown Editor
-
-        bool triggered = false;
-        private void DescriptionRTextBox_TextChanged(object sender, RoutedEventArgs e)
+        DispatcherTimer timer = new DispatcherTimer();
+        private void DescriptionBox_TextChanged(object sender, RoutedEventArgs e)
         {
+            timer.Stop();
 
+            timer.Interval = TimeSpan.FromMilliseconds(300);                         
+            timer.Start();
 
-            /*
-            FlowDocument flowDocument = Description_RTextBox.Document;
-            if (triggered)
-            {
-                triggered = false;
-                return;
-            }
-            else if (!triggered)
-            {
-                foreach (Block block in flowDocument.Blocks)
-                {
-                    if (block is Paragraph paragraph)
-                    {
-                        foreach (Inline inline in paragraph.Inlines)
-                        {
-                            if (inline is Run run)
-                            {
-                                //int starInRowCount;
-                                bool italicYet = false;
-                                string italicText = "";
-                                for (int i = 0; i < run.Text.Length; i++)
-                                {
-                                    if (run.Text[i] == '*')
-                                    {
-                                        if (!italicYet)
-                                        {
-                                            italicYet = true;
-                                        }
-                                        else if (italicYet)
-                                        {
-                                            Italic italic = new Italic();
-                                            italic.Inlines.Add(italicText);
-                                            paragraph.Inlines.Add(italic);
-                                            triggered = true;
-                                            break;
-                                        }
-                                    }
-                                    else if (run.Text[i] != '*' && italicYet)
-                                    {
-                                        italicText += run.Text[i];
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            */
+            timer.Tick += RenderDescription;
         }
 
-        private string ConvertFlowDocumentToString(FlowDocument flowDocument)
+        private void RenderDescription(object sender, EventArgs E)
         {
-            string resultString = "";
-            foreach (Block block in flowDocument.Blocks)
-            {
-                if (block is Paragraph paragraph)
-                {
-                    foreach (Inline inline in paragraph.Inlines)
-                    {
-                        
-                    }
-                }
-            }
+            timer.Stop();
+            MarkDownRenderer mark = new MarkDownRenderer();
 
-            return resultString;
+            Preview_FlowDoc.Document = mark.Render(Description_TextBox.Text);
         }
-
-        private string SerializeInline(Inline inline)
-        {
-            if (inline is Run run)
-            {
-                return run.Text;
-            }
-            else if (inline is Bold bold)
-            {
-                return "**" + SerializeInline(inline) + "**";
-            }
-            else return null;
-        }
-
         #endregion
     }
 }

@@ -33,13 +33,7 @@ namespace Pc_parts_lister
 
             MarkDownRenderer markDownRenderer = new MarkDownRenderer();
 
-
-            string testString = @"ahoj, jsem testovaci string pripraven na 
-*nekolik*
-
-casto **prazdnych**
-# radku.";
-            Description_FlowDocument.Document = markDownRenderer.Render(testString);
+            Description_FlowDocument.Document = markDownRenderer.Render(Komponenta.Description);
 
             if (komponenta.imagePaths.Count > 0)
             {
@@ -205,7 +199,7 @@ casto **prazdnych**
             int i = 0;
             foreach (string line in lines)
             {
-                if (string.IsNullOrWhiteSpace(line))
+                if (line.Length <= 1 || string.IsNullOrWhiteSpace(line))
                 {
                     paragraphs[i] = new Paragraph();
                 }
@@ -255,7 +249,7 @@ casto **prazdnych**
         {
             string outHeadingText = headingText.Trim('#');
             Paragraph paragraph = new Paragraph();
-            paragraph.FontSize = 28;
+            paragraph.FontSize = 24;
             ParseInline(outHeadingText);
             List<Inline> inlines = ParseInline(outHeadingText);
             foreach (Inline inline in inlines)
@@ -273,7 +267,7 @@ casto **prazdnych**
             List<Inline> inlines = new List<Inline>();
             for (int i = 0; i < text.Length; i++)
             {
-                if (i+1 >= text.Length)
+                if (i+1 == text.Length)
                 {
                     if (text[i] == '*')
                     {
@@ -295,10 +289,10 @@ casto **prazdnych**
                             inlines.Add(bold);
                             ClearBuffer(ref buffer);
                         }
-                        
                     }
                     else
                     {
+                        buffer += text[i];
                         Run run = new Run(buffer);
                         inlines.Add(run);
                         ClearBuffer(ref buffer);
@@ -353,7 +347,6 @@ casto **prazdnych**
             }
             return inlines;
         }
-
 
         public void ClearBuffer(ref string buffer)
         {

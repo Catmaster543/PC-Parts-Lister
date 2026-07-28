@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Detail Window" Height="600" Width="600" ResizeMode="NoResize">
+        Title="Detail Window" Height="800" Width="600" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="1.2*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Gray" Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="0,0,0,2">
             <StackPanel>
@@ -63,11 +63,7 @@
                 <TextBlock Name="Null_Photos_TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Text="Součástka zatím nemá fotky." FontWeight="Bold"/>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.RowSpan="5" Grid.ColumnSpan="2" Margin="5">
-            <!--<TextBlock Text="{Binding Description}" TextWrapping="Wrap" Width="auto" Height="auto"/>-->
-            <FlowDocumentScrollViewer Name="Description_FlowDocument" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
-                
-            </FlowDocumentScrollViewer>
-        </StackPanel>
+
+        <FlowDocumentScrollViewer Name="Description_FlowDocument" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="3" Margin="5"/>
     </Grid>
 </Window>
