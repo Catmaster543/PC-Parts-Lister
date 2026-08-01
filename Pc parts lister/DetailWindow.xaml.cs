@@ -299,15 +299,42 @@ namespace Pc_parts_lister
                     }
                 }
 
-                else if (text[i] == '*' && text[i+1] != '*')
+                else if (text[i] == '*' && text[i + 1] != '*')
                 {
-                    if (isItalic)
+                    if (isItalic && !isBold)
                     {
                         isItalic = false;
 
                         Italic italic = new Italic();
                         italic.Inlines.Add(new Run(buffer));
                         inlines.Add(italic);
+
+                        ClearBuffer(ref buffer);
+                    }
+                    else if (isBold && !isItalic)
+                    {
+                        isItalic = true;
+
+                        Bold bold = new Bold();
+                        bold.Inlines.Add(new Run(buffer));
+                        inlines.Add(bold);
+
+                        ClearBuffer(ref buffer);
+
+                        
+                    }
+                    else if (isItalic)
+                    {
+                        isItalic = false;
+
+                        Italic italic = new Italic();
+                        italic.Inlines.Add(new Run(buffer));
+
+                        Bold italicBold = new Bold();
+                        italicBold.Inlines.Add(new Italic(italic));
+
+                        inlines.Add(italicBold);
+
                         ClearBuffer(ref buffer);
                     }
                     else
@@ -319,16 +346,41 @@ namespace Pc_parts_lister
                         ClearBuffer(ref buffer);
                     }
                 }
-                else if (text[i] == '*' && text[i+1] == '*')
+
+                else if (text[i] == '*' && text[i + 1] == '*')
                 {
                     i++;
-                    if (isBold)
+                    if (isBold && !isItalic)
                     {
                         isBold = false;
 
                         Bold bold = new Bold();
                         bold.Inlines.Add(new Run(buffer));
                         inlines.Add(bold);
+                        ClearBuffer(ref buffer);
+                    }
+                    else if (isItalic && !isBold)
+                    {
+                        isBold = true;
+
+                        Italic italic = new Italic();
+                        italic.Inlines.Add(new Run(buffer));
+                        inlines.Add(italic);
+
+                        ClearBuffer(ref buffer);
+                    }
+                    else if (isBold)
+                    {
+                        isBold = false;
+
+                        Bold bold = new Bold();
+                        bold.Inlines.Add(new Run(buffer));
+                        
+                        Italic boldItalic = new Italic();
+                        boldItalic.Inlines.Add(new Bold(bold));
+
+                        inlines.Add(boldItalic);
+                                
                         ClearBuffer(ref buffer);
                     }
                     else
