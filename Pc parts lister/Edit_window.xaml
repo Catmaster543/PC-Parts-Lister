@@ -126,7 +126,40 @@
             </StackPanel>
         </ScrollViewer>
 
-        <TextBox Name="Description_TextBox" TextChanged="DescriptionBox_TextChanged" Margin="10" Grid.Row="3" Grid.Column="0" Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
+        <StackPanel Name="Editor_StackPanel" Margin="10" Grid.Row="3" Grid.Column="0">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Button Width="30" Height="30" BorderThickness="0" Click="Bold_ButtonClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/bold_button_on.png" />
+                        </Button.Background>
+                    </Button>
+                    <Button Width="30" Height="30" BorderThickness="0" Click="Italic_ButtonClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/italic_button_on.png" />
+                        </Button.Background>
+                    </Button>
+                    <Button Width="30" Height="30" BorderThickness="0" Click="BoldnItalic_ButtonClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/bolditalic_button_on.png" />
+                        </Button.Background>
+                    </Button>
+                    <Button Width="30" Height="30" BorderThickness="0" Click="Heading_ButtonClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/header_button.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button Width="30" Height="30" BorderThickness="0" Click="Heading2_ButtonClick">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/header2_button.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+            </Border>
+            
+            <TextBox Name="Description_TextBox" TextChanged="DescriptionBox_TextChanged" Width="auto" Height="auto" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Description}"/>
+        </StackPanel>
+        
         <FlowDocumentScrollViewer Name="Preview_FlowDoc" Margin="10" Grid.Row="3" Grid.Column="1" Width="auto" Height="auto"/>
 
         <StackPanel Grid.ColumnSpan="2" Grid.Row="4">

@@ -555,5 +555,80 @@ namespace Pc_parts_lister
             Preview_FlowDoc.Document = mark.Render(Description_TextBox.Text);
         }
         #endregion
+
+        #region MarkDown Buttons
+        private void Bold_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            string newString;
+            if (Description_TextBox.SelectedText[0] == '*' && Description_TextBox.SelectedText[1] == '*')
+            {
+                newString = Description_TextBox.SelectedText.Remove(0, 2);
+                newString = newString.Remove(newString.Length - 2, 2);
+                Description_TextBox.SelectedText = newString;
+            }
+            else
+            {
+                Description_TextBox.SelectedText = "**" + Description_TextBox.SelectedText + "**";
+            }
+        }
+
+        private void Italic_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            string newString;
+            if (Description_TextBox.SelectedText[0] == '*')
+            {
+                newString = Description_TextBox.SelectedText.Remove(0, 1);
+                newString = newString.Remove(newString.Length - 1, 1);
+                Description_TextBox.SelectedText = newString;
+            }
+            else
+            {
+                Description_TextBox.SelectedText = "*" + Description_TextBox.SelectedText + "*";
+            }
+        }
+
+        private void BoldnItalic_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            string newString;
+            if (Description_TextBox.SelectedText[0] == '*' && Description_TextBox.SelectedText[1] == '*' && Description_TextBox.SelectedText[2] == '*')
+            {
+                newString = Description_TextBox.SelectedText.Remove(0, 3);
+                newString = newString.Remove(newString.Length - 3, 3);
+                Description_TextBox.SelectedText = newString;
+            }
+            else
+            {
+                Description_TextBox.SelectedText = "***" + Description_TextBox.SelectedText + "***";
+            }
+        }
+
+        private void Heading_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            string newString;
+            if (Description_TextBox.SelectedText[0] == '#' && Description_TextBox.SelectedText[1] != '#')
+            {
+                newString = Description_TextBox.SelectedText.Remove(0, 1);
+                Description_TextBox.SelectedText = newString;
+            }
+            else
+            {
+                Description_TextBox.SelectedText = "#" + Description_TextBox.SelectedText;
+            }
+        }
+
+        private void Heading2_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            string newString;
+            if (Description_TextBox.SelectedText[0] == '#' && Description_TextBox.SelectedText[1] == '#')
+            {
+                newString = Description_TextBox.SelectedText.Remove(0, 2);
+                Description_TextBox.SelectedText = newString;
+            }
+            else
+            {
+                Description_TextBox.SelectedText = "#" + "#" + Description_TextBox.SelectedText;
+            }
+        }
+        #endregion
     }
 }
