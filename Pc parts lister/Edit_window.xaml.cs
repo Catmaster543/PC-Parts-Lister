@@ -45,10 +45,12 @@ namespace Pc_parts_lister
                 StatusBox.SelectedItem = komponenta.Status;
             }
 
+            /*
             if (komponenta.Type != null)
             {
                 Type_Box.SelectedItem = komponenta.Type;
             }
+            */
 
             if (komponenta.FullImagePath  != null)
             {
@@ -76,6 +78,7 @@ namespace Pc_parts_lister
                 "Opravený"
             };
 
+            /*
             if (Komponenta.Type == "CPU")
             {
                 SubType_Panel.Visibility = Visibility.Collapsed;
@@ -132,7 +135,9 @@ namespace Pc_parts_lister
                 SubSerText.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
             }
+*/
         }
+            
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();

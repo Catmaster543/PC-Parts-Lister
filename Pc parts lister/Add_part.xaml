@@ -5,10 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="Add Part" Height="500" Width="300" ResizeMode="NoResize">
+        Title="Add Part" Height="500" Width="1000" ResizeMode="NoResize">
     <Grid Margin="10">
-        <StackPanel>
-            <TextBlock x:Name="TypeText" Text="Typ:"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="5" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock Name="NameBox" FontWeight="Bold" FontSize="25"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="5" Grid.Column="0" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="10" Height="30">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Column="0">
+                            <TextBlock Text="Typ" x:Name="TypeText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
+                            <ComboBox Name="Type_Box" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                            <TextBlock x:Name="StatusText" Text="Stav" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Margin="20,0,0,0"/>
+                            <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
+                        </StackPanel>
+                    </Grid>
+                    <Button Width="60" Height="60" BorderThickness="0.3" HorizontalAlignment="Right" Click="Favorite_ButtonClick" Name="Favorite_Button" Grid.Column="2">
+                        <Button.Background>
+                            <ImageBrush Stretch="Uniform" ImageSource="{Binding favoriteIconPath}"/>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                        <TextBlock Text="Množství" x:Name="CountText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
+                        <TextBox Text="{Binding Quantity}" x:Name="CountBox" Margin="10,0,0,0" FontSize="20"  BorderThickness="0,0,0,2" MinWidth="15"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            <StackPanel Name="Error_Panel" Margin="5" Grid.Row="1">
+                
+            </StackPanel>
+        </Grid>
+        
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Name="Parameter_Column_A" Margin="5" Grid.Column="0" Grid.Row="0">
+                
+            </StackPanel>
+
+            <StackPanel Name="Parameter_Column_B" Margin="5" Grid.Column="1" Grid.Row="0">
+                
+            </StackPanel>
+            
+            <!--TextBlock x:Name="TypeText" Text="Typ:"/>
             <ComboBox x:Name="TypeBox" SelectionChanged="TypeBox_SelectionChanged" Text="Vyber, nebo napiš vlastní"/>
 
             <TextBlock x:Name="TypeText2" Text="Typ:"/>
@@ -36,9 +111,9 @@
             <TextBox x:Name="PowerBox" TextChanged="Power_TextChanged"/>
 
             <TextBlock x:Name="Qttext" Text="Množství:"/>
-            <TextBox x:Name="QtBox" TextChanged="Count_TextChanged"/>
+            <TextBox x:Name="QtBox" TextChanged="Count_TextChanged"/!-->
 
-            <Button Content="Uložit" Click="Save_Click" Margin="10"/>
-        </StackPanel>
+            <Button Content="Uložit" Click="Save_Click" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="SpringGreen" FontSize="12" FontWeight="Bold"/>
+        </Grid>
     </Grid>
 </Window>

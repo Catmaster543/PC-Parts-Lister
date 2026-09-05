@@ -50,6 +50,7 @@ namespace Pc_parts_lister
             CapacityBox.Visibility = Visibility.Collapsed;
             #endregion
 
+            /*
             if (Komponenta.Type == "CPU")
             {
                 TypeBox2.Visibility = Visibility.Collapsed;

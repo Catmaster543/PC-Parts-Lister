@@ -23,13 +23,29 @@ namespace Pc_parts_lister
     {
         public ObservableCollection<Component> Components { get; set; }
 
+        public List<PossibleParameter> Parameters { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
             Components = new ObservableCollection<Component>();
             Components = DataStorage.Load();
+
+            
+
             DataContext = this;
+
+            /*
+            Component ko = new Component();
+            Parameter para = new Parameter();
+            para.Name = "bohoo";
+            para.Value = "nullur";
+            para.type = Parameter.Type.Number;
+            
+
+            ko.parameters.Add(para);
+            */
         }
 
         private void Pridat(object sender, RoutedEventArgs e)
@@ -38,7 +54,7 @@ namespace Pc_parts_lister
 
             if (window.ShowDialog() == true)
             {
-                Components.Add(window.Component);
+                Components.Add(window.Komponenta);
             }
         }
 
@@ -60,6 +76,9 @@ namespace Pc_parts_lister
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Favorited { get; set; }
+        public int Quantity {  get; set; }
+        public string Status { get; set; }
+        /*
         public string Type { get; set; }
         public string Manufacturer { get; set; }
         public string Series { get; set; }
@@ -68,8 +87,7 @@ namespace Pc_parts_lister
         public int Capacity { get; set; }
         public string SubType { get; set; }
         public int Power { get; set; }
-        public int Quantity {  get; set; }
-        public string Status { get; set; }
+        */
 
         private string imagePath;
         public string ImagePath
@@ -110,8 +128,33 @@ namespace Pc_parts_lister
             }
         }
         public List<string> imagePaths { get; set; } = new List<string>(1);
+
+        public List<Parameter> parameters { get; set; } = new List<Parameter>(); 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    public class Parameter
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public Type type { get; set; }
+        public enum Type
+        {
+            Number,
+            String,
+            Boolean
+        }
+        public List<string> values { get; set; }
+    }
+
+    public class PossibleParameter : Parameter
+    {
+        // Nastavení pravidel
+
+        public string requiredType { get; set; }
+        public List<PossibleParameter> reuiredParameters { get; set; }
+
     }
 
     public static class DataStorage

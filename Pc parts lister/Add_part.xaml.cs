@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,13 +25,19 @@ namespace Pc_parts_lister
         public int countIntT;
         public bool capacityIsLegit = true;
         public int capacityIntT;
+
+        public Component Komponenta = new Component();
+
+
         public Add_part()
         {
-            
+            InitializeComponent();
+
             //Intitial hiding of everything
 
             #region Hiding
-            InitializeComponent();
+            
+            /*
             Manufacturertext.Visibility = Visibility.Collapsed;
             ManufacturerBox.Visibility = Visibility.Collapsed;
             SerText.Visibility = Visibility.Collapsed;
@@ -43,11 +52,75 @@ namespace Pc_parts_lister
             CapacityBox.Visibility = Visibility.Collapsed;
             TypeText2.Visibility = Visibility.Collapsed;
             TypeBox2.Visibility = Visibility.Collapsed;
+            */
+            #endregion
+
+            #region Setting default component parameters
+
+            Komponenta.parameters = new List<Parameter>();
+
+            Parameter typeParameter = new Parameter();
+            typeParameter.Name = "Typ";
+            typeParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(typeParameter);
+
+            Parameter manuParameter = new Parameter();
+            manuParameter.Name = "Výrobce";
+            manuParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(manuParameter);
+
+            Parameter serParameter = new Parameter();
+            serParameter.Name = "Série";
+            serParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(serParameter);
+
+            Parameter subSerParameter = new Parameter();
+            subSerParameter.Name = "Subsérie";
+            subSerParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(subSerParameter);
+
+            Parameter modelParameter = new Parameter();
+            modelParameter.Name = "Model";
+            modelParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(modelParameter);
+
+            Parameter capParameter = new Parameter();
+            capParameter.Name = "Kapacita";
+            capParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(capParameter);
+
+            Parameter subTypeParameter = new Parameter();
+            subTypeParameter.Name = "Subtyp";
+            subTypeParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(subTypeParameter);
+
+            Parameter powerParameter = new Parameter();
+            powerParameter.Name = "Výkon";
+            powerParameter.type = Parameter.Type.String;
+            Komponenta.parameters.Add(powerParameter);
+
+            CountBox.TextChanged += Check_Bool_Validation;
+
             #endregion
 
             //Default options for what is it
 
-            TypeBox.ItemsSource = new[]
+            bool isA = true;
+            foreach (Parameter parameter in Komponenta.parameters)
+            {
+                if (isA)
+                {
+                    Parameter_Column_A.Children.Add(CreatePanel(parameter));
+                    isA = false;
+                }
+                else
+                {
+                    Parameter_Column_B.Children.Add(CreatePanel(parameter));
+                    isA = true;
+                }
+            }
+
+            Type_Box.ItemsSource = new[]
             {
                 "CPU",
                 "GPU",
@@ -71,8 +144,95 @@ namespace Pc_parts_lister
 
         //Making component public
 
-        public Component Component { get; private set; }
+        
 
+        public StackPanel CreatePanel(Parameter parameter)
+        {
+            StackPanel panel = new StackPanel();
+            TextBlock textBlock = new TextBlock();
+            panel.Orientation = Orientation.Horizontal;
+            textBlock.Text = parameter.Name;
+            textBlock.FontWeight = FontWeights.Bold;
+            textBlock.FontSize = 20;
+            panel.Children.Add(textBlock);
+            if (parameter.type == Parameter.Type.String)
+            {
+                ComboBox comboBox = new ComboBox();
+                comboBox.ItemsSource = parameter.values;
+                comboBox.Margin = new Thickness(10,0,0,0);
+                comboBox.BorderThickness = new Thickness(0);
+
+                panel.Children.Add(comboBox);
+
+                return panel;
+            }
+            else if (parameter.type == Parameter.Type.Boolean)
+            {
+                Button button = new Button();
+
+                panel.Children.Add(button);
+
+                return panel;
+            }
+            else if (parameter.type == Parameter.Type.Number)
+            {
+                TextBox box = new TextBox();
+                box.SelectionChanged += Check_Bool_Validation;
+
+                return panel;
+            }
+            else return null;
+        }
+
+        private void Check_Bool_Validation(Object sender, RoutedEventArgs e)
+        {
+            bool result;
+            TextBox box = (TextBox)sender;
+            if (int.TryParse(box.Text, out int i))
+            {
+                result = true;
+                box.Tag = i;
+                box.Foreground = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else if (box.Text == null || box.Text == "")
+            {
+                result = true;
+                box.Foreground = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else
+            {
+                result = false;
+                box.Foreground = new SolidColorBrush(Colors.Red);
+                box.BorderBrush = new SolidColorBrush(Colors.Red);
+            }
+
+        }
+
+        private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            Favorite_Button.BorderBrush = new SolidColorBrush(Colors.Green);
+            ChangeFavButtonBg(button);
+        }
+
+        bool favBool = true;
+
+        private void ChangeFavButtonBg(Button button)
+        {
+            if (favBool)
+            {
+                button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button_on.png")));
+            }
+            else
+            {
+                button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button_off.png")));
+            }
+                
+        }
+
+        /*
         private void TypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var type = TypeBox.SelectedItem?.ToString();
@@ -492,6 +652,8 @@ namespace Pc_parts_lister
         }
         #endregion
 
+        
+
         private void Power_TextChanged(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(PowerBox.Text, out int i))
@@ -515,6 +677,7 @@ namespace Pc_parts_lister
             }
         }
 
+        /*
         private void Count_TextChanged(object sender, RoutedEventArgs e)
         {
             if (int.TryParse(QtBox.Text, out int i))
@@ -560,10 +723,13 @@ namespace Pc_parts_lister
                 CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
         }
+        */
 
         // Saving the component
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (powerIsLegit && countIsLegit && capacityIsLegit)
             {
                 if (TypeBox.Text == "CPU")
@@ -785,6 +951,8 @@ namespace Pc_parts_lister
         private void CapacityBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+        */
         }
     }
 }

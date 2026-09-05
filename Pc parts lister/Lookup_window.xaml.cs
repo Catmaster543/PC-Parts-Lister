@@ -126,6 +126,10 @@ namespace Pc_parts_lister
                 searchBool = true;
             }
 
+            return false;
+        }
+
+            /*
             if (Filters.type == component.Type)
             {
                 typeBool = true;
@@ -332,6 +336,7 @@ namespace Pc_parts_lister
 
             return searchBool && typeBool && manuBool && statusBool && serBool && subSerBool && type2Bool && modelBool && powerBool && countBool && capacityBool && favoriteBool;
         }
+            */
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)
         {
