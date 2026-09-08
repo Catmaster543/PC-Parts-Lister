@@ -8,7 +8,7 @@
         Title="Add Part" Height="500" Width="1000" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.11*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -16,28 +16,25 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="5" Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBlock Name="NameBox" FontWeight="Bold" FontSize="25"/>
+            <TextBox Name="NameBox" FontWeight="Bold" FontSize="25" BorderThickness="0,0,0,2"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Margin="5" Grid.Column="0" Grid.Row="0">
+            <StackPanel Name="MainParameters_Panel" Margin="5" Grid.Column="0" Grid.Row="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="60"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Margin="10" Height="30">
+                    <Grid Name="Grid0" Margin="10" Height="30">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <StackPanel Orientation="Horizontal" Grid.Column="0">
-                            <TextBlock Text="Typ" x:Name="TypeText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                            <ComboBox Name="Type_Box" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
-                        </StackPanel>
+                        
                         <StackPanel Orientation="Horizontal" Grid.Column="1">
                             <TextBlock x:Name="StatusText" Text="Stav" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Margin="20,0,0,0"/>
                             <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
@@ -56,7 +53,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="0">
                         <TextBlock Text="Množství" x:Name="CountText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                        <TextBox Text="{Binding Quantity}" x:Name="CountBox" Margin="10,0,0,0" FontSize="20"  BorderThickness="0,0,0,2" MinWidth="15"/>
+                        <TextBox Text="{Binding Quantity}" x:Name="CountBox" Margin="10,0,0,0" FontSize="20" BorderThickness="0,0,0,2" MinWidth="15"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>

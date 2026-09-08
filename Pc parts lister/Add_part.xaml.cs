@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,17 +21,13 @@ namespace Pc_parts_lister
 {
     public partial class Add_part : Window
     {
-        public bool powerIsLegit = true;
-        public int powerIntT;
-        public bool countIsLegit = true;
-        public int countIntT;
-        public bool capacityIsLegit = true;
-        public int capacityIntT;
+        public List<bool> boolChecks = new List<bool>();
 
         public Component Komponenta = new Component();
 
+        
 
-        public Add_part()
+        public Add_part(ObservableCollection<PossibleParameter> possibleParameters)
         {
             InitializeComponent();
 
@@ -57,80 +55,38 @@ namespace Pc_parts_lister
 
             #region Setting default component parameters
 
-            Komponenta.parameters = new List<Parameter>();
 
-            Parameter typeParameter = new Parameter();
-            typeParameter.Name = "Typ";
-            typeParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(typeParameter);
-
-            Parameter manuParameter = new Parameter();
-            manuParameter.Name = "Výrobce";
-            manuParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(manuParameter);
-
-            Parameter serParameter = new Parameter();
-            serParameter.Name = "Série";
-            serParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(serParameter);
-
-            Parameter subSerParameter = new Parameter();
-            subSerParameter.Name = "Subsérie";
-            subSerParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(subSerParameter);
-
-            Parameter modelParameter = new Parameter();
-            modelParameter.Name = "Model";
-            modelParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(modelParameter);
-
-            Parameter capParameter = new Parameter();
-            capParameter.Name = "Kapacita";
-            capParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(capParameter);
-
-            Parameter subTypeParameter = new Parameter();
-            subTypeParameter.Name = "Subtyp";
-            subTypeParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(subTypeParameter);
-
-            Parameter powerParameter = new Parameter();
-            powerParameter.Name = "Výkon";
-            powerParameter.type = Parameter.Type.String;
-            Komponenta.parameters.Add(powerParameter);
-
-            CountBox.TextChanged += Check_Bool_Validation;
+            CountBox.TextChanged += Check_Int_Validation;
 
             #endregion
 
             //Default options for what is it
 
             bool isA = true;
-            foreach (Parameter parameter in Komponenta.parameters)
+            foreach (PossibleParameter parameter in possibleParameters)
             {
-                if (isA)
+                if (isA && parameter.ID != "Type")
                 {
                     Parameter_Column_A.Children.Add(CreatePanel(parameter));
                     isA = false;
                 }
-                else
+                else if (!isA && parameter.ID != "Type")
                 {
                     Parameter_Column_B.Children.Add(CreatePanel(parameter));
                     isA = true;
                 }
             }
 
-            Type_Box.ItemsSource = new[]
+            foreach (PossibleParameter parameter in possibleParameters)
             {
-                "CPU",
-                "GPU",
-                "RAM",
-                "Mb",
-                "Disk",
-                "PSU",
-                "Case",
-                "Jiné"
-            };
+                if (parameter.ID == "Type")
+                {
+                    StackPanel panel = CreatePanel(parameter);
+                    ComboBox comboBox = (ComboBox)panel.Children[1];
+                    comboBox.ItemsSource = parameter.values;
+                    Grid0.Children.Insert(0, panel);
+                }
+            }
 
             StatusBox.ItemsSource = new[]
             {
@@ -146,11 +102,12 @@ namespace Pc_parts_lister
 
         
 
-        public StackPanel CreatePanel(Parameter parameter)
+        public StackPanel CreatePanel(PossibleParameter parameter)
         {
             StackPanel panel = new StackPanel();
             TextBlock textBlock = new TextBlock();
             panel.Orientation = Orientation.Horizontal;
+            panel.Tag = parameter;
             textBlock.Text = parameter.Name;
             textBlock.FontWeight = FontWeights.Bold;
             textBlock.FontSize = 20;
@@ -161,6 +118,7 @@ namespace Pc_parts_lister
                 comboBox.ItemsSource = parameter.values;
                 comboBox.Margin = new Thickness(10,0,0,0);
                 comboBox.BorderThickness = new Thickness(0);
+                comboBox.FontSize = 20;
 
                 panel.Children.Add(comboBox);
 
@@ -177,14 +135,14 @@ namespace Pc_parts_lister
             else if (parameter.type == Parameter.Type.Number)
             {
                 TextBox box = new TextBox();
-                box.SelectionChanged += Check_Bool_Validation;
+                box.SelectionChanged += Check_Int_Validation;
 
                 return panel;
             }
             else return null;
         }
 
-        private void Check_Bool_Validation(Object sender, RoutedEventArgs e)
+        private void Check_Int_Validation(Object sender, RoutedEventArgs e)
         {
             bool result;
             TextBox box = (TextBox)sender;
@@ -207,7 +165,7 @@ namespace Pc_parts_lister
                 box.Foreground = new SolidColorBrush(Colors.Red);
                 box.BorderBrush = new SolidColorBrush(Colors.Red);
             }
-
+            boolChecks.Add(result);
         }
 
         private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
@@ -230,6 +188,17 @@ namespace Pc_parts_lister
                 button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button_off.png")));
             }
                 
+        }
+
+        private Parameter convertPossibleToParameter(PossibleParameter possibleParameter)
+        {
+            Parameter parameter = new Parameter();
+            parameter.Name = possibleParameter.Name;
+            parameter.Value = possibleParameter.Value;
+            parameter.type = possibleParameter.type;
+            parameter.ID = possibleParameter.ID;
+
+            return parameter;
         }
 
         /*
@@ -725,10 +694,103 @@ namespace Pc_parts_lister
         }
         */
 
-        // Saving the component
+
+
+        #region Saving the component
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            bool canSave = true;
+            Komponenta.Name = NameBox.Text;
+            if (StatusBox.SelectedItem != null)
+            {
+                Komponenta.Status = StatusBox.SelectedItem.ToString();
+            }
+
+            foreach (bool check in boolChecks)
+            {
+                if (!check)
+                {
+                    canSave = false;
+                }
+            }
+            if (canSave)
+            {
+                foreach (StackPanel stackPanel in Parameter_Column_A.Children)
+                {
+                    Parameter currentParameter = (Parameter)stackPanel.Tag;
+                    if (currentParameter.type == Parameter.Type.String)
+                    {
+                        ComboBox comboBox = (ComboBox)stackPanel.Children[1];
+                        if (comboBox.SelectedItem != null)
+                        {
+                            //Clearing the placeholder parameter in favor of the new one
+                            Komponenta.parameters.Remove(currentParameter);
+
+                            currentParameter.Value = comboBox.SelectedItem.ToString();
+
+                            Komponenta.parameters.Add(currentParameter);
+                        }
+                        else
+                        {
+                            Komponenta.parameters.Remove(currentParameter);
+                        }
+                    }
+                    else if (currentParameter.type == Parameter.Type.Number)
+                    {
+                        Komponenta.parameters.Remove(currentParameter);
+                        Komponenta.parameters.Add(currentParameter);
+                    }
+                    else
+                    {
+                        Komponenta.parameters.Remove(currentParameter);
+                        Komponenta.parameters.Add(currentParameter);
+                    }
+                }
+
+                foreach (StackPanel stackPanel in Parameter_Column_B.Children)
+                {
+                    Parameter currentParameter = (Parameter)stackPanel.Tag;
+
+                    if (currentParameter.type == Parameter.Type.String)
+                    {
+                        ComboBox comboBox = (ComboBox)stackPanel.Children[1];
+                        if (comboBox.SelectedItem != null)
+                        {
+                            //Clearing the placeholder parameter in favor of the new one
+                            Komponenta.parameters.Remove(currentParameter);
+
+                            currentParameter.Value = comboBox.SelectedItem.ToString();
+
+                            Komponenta.parameters.Add(currentParameter);
+                        }
+                        else
+                        {
+                            Komponenta.parameters.Remove(currentParameter);
+                        }
+                    }
+                    else
+                    {
+                        Komponenta.parameters.Remove(currentParameter);
+                        Komponenta.parameters.Add(currentParameter);
+                    }
+                }
+                this.DialogResult = true;
+                this.Close();
+            }
+            else
+            {
+                var result = MessageBox.Show(
+                $"Nelze uložit komponentu; zkontrolujte zadané parametry",
+                "Chyba",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+                return;
+            }
+
+
+            
+
             /*
             if (powerIsLegit && countIsLegit && capacityIsLegit)
             {
@@ -954,5 +1016,21 @@ namespace Pc_parts_lister
         }
         */
         }
+
+        #endregion
+
+        /*
+        public Parameter FindParameter(Parameter parameter)
+        {
+            int i = 0;
+            foreach (Parameter parameter in Komponenta.parameters)
+            {
+                if (Komponenta.parameters[i].ID == )
+                
+                i++;
+            }
+            return null;
+        }
+        */
     }
 }
