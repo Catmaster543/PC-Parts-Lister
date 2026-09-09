@@ -67,7 +67,6 @@ namespace Pc_parts_lister
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Favorited { get; set; }
-        public int Quantity {  get; set; }
         public string Status { get; set; }
 
         private string imagePath;
@@ -153,6 +152,12 @@ namespace Pc_parts_lister
             typeParameter.values.Add("Jiné");
             typeParameter.type = Parameter.Type.String;
             parameters.Add(typeParameter);
+
+            PossibleParameter countParameter = new PossibleParameter();
+            countParameter.Name = "Počet";
+            countParameter.ID = "Count";
+            countParameter.type = PossibleParameter.Type.Number;
+            parameters.Add(countParameter);
 
             PossibleParameter manuParameter = new PossibleParameter();
             manuParameter.Name = "Výrobce";

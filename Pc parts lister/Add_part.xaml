@@ -40,9 +40,9 @@
                             <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
                         </StackPanel>
                     </Grid>
-                    <Button Width="60" Height="60" BorderThickness="0.3" HorizontalAlignment="Right" Click="Favorite_ButtonClick" Name="Favorite_Button" Grid.Column="2">
+                    <Button Width="60" Height="60" BorderThickness="0" HorizontalAlignment="Right" Click="Favorite_ButtonClick" Name="Favorite_Button" Grid.Column="2">
                         <Button.Background>
-                            <ImageBrush Stretch="Uniform" ImageSource="{Binding favoriteIconPath}"/>
+                            <ImageBrush Stretch="Uniform" ImageSource="/favorite_button.png"/>
                         </Button.Background>
                     </Button>
                 </Grid>
@@ -51,9 +51,9 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="0">
-                        <TextBlock Text="Množství" x:Name="CountText" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20"/>
-                        <TextBox Text="{Binding Quantity}" x:Name="CountBox" Margin="10,0,0,0" FontSize="20" BorderThickness="0,0,0,2" MinWidth="15"/>
+                    <StackPanel Name="StackPanel2" Orientation="Horizontal" Grid.Column="0">
+                        
+                        
                     </StackPanel>
                 </Grid>
             </StackPanel>

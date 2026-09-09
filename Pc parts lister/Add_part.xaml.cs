@@ -21,7 +21,7 @@ namespace Pc_parts_lister
 {
     public partial class Add_part : Window
     {
-        public List<bool> boolChecks = new List<bool>();
+        public List<Saveable> boolChecks = new List<Saveable>();
 
         public Component Komponenta = new Component();
 
@@ -53,24 +53,17 @@ namespace Pc_parts_lister
             */
             #endregion
 
-            #region Setting default component parameters
-
-
-            CountBox.TextChanged += Check_Int_Validation;
-
-            #endregion
-
             //Default options for what is it
 
             bool isA = true;
             foreach (PossibleParameter parameter in possibleParameters)
             {
-                if (isA && parameter.ID != "Type")
+                if (isA && parameter.ID != "Type" && parameter.ID != "Count")
                 {
                     Parameter_Column_A.Children.Add(CreatePanel(parameter));
                     isA = false;
                 }
-                else if (!isA && parameter.ID != "Type")
+                else if (!isA && parameter.ID != "Type" && parameter.ID != "Count")
                 {
                     Parameter_Column_B.Children.Add(CreatePanel(parameter));
                     isA = true;
@@ -86,7 +79,13 @@ namespace Pc_parts_lister
                     comboBox.ItemsSource = parameter.values;
                     Grid0.Children.Insert(0, panel);
                 }
+                else if (parameter.ID == "Count")
+                {
+                    StackPanel panel = CreatePanel(parameter);
+                    StackPanel2.Children.Insert(0, panel);
+                }
             }
+
 
             StatusBox.ItemsSource = new[]
             {
@@ -135,7 +134,14 @@ namespace Pc_parts_lister
             else if (parameter.type == Parameter.Type.Number)
             {
                 TextBox box = new TextBox();
+                box.BorderThickness = new Thickness(0, 0, 0, 2);
+                box.Margin = new Thickness(10,0,0,0);
+                box.MinWidth = 15;
+                box.FontSize = 20;
+                box.Tag = parameter;
                 box.SelectionChanged += Check_Int_Validation;
+
+                panel.Children.Add(box);
 
                 return panel;
             }
@@ -145,11 +151,23 @@ namespace Pc_parts_lister
         private void Check_Int_Validation(Object sender, RoutedEventArgs e)
         {
             bool result;
+            Saveable saveable = new Saveable();
             TextBox box = (TextBox)sender;
+            Parameter iparameter = (Parameter)box.Tag;
+
+            foreach (Saveable fsaveable in boolChecks)
+            {
+                if (fsaveable.ID == iparameter.ID)
+                {
+                    saveable = fsaveable;
+                }
+            }
+
+            boolChecks.Remove(saveable);
+
             if (int.TryParse(box.Text, out int i))
             {
                 result = true;
-                box.Tag = i;
                 box.Foreground = new SolidColorBrush(Colors.Black);
                 box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
@@ -165,7 +183,10 @@ namespace Pc_parts_lister
                 box.Foreground = new SolidColorBrush(Colors.Red);
                 box.BorderBrush = new SolidColorBrush(Colors.Red);
             }
-            boolChecks.Add(result);
+            Parameter parameter = (Parameter)box.Tag;
+            saveable.ID = parameter.ID;
+            saveable.canSave = result;
+            boolChecks.Add(saveable);
         }
 
         private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
@@ -181,11 +202,15 @@ namespace Pc_parts_lister
         {
             if (favBool)
             {
+                favBool = false;
+                Komponenta.Favorited = true;
                 button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button_on.png")));
             }
             else
             {
-                button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button_off.png")));
+                favBool = true;
+                Komponenta.Favorited = false;
+                button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button.png")));
             }
                 
         }
@@ -707,9 +732,9 @@ namespace Pc_parts_lister
                 Komponenta.Status = StatusBox.SelectedItem.ToString();
             }
 
-            foreach (bool check in boolChecks)
+            foreach (Saveable check in boolChecks)
             {
-                if (!check)
+                if (!check.canSave)
                 {
                     canSave = false;
                 }
@@ -787,9 +812,6 @@ namespace Pc_parts_lister
                 MessageBoxImage.Error);
                 return;
             }
-
-
-            
 
             /*
             if (powerIsLegit && countIsLegit && capacityIsLegit)
@@ -1032,5 +1054,11 @@ namespace Pc_parts_lister
             return null;
         }
         */
+    }
+
+    public class Saveable
+    {
+        public string ID { get; set; }
+        public bool canSave {  get; set; }
     }
 }
