@@ -24,9 +24,15 @@ namespace Pc_parts_lister
 
         private SearchFilters Filters = new SearchFilters();
 
-        public Lookup_window(ObservableCollection<Component> components)
+        private ObservableCollection<PossibleParameter> PossibleParameters = new ObservableCollection<PossibleParameter>();
+
+        public ObservableCollection<FilterParameter> filterParameters = new ObservableCollection<FilterParameter>();
+
+        public Lookup_window(ObservableCollection<Component> components, ObservableCollection<PossibleParameter> possibleParameters)
         {
             InitializeComponent();
+
+            PossibleParameters = possibleParameters;
 
             Components = components;
             ComponentsView = CollectionViewSource.GetDefaultView(Components);
@@ -461,7 +467,7 @@ namespace Pc_parts_lister
         
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
-            Filter_window Fwindow = new Filter_window(Filters);
+            Filter_window Fwindow = new Filter_window(Filters, PossibleParameters);
 
             if (Fwindow.ShowDialog() == true)
             {

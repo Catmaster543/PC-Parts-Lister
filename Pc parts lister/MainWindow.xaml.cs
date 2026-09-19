@@ -50,7 +50,7 @@ namespace Pc_parts_lister
 
         private void Hledat(object sender, RoutedEventArgs e)
         {
-            Lookup_window window = new Lookup_window(Components);
+            Lookup_window window = new Lookup_window(Components, PossibleParameters);
             //window.DataContext = Components;
             window.Show();
         }
@@ -197,7 +197,7 @@ namespace Pc_parts_lister
 
             PossibleParameter powerParameter = new PossibleParameter();
             powerParameter.Name = "Výkon";
-            powerParameter.type = Parameter.Type.String;
+            powerParameter.type = Parameter.Type.Number;
             parameters.Add(powerParameter);
         }
     }

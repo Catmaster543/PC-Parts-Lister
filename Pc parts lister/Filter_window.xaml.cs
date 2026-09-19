@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -16,21 +17,24 @@ using System.Windows.Shapes;
 
 namespace Pc_parts_lister
 {
-    /// <summary>
-    /// Interakční logika pro Filter_window.xaml
-    /// </summary>
     public partial class Filter_window : Window
     {
         public Lookup_window.SearchFilters Filters { get; }
-        public Filter_window(Lookup_window.SearchFilters filters)
+        private ObservableCollection<PossibleParameter> PossibleParameters;
+
+        public List<Saveable> boolChecks = new List<Saveable>();
+        public ObservableCollection<FilterParameter> filterParameters = new ObservableCollection<FilterParameter>();
+        public Filter_window(Lookup_window.SearchFilters filters, ObservableCollection<PossibleParameter> possibleParameters)
         {
             InitializeComponent();
 
             Filters = filters;
             DataContext = Filters;
 
+            PossibleParameters = possibleParameters;
+
             #region Hiding
-            InitializeComponent();
+            /*
             SerText.Visibility = Visibility.Collapsed;
             SerBox.Visibility = Visibility.Collapsed;
             SubSerText.Visibility = Visibility.Collapsed;
@@ -43,7 +47,31 @@ namespace Pc_parts_lister
             CapacityGrid.Visibility = Visibility.Collapsed;
             TypeText2.Visibility = Visibility.Collapsed;
             TypeBox2.Visibility = Visibility.Collapsed;
+            */
             #endregion
+
+            foreach (PossibleParameter parameter in possibleParameters)
+            {
+                if (parameter.ID == "Type")
+                {
+                    StackPanel panel = CreatePanel(parameter);
+                    ComboBox comboBox = (ComboBox)panel.Children[1];
+                    comboBox.ItemsSource = parameter.values;
+                    Stack_Panel_L.Children.Insert(0, panel);
+                }
+                else if (parameter.ID == "Count")
+                {
+                    StackPanel panel = CreatePanel(parameter);
+                    Stack_Panel_L.Children.Insert(1, panel);
+                }
+                else
+                {
+                    Stack_Panel_R.Children.Add(CreatePanel(parameter));
+                }
+            }
+        }
+
+            /*
 
             #region Setting default values to main boxes
             TypeBox.ItemsSource = new[]
@@ -131,7 +159,187 @@ namespace Pc_parts_lister
             #endregion
         }
 
+        */
         public Component Component { get; private set; }
+
+        public StackPanel CreatePanel(PossibleParameter parameter)
+        {
+            StackPanel panel = new StackPanel();
+            TextBlock textBlock = new TextBlock();
+
+            FilterParameter filterParameter = new FilterParameter();
+            filterParameter.Name = parameter.Name;
+            filterParameter.ID = parameter.ID;
+            filterParameter.Value = parameter.Value;
+            filterParameter.type = parameter.type;
+
+            panel.Tag = filterParameter;
+
+            textBlock.Text = parameter.Name;
+            textBlock.FontWeight = FontWeights.SemiBold;
+
+            if (parameter.type != Parameter.Type.Number)
+            {
+                panel.Orientation = Orientation.Horizontal;
+                panel.Children.Add(textBlock);
+            }
+
+            if (parameter.type == Parameter.Type.String)
+            {
+                ComboBox comboBox = new ComboBox();
+                comboBox.ItemsSource = parameter.values;
+                comboBox.BorderThickness = new Thickness(0);
+
+                panel.Children.Add(comboBox);
+
+                return panel;
+            }
+            else if (parameter.type == Parameter.Type.Boolean)
+            {
+                Button button = new Button();
+
+                panel.Children.Add(button);
+
+                return panel;
+            }
+            else if (parameter.type == Parameter.Type.Number)
+            {
+                StackPanel textPanel = new StackPanel();
+                textPanel.Children.Add(textBlock);
+                textPanel.Orientation = Orientation.Horizontal;
+                panel.Children.Add(textPanel);
+
+                Grid grid = new Grid();
+                grid.Height = 20;
+                ColumnDefinition smallerColumnDefinition = new ColumnDefinition();
+                smallerColumnDefinition.Width = new GridLength(20);
+                grid.ColumnDefinitions.Add(smallerColumnDefinition);
+                ColumnDefinition equalsColumnDefinition = new ColumnDefinition();
+                equalsColumnDefinition.Width = new GridLength(20);
+                grid.ColumnDefinitions.Add(equalsColumnDefinition);
+                ColumnDefinition biggerColumnDefinition = new ColumnDefinition();
+                biggerColumnDefinition.Width = new GridLength(20);
+                grid.ColumnDefinitions.Add(biggerColumnDefinition);
+                ColumnDefinition writeColumnDefinition = new ColumnDefinition();
+                writeColumnDefinition.Width = new GridLength(1, GridUnitType.Star);
+                grid.ColumnDefinitions.Add(writeColumnDefinition);
+
+                Button smallerButton = new Button();
+                smallerButton.BorderThickness = new Thickness(1);
+                smallerButton.Tag = filterParameter;
+                smallerButton.Click += Smaller_Button_Click;
+                smallerButton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/smaller_button.png")));
+                filterParameter.smallerButton = smallerButton;
+                grid.Children.Add(smallerButton);
+                Grid.SetColumn(smallerButton, 0);
+
+                Button biggerButton = new Button();
+                biggerButton.BorderThickness = new Thickness(1);
+                biggerButton.Tag = filterParameter;
+                biggerButton.Click += Bigger_Button_Click;
+                biggerButton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/bigger_button.png")));
+                filterParameter.biggerButton = biggerButton;
+                grid.Children.Add(biggerButton);
+                Grid.SetColumn(biggerButton, 1);
+
+                Button equalsButton = new Button();
+                equalsButton.BorderThickness = new Thickness(1);
+                equalsButton.Tag = filterParameter;
+                equalsButton.Click += Equals_Button_Click;
+                equalsButton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/equals_button.png")));
+                filterParameter.equalsButton = equalsButton;
+                grid.Children.Add(equalsButton);
+                Grid.SetColumn(equalsButton, 2);
+
+                TextBox writeBox = new TextBox();
+                writeBox.BorderThickness = new Thickness(0, 0, 0, 2);
+                writeBox.Margin = new Thickness(10, 0, 0, 0);
+                writeBox.MinWidth = 15;
+                writeBox.Tag = filterParameter;
+                writeBox.SelectionChanged += Check_Int_Validation;
+                Grid.SetColumn(writeBox, 3);
+
+                panel.Children.Add(grid);
+                grid.Children.Add(writeBox);
+
+                return panel;
+            }
+            else return null;
+        }
+
+        private void Check_Int_Validation(Object sender, RoutedEventArgs e)
+        {
+            bool result;
+            Saveable saveable = new Saveable();
+            TextBox box = (TextBox)sender;
+            Parameter iparameter = (Parameter)box.Tag;
+
+            foreach (Saveable fsaveable in boolChecks)
+            {
+                if (fsaveable.ID == iparameter.ID)
+                {
+                    saveable = fsaveable;
+                }
+            }
+
+            boolChecks.Remove(saveable);
+
+            if (int.TryParse(box.Text, out int i))
+            {
+                result = true;
+                box.Foreground = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else if (box.Text == null || box.Text == "")
+            {
+                result = true;
+                box.Foreground = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+            }
+            else
+            {
+                result = false;
+                box.Foreground = new SolidColorBrush(Colors.Red);
+                box.BorderBrush = new SolidColorBrush(Colors.Red);
+            }
+            Parameter parameter = (Parameter)box.Tag;
+            saveable.ID = parameter.ID;
+            saveable.canSave = result;
+            boolChecks.Add(saveable);
+        }
+
+        
+        private void Smaller_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BorderBrush = new SolidColorBrush(Colors.SpringGreen);
+            FilterParameter filterParameter = (FilterParameter)button.Tag;
+            filterParameter.numberFilterType = FilterParameter.NumberFilterType.Smaller;
+            filterParameter.biggerButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+            filterParameter.equalsButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void Equals_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BorderBrush = new SolidColorBrush(Colors.SpringGreen);
+            FilterParameter filterParameter = (FilterParameter)button.Tag;
+            filterParameter.numberFilterType = FilterParameter.NumberFilterType.Equals;
+            filterParameter.biggerButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+            filterParameter.smallerButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void Bigger_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BorderBrush = new SolidColorBrush(Colors.SpringGreen);
+            FilterParameter filterParameter = (FilterParameter)button.Tag;
+            filterParameter.numberFilterType = FilterParameter.NumberFilterType.Bigger;
+            filterParameter.smallerButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+            filterParameter.equalsButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+        }
+
+        /*
 
         private void TypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -796,7 +1004,9 @@ namespace Pc_parts_lister
             SetCompButtonOutline(CapacityGrid, Filters.capacityCompMode);
         }
         #endregion
+        */
 
+        #region Old error logging system
         int currentErrorId = 1;
         int critErrors = 0;
         int WriteAnError(string message, Color color, bool IsCritical = false)
@@ -832,6 +1042,7 @@ namespace Pc_parts_lister
 
         bool ClearAnError(ref int errorId, bool IsCritical = false)
         {
+            /*
             if (errorId < powerErrorInt)
             {
                 powerErrorInt--;
@@ -856,6 +1067,7 @@ namespace Pc_parts_lister
             {
                 capacityCompErrorInt--;
             }
+            */
             SaveNErrorPanel.Children.RemoveAt(errorId);
             errorId = 0;
             CalculateIndex();
@@ -884,6 +1096,7 @@ namespace Pc_parts_lister
                 }
             }
         }
+        #endregion
 
         private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
         {
@@ -901,6 +1114,8 @@ namespace Pc_parts_lister
             }
             ChangeButtonBg(button, Filters.favoriteIconPath);
         }
+
+        /*
 
         #region Clearing specified filters reacts
         private void UnFilterFavorite_Click(object sender, RoutedEventArgs e)
@@ -1016,9 +1231,55 @@ namespace Pc_parts_lister
                 }
             }
         }
-        
+        */
         private void Save_Filter_Click(object sender, RoutedEventArgs e)
         {
+            bool canSave = true;
+            foreach (Saveable saveable in boolChecks)
+            {
+                if (!saveable.canSave)
+                {
+                    canSave = false;
+                }
+            }
+
+            if (canSave)
+            {
+                foreach (StackPanel panel in Stack_Panel_R.Children)
+                {
+                    Parameter currentParameter = (Parameter)panel.Tag;
+                    if (currentParameter.type == Parameter.Type.String)
+                    {
+                        ComboBox comboBox = (ComboBox)panel.Children[1];
+                        if (comboBox.SelectedItem != null)
+                        {
+
+                        }
+                    }
+                    else if (currentParameter.type == Parameter.Type.Number)
+                    {
+
+                    }
+                    else if (currentParameter.type == Parameter.Type.Boolean)
+                    {
+
+                    }
+                }
+
+                this.DialogResult = true;
+                this.Close();
+            }
+            else
+            {
+                var result = MessageBox.Show(
+                $"Nelze uložit filtry; zkontrolujte zadané parametry",
+                "Chyba",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+                return;
+            }
+
+            /*
             if (TypeBox.Text == "CPU")
             {
                 Filters.type = TypeBox.SelectedItem.ToString();
@@ -1112,11 +1373,26 @@ namespace Pc_parts_lister
             {
                 DialogResult = true;
             }
+            */
         }
-
+        
         private void ChangeButtonBg(Button button, string path)
         {
             button.Background = new ImageBrush(new BitmapImage(new Uri(path)));
+        }
+    }
+
+    public class FilterParameter : Parameter
+    {
+        public Button smallerButton;
+        public Button biggerButton;
+        public Button equalsButton;
+        public NumberFilterType numberFilterType;
+        public enum NumberFilterType
+        {
+            Smaller,
+            Bigger,
+            Equals
         }
     }
 }
