@@ -58,7 +58,7 @@ namespace Pc_parts_lister
                 if (parameter.ID == "Type")
                 {
                     StackPanel panel = CreatePanel(parameter);
-                    ComboBox comboBox = (ComboBox)panel.Children[1];
+                    ComboBox comboBox = (ComboBox)panel.Children[2];
                     comboBox.ItemsSource = parameter.values;
                     Stack_Panel_L.Children.Insert(0, panel);
                 }
@@ -180,6 +180,16 @@ namespace Pc_parts_lister
             textBlock.Text = parameter.Name;
             textBlock.FontWeight = FontWeights.SemiBold;
 
+            Button cancelButton = new Button();
+            cancelButton.Width = 10;
+            cancelButton.Height = 10;
+            cancelButton.BorderThickness = new Thickness(0);
+            cancelButton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/cancel_button.png")));
+            cancelButton.Click += Reset_Button_Click;
+            cancelButton.Tag = filterParameter;
+            cancelButton.Visibility = Visibility.Hidden;
+            filterParameter.resetButton = cancelButton;
+
             if (parameter.type != Parameter.Type.Number)
             {
                 panel.Orientation = Orientation.Horizontal;
@@ -191,7 +201,11 @@ namespace Pc_parts_lister
                 ComboBox comboBox = new ComboBox();
                 comboBox.ItemsSource = parameter.values;
                 comboBox.BorderThickness = new Thickness(0);
+                comboBox.Tag = filterParameter;
+                comboBox.SelectionChanged += ComboBox_Selection_Changed;
+                filterParameter.comboBox = comboBox;
 
+                panel.Children.Add(cancelButton);
                 panel.Children.Add(comboBox);
 
                 return panel;
@@ -200,6 +214,7 @@ namespace Pc_parts_lister
             {
                 Button button = new Button();
 
+                panel.Children.Add(cancelButton);
                 panel.Children.Add(button);
 
                 return panel;
@@ -340,6 +355,27 @@ namespace Pc_parts_lister
             filterParameter.numberFilterType = FilterParameter.NumberFilterType.Bigger;
             filterParameter.smallerButton.BorderBrush = new SolidColorBrush(Colors.Gray);
             filterParameter.equalsButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+        }
+
+        private void ComboBox_Selection_Changed(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            FilterParameter filterParameter = (FilterParameter)comboBox.Tag;
+            if (comboBox.SelectedItem != null)
+            {
+                filterParameter.resetButton.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Reset_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            FilterParameter filterParameter = (FilterParameter)button.Tag;
+            if (filterParameter.comboBox != null)
+            {
+                filterParameter.comboBox.SelectedItem = null;
+            }
+            button.Visibility = Visibility.Hidden;
         }
 
         /*
@@ -1253,10 +1289,11 @@ namespace Pc_parts_lister
                     Parameter currentParameter = (Parameter)panel.Tag;
                     if (currentParameter.type == Parameter.Type.String)
                     {
-                        ComboBox comboBox = (ComboBox)panel.Children[1];
+                        ComboBox comboBox = (ComboBox)panel.Children[2];
                         if (comboBox.SelectedItem != null)
                         {
-
+                            currentParameter.Value = comboBox.SelectedItem.ToString();
+                            filterParameters.Add((FilterParameter)currentParameter);
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
@@ -1394,6 +1431,8 @@ namespace Pc_parts_lister
         public Button smallerButton;
         public Button biggerButton;
         public Button equalsButton;
+        public Button resetButton;
+        public ComboBox comboBox;
         public NumberFilterType numberFilterType;
         public enum NumberFilterType
         {

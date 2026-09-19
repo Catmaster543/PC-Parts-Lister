@@ -131,6 +131,17 @@ namespace Pc_parts_lister
                                 }
                             }
                         }
+                        else if (parameter.type == Parameter.Type.String)
+                        {
+                            if (parameter.Value == filterParameter.Value)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
                     }
                     else
                     {
