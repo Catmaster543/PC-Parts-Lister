@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -76,21 +78,69 @@ namespace Pc_parts_lister
         }
 
         string inputText;
-        string selectedType;
-        bool searchBool;
-        bool typeBool;
-        bool manuBool;
-        bool statusBool;
-        bool serBool;
-        bool type2Bool;
-        bool modelBool;
-        bool powerBool;
-        bool countBool;
-        bool capacityBool;
-        bool favoriteBool;
-        bool subSerBool;
         private bool FilterComponents(object obj)   //Main method for filtering components
         {
+            bool result = true;
+            Component komponenta = obj as Component;
+            if (komponenta == null)
+            {
+                return false;
+            }
+            foreach (FilterParameter filterParameter in filterParameters)
+            {
+                foreach (Parameter parameter in komponenta.parameters)
+                {
+                    if (parameter.ID == filterParameter.ID)
+                    {
+                        if (parameter.type == Parameter.Type.Number)
+                        {
+                            if (int.TryParse(parameter.Value, out int pi) && int.TryParse(filterParameter.Value, out int fi))
+                            {
+                                if (filterParameter.numberFilterType == FilterParameter.NumberFilterType.Equals)
+                                {
+                                    if (pi == fi)
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else if (filterParameter.numberFilterType == FilterParameter.NumberFilterType.Smaller)
+                                {
+                                    if (pi <= fi)
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                                else if (filterParameter.numberFilterType == FilterParameter.NumberFilterType.Bigger)
+                                {
+                                    if (pi >= fi)
+                                    {
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+            /*
             searchBool = false;
             typeBool = false;
             manuBool = false;
@@ -133,6 +183,7 @@ namespace Pc_parts_lister
             }
 
             return false;
+            */
         }
 
             /*
@@ -358,6 +409,7 @@ namespace Pc_parts_lister
             Search.Visibility = Visibility.Visible;
         }
 
+        #region Click specific filtering
         private void Mb_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
@@ -422,6 +474,8 @@ namespace Pc_parts_lister
             Search.Visibility = Visibility.Visible;
         }
 
+        #endregion
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is Component komponenta)
@@ -467,10 +521,11 @@ namespace Pc_parts_lister
         
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
-            Filter_window Fwindow = new Filter_window(Filters, PossibleParameters);
+            Filter_window Fwindow = new Filter_window(Filters, PossibleParameters, this);
 
             if (Fwindow.ShowDialog() == true)
             {
+                Debug.WriteLine($"Dialog returned true");
                 CheckComponentsViewForNull();
             }
         }

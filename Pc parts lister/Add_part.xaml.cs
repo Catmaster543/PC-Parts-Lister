@@ -763,6 +763,9 @@ namespace Pc_parts_lister
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
                     {
+                        TextBox textBox = (TextBox)stackPanel.Children[1];
+                        currentParameter.Value = textBox.Text;
+
                         Komponenta.parameters.Remove(currentParameter);
                         Komponenta.parameters.Add(currentParameter);
                     }

@@ -161,6 +161,7 @@ namespace Pc_parts_lister
 
             PossibleParameter manuParameter = new PossibleParameter();
             manuParameter.Name = "Výrobce";
+            countParameter.ID = "Manufacturer";
             manuParameter.values = new List<string>();
             manuParameter.values.Add("MSI");
             manuParameter.values.Add("Gigabyte");
@@ -169,6 +170,7 @@ namespace Pc_parts_lister
 
             PossibleParameter serParameter = new PossibleParameter();
             serParameter.Name = "Série";
+            countParameter.ID = "Series";
             serParameter.values = new List<string>();
             serParameter.values.Add("Core");
             serParameter.values.Add("Atom");
@@ -177,26 +179,31 @@ namespace Pc_parts_lister
 
             PossibleParameter subSerParameter = new PossibleParameter();
             subSerParameter.Name = "Subsérie";
+            countParameter.ID = "Subseries";
             subSerParameter.type = Parameter.Type.String;
             parameters.Add(subSerParameter);
 
             PossibleParameter modelParameter = new PossibleParameter();
             modelParameter.Name = "Model";
+            countParameter.ID = "Model";
             modelParameter.type = Parameter.Type.String;
             parameters.Add(modelParameter);
 
             PossibleParameter capParameter = new PossibleParameter();
             capParameter.Name = "Kapacita";
+            countParameter.ID = "Capacity";
             capParameter.type = Parameter.Type.String;
             parameters.Add(capParameter);
 
             PossibleParameter subTypeParameter = new PossibleParameter();
             subTypeParameter.Name = "Subtyp";
+            countParameter.ID = "Subtype";
             subTypeParameter.type = Parameter.Type.String;
             parameters.Add(subTypeParameter);
 
             PossibleParameter powerParameter = new PossibleParameter();
             powerParameter.Name = "Výkon";
+            countParameter.ID = "Power";
             powerParameter.type = Parameter.Type.Number;
             parameters.Add(powerParameter);
         }

@@ -24,12 +24,15 @@ namespace Pc_parts_lister
 
         public List<Saveable> boolChecks = new List<Saveable>();
         public ObservableCollection<FilterParameter> filterParameters = new ObservableCollection<FilterParameter>();
-        public Filter_window(Lookup_window.SearchFilters filters, ObservableCollection<PossibleParameter> possibleParameters)
+
+        public Lookup_window lookup_window;
+        public Filter_window(Lookup_window.SearchFilters filters, ObservableCollection<PossibleParameter> possibleParameters, Lookup_window lookup_Window)
         {
             InitializeComponent();
 
             Filters = filters;
             DataContext = Filters;
+            lookup_window = lookup_Window;
 
             PossibleParameters = possibleParameters;
 
@@ -170,7 +173,6 @@ namespace Pc_parts_lister
             FilterParameter filterParameter = new FilterParameter();
             filterParameter.Name = parameter.Name;
             filterParameter.ID = parameter.ID;
-            filterParameter.Value = parameter.Value;
             filterParameter.type = parameter.type;
 
             panel.Tag = filterParameter;
@@ -287,6 +289,7 @@ namespace Pc_parts_lister
             if (int.TryParse(box.Text, out int i))
             {
                 result = true;
+                iparameter.Value = i.ToString();
                 box.Foreground = new SolidColorBrush(Colors.Black);
                 box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
             }
@@ -1258,7 +1261,10 @@ namespace Pc_parts_lister
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
                     {
-
+                        if (currentParameter.Value != null)
+                        {
+                            filterParameters.Add((FilterParameter)currentParameter);
+                        }
                     }
                     else if (currentParameter.type == Parameter.Type.Boolean)
                     {
@@ -1266,6 +1272,7 @@ namespace Pc_parts_lister
                     }
                 }
 
+                lookup_window.filterParameters = filterParameters;
                 this.DialogResult = true;
                 this.Close();
             }
@@ -1390,9 +1397,9 @@ namespace Pc_parts_lister
         public NumberFilterType numberFilterType;
         public enum NumberFilterType
         {
+            Equals,
             Smaller,
-            Bigger,
-            Equals
+            Bigger
         }
     }
 }
