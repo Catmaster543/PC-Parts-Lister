@@ -67,6 +67,11 @@ namespace Pc_parts_lister
                     StackPanel panel = CreatePanel(parameter);
                     Stack_Panel_L.Children.Insert(1, panel);
                 }
+                else if (parameter.ID == "Status")
+                {
+                    StackPanel panel = CreatePanel(parameter);
+                    Stack_Panel_L.Children.Insert(2, panel);
+                }
                 else
                 {
                     Stack_Panel_R.Children.Add(CreatePanel(parameter));
@@ -176,6 +181,7 @@ namespace Pc_parts_lister
             filterParameter.type = parameter.type;
 
             panel.Tag = filterParameter;
+            panel.Margin = new Thickness(0, 10, 0, 0);
 
             textBlock.Text = parameter.Name;
             textBlock.FontWeight = FontWeights.SemiBold;
@@ -307,18 +313,21 @@ namespace Pc_parts_lister
                 iparameter.Value = i.ToString();
                 box.Foreground = new SolidColorBrush(Colors.Black);
                 box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                Save_Button.IsEnabled = true;
             }
             else if (box.Text == null || box.Text == "")
             {
                 result = true;
                 box.Foreground = new SolidColorBrush(Colors.Black);
                 box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                Save_Button.IsEnabled = true;
             }
             else
             {
                 result = false;
                 box.Foreground = new SolidColorBrush(Colors.Red);
                 box.BorderBrush = new SolidColorBrush(Colors.Red);
+                Save_Button.IsEnabled = false;
             }
             Parameter parameter = (Parameter)box.Tag;
             saveable.ID = parameter.ID;
@@ -1284,6 +1293,34 @@ namespace Pc_parts_lister
 
             if (canSave)
             {
+                foreach (StackPanel panel in Stack_Panel_L.Children)
+                {
+                    if (panel.Name != "FavoriteButton_StackPanel")
+                    {
+                        Parameter currentParameter = (Parameter)panel.Tag;
+                        if (currentParameter.type == Parameter.Type.String)
+                        {
+                            ComboBox comboBox = (ComboBox)panel.Children[2];
+                            if (comboBox.SelectedItem != null)
+                            {
+                                currentParameter.Value = comboBox.SelectedItem.ToString();
+                                filterParameters.Add((FilterParameter)currentParameter);
+                            }
+                        }
+                        else if (currentParameter.type == Parameter.Type.Number)
+                        {
+                            if (currentParameter.Value != null)
+                            {
+                                filterParameters.Add((FilterParameter)currentParameter);
+                            }
+                        }
+                        else if (currentParameter.type == Parameter.Type.Boolean)
+                        {
+
+                        }
+                    }
+                    
+                }
                 foreach (StackPanel panel in Stack_Panel_R.Children)
                 {
                     Parameter currentParameter = (Parameter)panel.Tag;

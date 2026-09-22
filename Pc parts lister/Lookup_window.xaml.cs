@@ -88,10 +88,12 @@ namespace Pc_parts_lister
             }
             foreach (FilterParameter filterParameter in filterParameters)
             {
+                bool found = false;
                 foreach (Parameter parameter in komponenta.parameters)
                 {
                     if (parameter.ID == filterParameter.ID)
                     {
+                        found = true;
                         if (parameter.type == Parameter.Type.Number)
                         {
                             if (int.TryParse(parameter.Value, out int pi) && int.TryParse(filterParameter.Value, out int fi))
@@ -100,7 +102,7 @@ namespace Pc_parts_lister
                                 {
                                     if (pi == fi)
                                     {
-                                        return true;
+                                        //return true;
                                     }
                                     else
                                     {
@@ -111,7 +113,7 @@ namespace Pc_parts_lister
                                 {
                                     if (pi <= fi)
                                     {
-                                        return true;
+                                        //return true;
                                     }
                                     else
                                     {
@@ -122,7 +124,7 @@ namespace Pc_parts_lister
                                 {
                                     if (pi >= fi)
                                     {
-                                        return true;
+                                        //return true;
                                     }
                                     else
                                     {
@@ -135,23 +137,31 @@ namespace Pc_parts_lister
                         {
                             if (parameter.Value == filterParameter.Value)
                             {
-                                return true;
+                                //return true;
                             }
                             else
                             {
                                 return false;
                             }
                         }
+                        break;
                     }
-                    else
+                    
+                    /*else
                     {
                         return false;
                     }
+                    */
+                }
+                if (!found)
+                {
+                    return false;
                 }
             }
 
             return true;
-            /*
+        }
+/*
             searchBool = false;
             typeBool = false;
             manuBool = false;
@@ -195,8 +205,6 @@ namespace Pc_parts_lister
 
             return false;
             */
-        }
-
             /*
             if (Filters.type == component.Type)
             {
@@ -543,20 +551,7 @@ namespace Pc_parts_lister
 
         private void ClearF_Click(object sender, RoutedEventArgs e)
         {
-            Filters.type = null;
-            Filters.status = null;
-            Filters.manufacturer = null;
-            Filters.series = null;
-            Filters.type2 = null;
-            Filters.model = null;
-            Filters.power = 0;
-            Filters.powerCompMode = null;
-            Filters.count = 0;
-            Filters.countCompMode = null;
-            Filters.capacity = 0;
-            Filters.capacityCompMode = null;
-            Filters.filterFavorite = false;
-            Filters.favorite = false;
+            filterParameters.Clear();
 
             CheckComponentsViewForNull();
         }

@@ -40,10 +40,12 @@ namespace Pc_parts_lister
 
             ReloadAllImages();
 
+            /*
             if (komponenta.Status != null)
             {
                 StatusBox.SelectedItem = komponenta.Status;
             }
+            */
 
             /*
             if (komponenta.Type != null)
@@ -144,10 +146,12 @@ namespace Pc_parts_lister
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (StatusBox.SelectedItem != null)
             {
                 Komponenta.Status = StatusBox.SelectedItem.ToString();
             }
+            */
             Komponenta.Description = Description_TextBox.Text;
             Close();
         }

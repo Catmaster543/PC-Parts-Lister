@@ -35,9 +35,8 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         
-                        <StackPanel Orientation="Horizontal" Grid.Column="1">
-                            <TextBlock x:Name="StatusText" Text="Stav" HorizontalAlignment="Left" FontWeight="Bold" FontSize="20" Margin="20,0,0,0"/>
-                            <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" Margin="10,0,0,0" FontSize="20" BorderThickness="0"/>
+                        <StackPanel Name="StackPanel1" Orientation="Horizontal" Grid.ColumnSpan="2">
+                            
                         </StackPanel>
                     </Grid>
                     <Button Width="60" Height="60" BorderThickness="0" HorizontalAlignment="Right" Click="Favorite_ButtonClick" Name="Favorite_Button" Grid.Column="2">
@@ -110,7 +109,7 @@
             <TextBlock x:Name="Qttext" Text="Množství:"/>
             <TextBox x:Name="QtBox" TextChanged="Count_TextChanged"/!-->
 
-            <Button Content="Uložit" Click="Save_Click" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="SpringGreen" FontSize="12" FontWeight="Bold"/>
+            <Button Name="Save_Button" Content="Uložit" Click="Save_Click" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="SpringGreen" FontSize="12" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

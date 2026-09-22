@@ -17,8 +17,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Name="Stack_Panel_L" Grid.Column="0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="TypeText" Text="Typ:" FontWeight="SemiBold"/>
+            <!-- StackPanel Orientation="Horizontal">
+                < TextBlock x:Name="TypeText" Text="Typ:" FontWeight="SemiBold"/>
                 <Button  Name="UnFilterType_Button" Width="10" Height="10" BorderThickness="0" Margin="5,0,0,0" Visibility="Collapsed">
                     <Button.Background>
                         <ImageBrush ImageSource="/cancel_button.png"/>
@@ -35,18 +35,8 @@
                     </Button.Background>
                 </Button>
             </StackPanel>
-            <ComboBox x:Name="ManufacturerBox"  IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
-
-            <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="StatusText" Text="Stav:" FontWeight="SemiBold"/>
-                <Button  Name="UnFilterStatus_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/cancel_button.png"/>
-                    </Button.Background>
-                </Button>
-            </StackPanel>
-            <ComboBox x:Name="StatusBox" IsEditable="False" Text="Vyber" />
-            <StackPanel>
+            <ComboBox x:Name="ManufacturerBox"  IsEditable="True" Text="Vyber, nebo napiš vlastní"/-->
+            <!--StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="CountText" Text="Množství:" FontWeight="SemiBold"/>
                     <Button  Name="UnFilterCount_Button" Width="10" Height="10" VerticalAlignment="Top" BorderThickness="0" Visibility="Collapsed">
@@ -80,7 +70,7 @@
                     </Button>
                     <TextBox x:Name="CountBox" Grid.Column="3"  BorderBrush="#FFB3ABAB"/>
                 </Grid>
-            </StackPanel>
+            </StackPanel-->
             
             <!--StackPanel Orientation="Horizontal">
                 <Grid Height="20">
@@ -97,7 +87,7 @@
                     </Button>
                 </Grid>
             </StackPanel-->
-            <StackPanel Margin="7" Orientation="Horizontal">
+            <StackPanel Name="FavoriteButton_StackPanel" Margin="7" Orientation="Horizontal">
                 <Button Width="30" Height="30" BorderThickness="0.3" HorizontalAlignment="Left"  Name="Favorite_Button">
                     <Button.Background>
                         <ImageBrush Stretch="Uniform" ImageSource="{Binding favoriteIconPath}"/>

@@ -67,7 +67,7 @@ namespace Pc_parts_lister
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Favorited { get; set; }
-        public string Status { get; set; }
+        //public string Status { get; set; }
 
         private string imagePath;
         public string ImagePath
@@ -159,9 +159,21 @@ namespace Pc_parts_lister
             countParameter.type = PossibleParameter.Type.Number;
             parameters.Add(countParameter);
 
+            PossibleParameter statusParameter = new PossibleParameter();
+            statusParameter.Name = "Stav";
+            statusParameter.ID = "Status";
+            statusParameter.values = new List<string>();
+            statusParameter.values.Add("Funkční");
+            statusParameter.values.Add("Ok");
+            statusParameter.values.Add("Kritický");
+            statusParameter.values.Add("Nefunkční");
+            statusParameter.values.Add("Opravený");
+            statusParameter.type = PossibleParameter.Type.String;
+            parameters.Add(statusParameter);
+
             PossibleParameter manuParameter = new PossibleParameter();
             manuParameter.Name = "Výrobce";
-            countParameter.ID = "Manufacturer";
+            manuParameter.ID = "Manufacturer";
             manuParameter.values = new List<string>();
             manuParameter.values.Add("MSI");
             manuParameter.values.Add("Gigabyte");
@@ -170,7 +182,7 @@ namespace Pc_parts_lister
 
             PossibleParameter serParameter = new PossibleParameter();
             serParameter.Name = "Série";
-            countParameter.ID = "Series";
+            serParameter.ID = "Series";
             serParameter.values = new List<string>();
             serParameter.values.Add("Core");
             serParameter.values.Add("Atom");
@@ -179,31 +191,31 @@ namespace Pc_parts_lister
 
             PossibleParameter subSerParameter = new PossibleParameter();
             subSerParameter.Name = "Subsérie";
-            countParameter.ID = "Subseries";
+            subSerParameter.ID = "Subseries";
             subSerParameter.type = Parameter.Type.String;
             parameters.Add(subSerParameter);
 
             PossibleParameter modelParameter = new PossibleParameter();
             modelParameter.Name = "Model";
-            countParameter.ID = "Model";
+            modelParameter.ID = "Model";
             modelParameter.type = Parameter.Type.String;
             parameters.Add(modelParameter);
 
             PossibleParameter capParameter = new PossibleParameter();
             capParameter.Name = "Kapacita";
-            countParameter.ID = "Capacity";
+            capParameter.ID = "Capacity";
             capParameter.type = Parameter.Type.String;
             parameters.Add(capParameter);
 
             PossibleParameter subTypeParameter = new PossibleParameter();
             subTypeParameter.Name = "Subtyp";
-            countParameter.ID = "Subtype";
+            subTypeParameter.ID = "Subtype";
             subTypeParameter.type = Parameter.Type.String;
             parameters.Add(subTypeParameter);
 
             PossibleParameter powerParameter = new PossibleParameter();
             powerParameter.Name = "Výkon";
-            countParameter.ID = "Power";
+            powerParameter.ID = "Power";
             powerParameter.type = Parameter.Type.Number;
             parameters.Add(powerParameter);
         }
