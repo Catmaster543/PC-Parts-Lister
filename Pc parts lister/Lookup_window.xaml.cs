@@ -24,8 +24,6 @@ namespace Pc_parts_lister
         public ObservableCollection<Component> Components { get; }
         public ICollectionView ComponentsView { get; }
 
-        private SearchFilters Filters = new SearchFilters();
-
         private ObservableCollection<PossibleParameter> PossibleParameters = new ObservableCollection<PossibleParameter>();
 
         public ObservableCollection<FilterParameter> filterParameters = new ObservableCollection<FilterParameter>();
@@ -44,39 +42,6 @@ namespace Pc_parts_lister
             DataContext = this;
         }
 
-        public class SearchFilters
-        {
-            public string type { get; set; }
-            public string manufacturer {  get; set; }
-            public string status { get; set; }
-            public string series { get; set; }
-            public string subseries { get; set; }
-            public string type2 { get; set; }
-            public string model { get; set; }
-            public string powerCompMode { get; set; }
-            public int power { get; set; }
-            public string countCompMode { get; set; }
-            public int count { get; set; }
-            public string capacityCompMode { get; set; }
-            public int capacity { get; set; }
-            public bool favorite { get; set; }
-            public string favoriteIconPath
-            {
-                get
-                {
-                    if (favorite)
-                    {
-                        return "pack://application:,,,/favorite_button_on.png";
-                    }
-                    else
-                    {
-                        return "pack://application:,,,/favorite_button.png";
-                    }
-                }
-            }
-            public bool filterFavorite {  get; set; }
-        }
-
         string inputText;
         private bool FilterComponents(object obj)   //Main method for filtering components
         {
@@ -85,6 +50,10 @@ namespace Pc_parts_lister
             if (komponenta == null)
             {
                 return false;
+            }
+            if (komponenta.Name.ToLower().Contains(Search_Box.Text.ToLower()))
+            {
+                return true;
             }
             foreach (FilterParameter filterParameter in filterParameters)
             {
@@ -416,14 +385,18 @@ namespace Pc_parts_lister
 
         private void Filtering_Changed(object sender, RoutedEventArgs e)
         {
-            inputText = Search_Box.Text;
+            filterParameters.Clear();
+            FilterParameter filterParameter = new FilterParameter();
+            filterParameter.ID = "Name";
+            filterParameter.Value = Search_Box.Text;
+            filterParameters.Add(filterParameter);
             CheckComponentsViewForNull();
         }
 
         private void Hledat_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "all";
+
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -432,7 +405,12 @@ namespace Pc_parts_lister
         private void Mb_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "Mb";
+            filterParameters.Clear();
+            FilterParameter mb_filter = new FilterParameter();
+            mb_filter.type = FilterParameter.Type.String;
+            mb_filter.ID = "Type";
+            mb_filter.Value = "Mb";
+            filterParameters.Add(mb_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -440,7 +418,12 @@ namespace Pc_parts_lister
         private void Cpu_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "CPU";
+            filterParameters.Clear();
+            FilterParameter cpu_filter = new FilterParameter();
+            cpu_filter.type = FilterParameter.Type.String;
+            cpu_filter.ID = "Type";
+            cpu_filter.Value = "CPU";
+            filterParameters.Add(cpu_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -448,7 +431,12 @@ namespace Pc_parts_lister
         private void Ram_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "RAM";
+            filterParameters.Clear();
+            FilterParameter ram_filter = new FilterParameter();
+            ram_filter.type = FilterParameter.Type.String;
+            ram_filter.ID = "Type";
+            ram_filter.Value = "RAM";
+            filterParameters.Add(ram_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -456,7 +444,12 @@ namespace Pc_parts_lister
         private void Gpu_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "GPU";
+            filterParameters.Clear();
+            FilterParameter gpu_filter = new FilterParameter();
+            gpu_filter.type = FilterParameter.Type.String;
+            gpu_filter.ID = "Type";
+            gpu_filter.Value = "GPU";
+            filterParameters.Add(gpu_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -464,7 +457,12 @@ namespace Pc_parts_lister
         private void Psu_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "PSU";
+            filterParameters.Clear();
+            FilterParameter psu_filter = new FilterParameter();
+            psu_filter.type = FilterParameter.Type.String;
+            psu_filter.ID = "Type";
+            psu_filter.Value = "PSU";
+            filterParameters.Add(psu_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -472,7 +470,12 @@ namespace Pc_parts_lister
         private void Disk_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "Disk";
+            filterParameters.Clear();
+            FilterParameter disk_filter = new FilterParameter();
+            disk_filter.type = FilterParameter.Type.String;
+            disk_filter.ID = "Type";
+            disk_filter.Value = "Disk";
+            filterParameters.Add(disk_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -480,7 +483,12 @@ namespace Pc_parts_lister
         private void Case_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "Case";
+            filterParameters.Clear();
+            FilterParameter case_filter = new FilterParameter();
+            case_filter.type = FilterParameter.Type.String;
+            case_filter.ID = "Type";
+            case_filter.Value = "Case";
+            filterParameters.Add(case_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -488,7 +496,12 @@ namespace Pc_parts_lister
         private void Other_click(object sender, RoutedEventArgs e)
         {
             Lookup.Visibility = Visibility.Collapsed;
-            Filters.type = "Jiné";
+            filterParameters.Clear();
+            FilterParameter else_filter = new FilterParameter();
+            else_filter.type = FilterParameter.Type.String;
+            else_filter.ID = "Type";
+            else_filter.Value = "Jiné";
+            filterParameters.Add(else_filter);
             CheckComponentsViewForNull();
             Search.Visibility = Visibility.Visible;
         }
@@ -540,7 +553,7 @@ namespace Pc_parts_lister
         
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
-            Filter_window Fwindow = new Filter_window(Filters, PossibleParameters, this);
+            Filter_window Fwindow = new Filter_window(PossibleParameters, this);
 
             if (Fwindow.ShowDialog() == true)
             {

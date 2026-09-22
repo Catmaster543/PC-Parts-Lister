@@ -67,7 +67,6 @@ namespace Pc_parts_lister
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Favorited { get; set; }
-        //public string Status { get; set; }
 
         private string imagePath;
         public string ImagePath

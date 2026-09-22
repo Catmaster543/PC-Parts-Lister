@@ -19,19 +19,16 @@ namespace Pc_parts_lister
 {
     public partial class Filter_window : Window
     {
-        public Lookup_window.SearchFilters Filters { get; }
         private ObservableCollection<PossibleParameter> PossibleParameters;
 
         public List<Saveable> boolChecks = new List<Saveable>();
         public ObservableCollection<FilterParameter> filterParameters = new ObservableCollection<FilterParameter>();
 
         public Lookup_window lookup_window;
-        public Filter_window(Lookup_window.SearchFilters filters, ObservableCollection<PossibleParameter> possibleParameters, Lookup_window lookup_Window)
+        public Filter_window(ObservableCollection<PossibleParameter> possibleParameters, Lookup_window lookup_Window)
         {
             InitializeComponent();
 
-            Filters = filters;
-            DataContext = Filters;
             lookup_window = lookup_Window;
 
             PossibleParameters = possibleParameters;
@@ -1145,7 +1142,7 @@ namespace Pc_parts_lister
             }
         }
         #endregion
-
+        /*
         private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -1162,6 +1159,7 @@ namespace Pc_parts_lister
             }
             ChangeButtonBg(button, Filters.favoriteIconPath);
         }
+        */
 
         /*
 
