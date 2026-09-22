@@ -51,7 +51,7 @@ namespace Pc_parts_lister
             {
                 return false;
             }
-            if (komponenta.Name.ToLower().Contains(Search_Box.Text.ToLower()))
+            if (komponenta.Name.ToLower().Contains(Search_Box.Text.ToLower()) && Search_Box.Text != "" && Search_Box.Text != null)
             {
                 return true;
             }
@@ -60,6 +60,14 @@ namespace Pc_parts_lister
                 bool found = false;
                 foreach (Parameter parameter in komponenta.parameters)
                 {
+                    if (filterParameter.ID == "fav" && komponenta.Favorited)
+                    {
+                        found = true;
+                    }
+                    else if (filterParameter.ID == "fav" && !komponenta.Favorited)
+                    {
+                        return false;
+                    }
                     if (parameter.ID == filterParameter.ID)
                     {
                         found = true;

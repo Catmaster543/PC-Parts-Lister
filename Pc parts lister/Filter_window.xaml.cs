@@ -25,6 +25,7 @@ namespace Pc_parts_lister
         public ObservableCollection<FilterParameter> filterParameters = new ObservableCollection<FilterParameter>();
 
         public Lookup_window lookup_window;
+        private bool filterFav = false;
         public Filter_window(ObservableCollection<PossibleParameter> possibleParameters, Lookup_window lookup_Window)
         {
             InitializeComponent();
@@ -49,6 +50,9 @@ namespace Pc_parts_lister
             TypeBox2.Visibility = Visibility.Collapsed;
             */
             #endregion
+
+            ChangeButtonBg(Favorite_Button, "pack://application:,,,/favorite_button.png");
+            filterFav = true;
 
             foreach (PossibleParameter parameter in possibleParameters)
             {
@@ -165,7 +169,6 @@ namespace Pc_parts_lister
         }
 
         */
-        public Component Component { get; private set; }
 
         public StackPanel CreatePanel(PossibleParameter parameter)
         {
@@ -1142,24 +1145,29 @@ namespace Pc_parts_lister
             }
         }
         #endregion
-        /*
+        
         private void Favorite_ButtonClick(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            Filters.filterFavorite = true;
-            UnFilterFavorite_Button.Visibility = Visibility.Visible;
+
+            //UnFilterFavorite_Button.Visibility = Visibility.Visible;
             Favorite_Button.BorderBrush = new SolidColorBrush(Colors.Green);
-            if (Filters.favorite)
+            if (filterFav)
             {
-                Filters.favorite = false;
+                filterFav = false;
+                ChangeButtonBg(Favorite_Button, "pack://application:,,,/favorite_button_on.png");
+                FilterParameter filterParameter = new FilterParameter();
+                filterParameter.ID = "fav";
+                filterParameter.type = FilterParameter.Type.Boolean;
+                filterParameters.Add(filterParameter);
             }
-            else if (!Filters.favorite)
+            else
             {
-                Filters.favorite = true;
-            }
-            ChangeButtonBg(button, Filters.favoriteIconPath);
+                filterFav = true;
+                ChangeButtonBg(Favorite_Button, "pack://application:,,,/favorite_button.png");
+                filterParameters.Clear();
+            }            
         }
-        */
 
         /*
 
@@ -1458,6 +1466,11 @@ namespace Pc_parts_lister
         private void ChangeButtonBg(Button button, string path)
         {
             button.Background = new ImageBrush(new BitmapImage(new Uri(path)));
+        }
+
+        private void UnFilterFavorite_Button_Click(object sender, RoutedEventArgs e)
+        {
+            filterFav = true;
         }
     }
 

@@ -127,10 +127,6 @@
 
                     <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
 
-                    <DataGridTextColumn Header="Typ" Binding="{Binding Type}" IsReadOnly="True"/>
-
-                    <DataGridTextColumn Header="Výrobce" Binding="{Binding Manufacturer}" IsReadOnly="True"/>
-
                     <!-- Tlačítka -->
                     <DataGridTemplateColumn Header="Akce">
                         <DataGridTemplateColumn.CellTemplate>
