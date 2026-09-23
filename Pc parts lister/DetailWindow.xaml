@@ -35,27 +35,8 @@
         </StackPanel>
         <TextBlock Name="Null_Main_Pic_TextBlock" Text="Komponenta nemá fotku." HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="23"/>
 
-        <StackPanel Margin="10" Grid.Column="1" Grid.Row="1">
-
-            <TextBlock Text="{Binding Type, StringFormat=Typ: {0}}" x:Name="TypeBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding SubType, StringFormat=Subtyp: {0}}" x:Name="TypeBox2" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Series, StringFormat=Série: {0}}" x:Name="SerBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding SubSeries, StringFormat=SubSérie: {0}}" x:Name="SubSerBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Model, StringFormat=Model: {0}}" x:Name="ModelBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Capacity, StringFormat=Paměť: {0} GB}" x:Name="CapacityBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Power, StringFormat=Výkon: {0}}" x:Name="PowerBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Manufacturer, StringFormat=Výrobce: {0}}" x:Name="ManufacturerBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Quantity, StringFormat=Množství: {0}}" x:Name="QtBox" FontSize="20" FontWeight="Bold"/>
-
-            <TextBlock Text="{Binding Status, StringFormat=Stav: {0}}" x:Name="StatusBox" FontSize="20" FontWeight="Bold"/>
+        <StackPanel Name="Parameters_StackPanel" Margin="10" Grid.Column="1" Grid.Row="1">
+            
         </StackPanel>
         <!-- Původ z Edit window! -->
         <ScrollViewer Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">

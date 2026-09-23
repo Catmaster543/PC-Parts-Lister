@@ -1,7 +1,6 @@
 ﻿using Pc_parts_lister;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -24,6 +23,8 @@ namespace Pc_parts_lister
     {
         public Component Komponenta { get; }
 
+        public List<Saveable> boolChecks = new List<Saveable>();
+
         public DetailWindow(Component komponenta)
         {
             InitializeComponent();
@@ -33,7 +34,10 @@ namespace Pc_parts_lister
 
             MarkDownRenderer markDownRenderer = new MarkDownRenderer();
 
-            Description_FlowDocument.Document = markDownRenderer.Render(Komponenta.Description);
+            if (Komponenta.Description != null)
+            {
+                Description_FlowDocument.Document = markDownRenderer.Render(Komponenta.Description);
+            }
 
             if (komponenta.imagePaths.Count > 0)
             {
@@ -45,11 +49,61 @@ namespace Pc_parts_lister
                 Null_Main_Pic_TextBlock.Visibility = Visibility.Collapsed;
             }
 
-            #region Hiding
-            PowerBox.Visibility = Visibility.Collapsed;
-            CapacityBox.Visibility = Visibility.Collapsed;
-            #endregion
+            foreach (Parameter parameter in komponenta.parameters)
+            {
+                StackPanel panel = CreatePanel(parameter);
+                Parameters_StackPanel.Children.Add(panel);
+            }
 
+            
+        }
+        public StackPanel CreatePanel(Parameter parameter)
+        {
+            StackPanel panel = new StackPanel();
+            TextBlock textBlock = new TextBlock();
+            panel.Orientation = Orientation.Horizontal;
+            panel.Tag = parameter;
+            panel.Margin = new Thickness(10, 0, 0, 0);
+            textBlock.Text = ($"{ parameter.Name}: {parameter.Value}");
+            textBlock.FontWeight = FontWeights.Bold;
+            textBlock.FontSize = 20;
+            panel.Children.Add(textBlock);
+            /*if (parameter.type == Parameter.Type.String)
+                {
+                    ComboBox comboBox = new ComboBox();
+                    comboBox.ItemsSource = parameter.values;
+                    comboBox.Margin = new Thickness(10, 0, 0, 0);
+                    comboBox.BorderThickness = new Thickness(0);
+                    comboBox.FontSize = 20;
+
+                    panel.Children.Add(comboBox);
+
+                    return panel;
+                }
+                else if (parameter.type == Parameter.Type.Boolean)
+                {
+                    Button button = new Button();
+
+                    panel.Children.Add(button);
+
+                    return panel;
+                }
+                else if (parameter.type == Parameter.Type.Number)
+                {
+                    TextBox box = new TextBox();
+                    box.BorderThickness = new Thickness(0, 0, 0, 2);
+                    box.Margin = new Thickness(10, 0, 0, 0);
+                    box.MinWidth = 15;
+                    box.FontSize = 20;
+                    box.Tag = parameter;
+                    box.SelectionChanged += Check_Int_Validation;
+
+                    panel.Children.Add(box);
+
+                    return panel;
+                }*/
+            return panel;
+        }
             /*
             if (Komponenta.Type == "CPU")
             {
@@ -110,9 +164,6 @@ namespace Pc_parts_lister
             document.Blocks.Add(paragraph);
             Description_FlowDocument.Document = document;
             */
-        }
-
-
 
         // Původ z Edit window
         void ConstructAnImageFrame(string imagePath)
@@ -169,7 +220,6 @@ namespace Pc_parts_lister
             Close();
         }
     }
-
 
 
     public class MarkDownRenderer
