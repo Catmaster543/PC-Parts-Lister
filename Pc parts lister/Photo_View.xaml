@@ -17,6 +17,6 @@
                 <ImageBrush ImageSource="/next_image_button.png"/>
             </Button.Background>
         </Button>
-        <Image Name="mainImage" Source="/cancel_button.png" MaxHeight="450" MaxWidth="800"/>
+        <Image Name="mainImage" Source="/cancel_button.png" MaxHeight="450" MaxWidth="750"/>
     </Grid>
 </Window>

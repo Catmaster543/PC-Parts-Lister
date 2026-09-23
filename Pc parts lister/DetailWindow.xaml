@@ -35,9 +35,12 @@
         </StackPanel>
         <TextBlock Name="Null_Main_Pic_TextBlock" Text="Komponenta nemá fotku." HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="23"/>
 
-        <StackPanel Name="Parameters_StackPanel" Margin="10" Grid.Column="1" Grid.Row="1">
+        <ScrollViewer Grid.Column="1" Grid.Row="1" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">
+            <StackPanel Name="Parameters_StackPanel" Margin="10">
             
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        
         <!-- Původ z Edit window! -->
         <ScrollViewer Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">
             <StackPanel Name="ImagesPanel" Margin="7" CanVerticallyScroll="False" Orientation="Horizontal">

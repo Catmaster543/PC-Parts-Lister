@@ -43,7 +43,7 @@ namespace Pc_parts_lister
 
             MainPicButton.Click += OpenImage_Click;
 
-            if (komponenta.FullImagePath != null || komponenta.FullImagePath != "")
+            if (komponenta.FullImagePath != null && komponenta.FullImagePath != "")
             {
                 SelectMainPic_Button.Visibility = Visibility.Collapsed;
                 MainPicButton.Height = 250;
@@ -189,6 +189,16 @@ namespace Pc_parts_lister
                 box.Tag = parameter;
                 box.SelectionChanged += Check_Int_Validation;
 
+                bool found = false;
+                foreach (Parameter kparameter in Komponenta.parameters)
+                {
+                    if (kparameter.ID == parameter.ID)
+                    {
+                        found = true;
+                        box.Text = kparameter.Value;
+                    }
+                }
+
                 panel.Children.Add(box);
 
                 return panel;
@@ -244,8 +254,10 @@ namespace Pc_parts_lister
         {
             Close();
         }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            Komponenta.parameters.Clear();
             foreach (StackPanel panel in Parameters_Panel.Children)
             {
                 PossibleParameter parameter = (PossibleParameter)panel.Tag;
@@ -443,8 +455,11 @@ namespace Pc_parts_lister
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
 
-            File.Delete(Komponenta.FullImagePath);
-
+            if (Komponenta.FullImagePath != null)
+            {
+                File.Delete(Komponenta.FullImagePath);
+            }
+            
             if (dialog.ShowDialog() == true)
             {
                 string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");

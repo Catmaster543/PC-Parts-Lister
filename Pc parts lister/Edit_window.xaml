@@ -36,7 +36,7 @@
             
         </StackPanel>
         <StackPanel Name="MainImagePanel" Margin="10" Grid.Column="0" Grid.Row="1">
-            <Button x:Name="MainPicButton" Height="270" Tag="{Binding FullImagePath}" BorderThickness="0" Background="{x:Null}">
+            <Button x:Name="MainPicButton" Height="250" Tag="{Binding FullImagePath}" BorderThickness="0" Background="{x:Null}">
                 <Image Name="Main_Pic" Source="{Binding FullImagePath}" Stretch="Uniform"/>
             </Button>
             <Button Name="SelectMainPic_Button" Content="Vybrat obrázek" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold" Height="29"/>

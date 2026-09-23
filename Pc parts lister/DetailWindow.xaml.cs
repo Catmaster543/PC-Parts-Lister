@@ -55,7 +55,22 @@ namespace Pc_parts_lister
                 Parameters_StackPanel.Children.Add(panel);
             }
 
-            
+            MainPicButton.Click += OpenImage_Click;
+
+            if (Komponenta.imagePaths != null)
+            {
+                for (int i = 0; i < Komponenta.imagePaths.Count; i++)
+                {
+                    if (Komponenta.imagePaths[i] != null && File.Exists(Komponenta.imagePaths[i]))
+                    {
+                        ConstructAnImageFrame(Komponenta.imagePaths[i]);
+                    }
+                    else if (!File.Exists(Komponenta.imagePaths[i]))
+                    {
+                        Komponenta.imagePaths.Remove(Komponenta.imagePaths[i]);
+                    }
+                }
+            }
         }
         public StackPanel CreatePanel(Parameter parameter)
         {
@@ -68,40 +83,6 @@ namespace Pc_parts_lister
             textBlock.FontWeight = FontWeights.Bold;
             textBlock.FontSize = 20;
             panel.Children.Add(textBlock);
-            /*if (parameter.type == Parameter.Type.String)
-                {
-                    ComboBox comboBox = new ComboBox();
-                    comboBox.ItemsSource = parameter.values;
-                    comboBox.Margin = new Thickness(10, 0, 0, 0);
-                    comboBox.BorderThickness = new Thickness(0);
-                    comboBox.FontSize = 20;
-
-                    panel.Children.Add(comboBox);
-
-                    return panel;
-                }
-                else if (parameter.type == Parameter.Type.Boolean)
-                {
-                    Button button = new Button();
-
-                    panel.Children.Add(button);
-
-                    return panel;
-                }
-                else if (parameter.type == Parameter.Type.Number)
-                {
-                    TextBox box = new TextBox();
-                    box.BorderThickness = new Thickness(0, 0, 0, 2);
-                    box.Margin = new Thickness(10, 0, 0, 0);
-                    box.MinWidth = 15;
-                    box.FontSize = 20;
-                    box.Tag = parameter;
-                    box.SelectionChanged += Check_Int_Validation;
-
-                    panel.Children.Add(box);
-
-                    return panel;
-                }*/
             return panel;
         }
             /*
@@ -140,29 +121,6 @@ namespace Pc_parts_lister
                 SerBox.Visibility = Visibility.Collapsed;
                 SubSerBox.Visibility = Visibility.Collapsed;
             }
-
-            MainPicButton.Click += OpenImage_Click;
-
-            if (Komponenta.imagePaths != null)
-            {
-                for (int i = 0; i < Komponenta.imagePaths.Count; i++)
-                {
-                    if (Komponenta.imagePaths[i] != null && File.Exists(Komponenta.imagePaths[i]))
-                    {
-                        ConstructAnImageFrame(Komponenta.imagePaths[i]);
-                    }
-                    else if (!File.Exists(Komponenta.imagePaths[i]))
-                    {
-                        Komponenta.imagePaths.Remove(Komponenta.imagePaths[i]);
-                    }
-                }
-            }
-            /* FlowDoc testground
-            FlowDocument document = new FlowDocument();
-            Paragraph paragraph = new Paragraph();
-            paragraph.Inlines.Add(new Run("Hello stupid FlowDoctor"));
-            document.Blocks.Add(paragraph);
-            Description_FlowDocument.Document = document;
             */
 
         // Původ z Edit window
