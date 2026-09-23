@@ -548,7 +548,7 @@ namespace Pc_parts_lister
         {
             if (sender is Button button && button.DataContext is Component komponenta)
             {
-                Edit_window Ewindow = new Edit_window(komponenta);
+                Edit_window Ewindow = new Edit_window(komponenta, PossibleParameters);
                 Ewindow.ShowDialog();
             }
         }

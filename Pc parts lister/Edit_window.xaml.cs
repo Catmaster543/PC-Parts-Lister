@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.IO;
@@ -24,11 +25,21 @@ namespace Pc_parts_lister
     public partial class Edit_window : Window
     {
         public Component Komponenta { get; set; }
-        public Edit_window(Component komponenta)
+        public List<Saveable> boolChecks = new List<Saveable>();
+        public ObservableCollection<PossibleParameter> possibleParameters = new ObservableCollection<PossibleParameter>();
+        public Edit_window(Component komponenta, ObservableCollection<PossibleParameter> impossibleParameters)
         {
             InitializeComponent();
             Komponenta = komponenta;
             DataContext = Komponenta;
+
+            possibleParameters = impossibleParameters;
+
+            foreach (PossibleParameter possibleParameter in possibleParameters)
+            {
+                StackPanel panel = CreatePanel(possibleParameter);
+                Parameters_Panel.Children.Add(panel);
+            }
 
             MainPicButton.Click += OpenImage_Click;
 
@@ -40,25 +51,12 @@ namespace Pc_parts_lister
 
             ReloadAllImages();
 
-            /*
-            if (komponenta.Status != null)
-            {
-                StatusBox.SelectedItem = komponenta.Status;
-            }
-            */
-
-            /*
-            if (komponenta.Type != null)
-            {
-                Type_Box.SelectedItem = komponenta.Type;
-            }
-            */
-
             if (komponenta.FullImagePath  != null)
             {
                 EditMainPic_Button.Visibility = Visibility.Visible;
             }
 
+            /*
             Type_Box.ItemsSource = new[]
             {
                 "CPU",
@@ -79,6 +77,7 @@ namespace Pc_parts_lister
                 "Nefunkční",
                 "Opravený"
             };
+            */
 
             /*
             if (Komponenta.Type == "CPU")
@@ -139,25 +138,157 @@ namespace Pc_parts_lister
             }
 */
         }
-            
+
+        public StackPanel CreatePanel(PossibleParameter parameter)
+        {
+            StackPanel panel = new StackPanel();
+            TextBlock textBlock = new TextBlock();
+            panel.Orientation = Orientation.Horizontal;
+            panel.Tag = parameter;
+            panel.Margin = new Thickness(10, 0, 0, 0);
+            textBlock.Text = parameter.Name;
+            textBlock.FontWeight = FontWeights.Bold;
+            textBlock.FontSize = 20;
+            panel.Children.Add(textBlock);
+            if (parameter.type == Parameter.Type.String)
+            {
+                ComboBox comboBox = new ComboBox();
+                bool found = false;
+                foreach (Parameter kparameter in Komponenta.parameters)
+                {
+                    if (kparameter.ID == parameter.ID)
+                    {
+                        found = true;
+                        comboBox.SelectedItem = kparameter.Value;
+                    }
+                }
+                comboBox.ItemsSource = parameter.values;
+                comboBox.Margin = new Thickness(10, 0, 0, 0);
+                comboBox.BorderThickness = new Thickness(0);
+                comboBox.FontSize = 20;
+
+                panel.Children.Add(comboBox);
+
+                return panel;
+            }
+            else if (parameter.type == Parameter.Type.Boolean)
+            {
+                Button button = new Button();
+
+                panel.Children.Add(button);
+
+                return panel;
+            }
+            else if (parameter.type == Parameter.Type.Number)
+            {
+                TextBox box = new TextBox();
+                box.BorderThickness = new Thickness(0, 0, 0, 2);
+                box.Margin = new Thickness(10, 0, 0, 0);
+                box.MinWidth = 15;
+                box.FontSize = 20;
+                box.Tag = parameter;
+                box.SelectionChanged += Check_Int_Validation;
+
+                panel.Children.Add(box);
+
+                return panel;
+            }
+            else return null;
+        }
+
+        private void Check_Int_Validation(Object sender, RoutedEventArgs e)
+        {
+            bool result;
+            Saveable saveable = new Saveable();
+            TextBox box = (TextBox)sender;
+            Parameter iparameter = (Parameter)box.Tag;
+
+            foreach (Saveable fsaveable in boolChecks)
+            {
+                if (fsaveable.ID == iparameter.ID)
+                {
+                    saveable = fsaveable;
+                }
+            }
+
+            boolChecks.Remove(saveable);
+
+            if (int.TryParse(box.Text, out int i))
+            {
+                result = true;
+                box.Foreground = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                Save_Button.IsEnabled = true;
+            }
+            else if (box.Text == null || box.Text == "")
+            {
+                result = true;
+                box.Foreground = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                Save_Button.IsEnabled = true;
+            }
+            else
+            {
+                result = false;
+                box.Foreground = new SolidColorBrush(Colors.Red);
+                box.BorderBrush = new SolidColorBrush(Colors.Red);
+                Save_Button.IsEnabled = false;
+            }
+            Parameter parameter = (Parameter)box.Tag;
+            saveable.ID = parameter.ID;
+            saveable.canSave = result;
+            boolChecks.Add(saveable);
+        }
+
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            if (StatusBox.SelectedItem != null)
+            foreach (StackPanel panel in Parameters_Panel.Children)
             {
-                Komponenta.Status = StatusBox.SelectedItem.ToString();
+                PossibleParameter parameter = (PossibleParameter)panel.Tag;
+                if (parameter.type == Parameter.Type.String)
+                {
+                    ComboBox comboBox = (ComboBox)panel.Children[1];
+                    if (comboBox.SelectedItem != null)
+                    {
+                        //Clearing the placeholder parameter in favor of the new one
+                        Komponenta.parameters.Remove(parameter);
+
+                        parameter.Value = comboBox.SelectedItem.ToString();
+
+                        Komponenta.parameters.Add(parameter);
+                    }
+                    else
+                    {
+                        Komponenta.parameters.Remove(parameter);
+                    }
+                }
+                else if (parameter.type == Parameter.Type.Number)
+                {
+                    TextBox textBox = (TextBox)panel.Children[1];
+                    if (textBox.Text != null && textBox.Text.Length > 0)
+                    {
+                        parameter.Value = textBox.Text;
+
+                        Komponenta.parameters.Remove(parameter);
+                        Komponenta.parameters.Add(parameter);
+                    }
+                }
+                else
+                {
+                    Komponenta.parameters.Remove(parameter);
+                    Komponenta.parameters.Add(parameter);
+                }
             }
-            */
             Komponenta.Description = Description_TextBox.Text;
             Close();
         }
 
         int currentErrorId = 0;
-
+/*
         #region Cpu parameters
         private void SubSerBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
@@ -253,6 +384,7 @@ namespace Pc_parts_lister
 
         #region Capacity section
 
+        
         bool capacityIsValid = true;
         int capacityErrorInt = -1;
         private void Capacity_TextChanged(object sender, RoutedEventArgs e)
@@ -292,8 +424,9 @@ namespace Pc_parts_lister
                 CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
             }
         }
+        
         #endregion
-
+*/
         #region Picture Methods
         private void SelectImage_Click(object sender, RoutedEventArgs e)
         {
@@ -371,6 +504,7 @@ namespace Pc_parts_lister
             return false;
         }
 
+        /*
         bool ClearAnError(ref int errorId)
         {
             if (errorId < powerErrorInt)
@@ -394,6 +528,7 @@ namespace Pc_parts_lister
             }
             return true;
         }
+        */
 
         void CalculateIndex()
         {
@@ -560,7 +695,6 @@ namespace Pc_parts_lister
         {
             timer.Stop();
             MarkDownRenderer mark = new MarkDownRenderer();
-
             Preview_FlowDoc.Document = mark.Render(Description_TextBox.Text);
         }
         #endregion
@@ -569,73 +703,88 @@ namespace Pc_parts_lister
         private void Bold_ButtonClick(object sender, RoutedEventArgs e)
         {
             string newString;
-            if (Description_TextBox.SelectedText[0] == '*' && Description_TextBox.SelectedText[1] == '*')
+            if (Description_TextBox.Text != null && Description_TextBox.Text != "" && Description_TextBox.SelectedText != null && Description_TextBox.SelectedText != "")
             {
-                newString = Description_TextBox.SelectedText.Remove(0, 2);
-                newString = newString.Remove(newString.Length - 2, 2);
-                Description_TextBox.SelectedText = newString;
-            }
-            else
-            {
-                Description_TextBox.SelectedText = "**" + Description_TextBox.SelectedText + "**";
+                if (Description_TextBox.SelectedText[0] == '*' && Description_TextBox.SelectedText[1] == '*')
+                {
+                    newString = Description_TextBox.SelectedText.Remove(0, 2);
+                    newString = newString.Remove(newString.Length - 2, 2);
+                    Description_TextBox.SelectedText = newString;
+                }
+                else
+                {
+                    Description_TextBox.SelectedText = "**" + Description_TextBox.SelectedText + "**";
+                }
             }
         }
 
         private void Italic_ButtonClick(object sender, RoutedEventArgs e)
         {
             string newString;
-            if (Description_TextBox.SelectedText[0] == '*')
+            if (Description_TextBox.Text != null && Description_TextBox.Text != "" && Description_TextBox.SelectedText != null && Description_TextBox.SelectedText != "")
             {
-                newString = Description_TextBox.SelectedText.Remove(0, 1);
-                newString = newString.Remove(newString.Length - 1, 1);
-                Description_TextBox.SelectedText = newString;
-            }
-            else
-            {
-                Description_TextBox.SelectedText = "*" + Description_TextBox.SelectedText + "*";
+                if (Description_TextBox.SelectedText[0] == '*')
+                {
+                    newString = Description_TextBox.SelectedText.Remove(0, 1);
+                    newString = newString.Remove(newString.Length - 1, 1);
+                    Description_TextBox.SelectedText = newString;
+                }
+                else
+                {
+                    Description_TextBox.SelectedText = "*" + Description_TextBox.SelectedText + "*";
+                }
             }
         }
 
         private void BoldnItalic_ButtonClick(object sender, RoutedEventArgs e)
         {
             string newString;
-            if (Description_TextBox.SelectedText[0] == '*' && Description_TextBox.SelectedText[1] == '*' && Description_TextBox.SelectedText[2] == '*')
+            if (Description_TextBox.Text != null && Description_TextBox.Text != "" && Description_TextBox.SelectedText != null && Description_TextBox.SelectedText != "")
             {
-                newString = Description_TextBox.SelectedText.Remove(0, 3);
-                newString = newString.Remove(newString.Length - 3, 3);
-                Description_TextBox.SelectedText = newString;
-            }
-            else
-            {
-                Description_TextBox.SelectedText = "***" + Description_TextBox.SelectedText + "***";
+                if (Description_TextBox.SelectedText[0] == '*' && Description_TextBox.SelectedText[1] == '*' && Description_TextBox.SelectedText[2] == '*')
+                {
+                    newString = Description_TextBox.SelectedText.Remove(0, 3);
+                    newString = newString.Remove(newString.Length - 3, 3);
+                    Description_TextBox.SelectedText = newString;
+                }
+                else
+                {
+                    Description_TextBox.SelectedText = "***" + Description_TextBox.SelectedText + "***";
+                }
             }
         }
 
         private void Heading_ButtonClick(object sender, RoutedEventArgs e)
         {
             string newString;
-            if (Description_TextBox.SelectedText[0] == '#' && Description_TextBox.SelectedText[1] != '#')
+            if (Description_TextBox.Text != null && Description_TextBox.Text != "" && Description_TextBox.SelectedText != null && Description_TextBox.SelectedText != "")
             {
-                newString = Description_TextBox.SelectedText.Remove(0, 1);
-                Description_TextBox.SelectedText = newString;
-            }
-            else
-            {
-                Description_TextBox.SelectedText = "#" + Description_TextBox.SelectedText;
+                if (Description_TextBox.SelectedText[0] == '#' && Description_TextBox.SelectedText[1] != '#')
+                {
+                    newString = Description_TextBox.SelectedText.Remove(0, 1);
+                    Description_TextBox.SelectedText = newString;
+                }
+                else
+                {
+                    Description_TextBox.SelectedText = "#" + Description_TextBox.SelectedText;
+                }
             }
         }
 
         private void Heading2_ButtonClick(object sender, RoutedEventArgs e)
         {
             string newString;
-            if (Description_TextBox.SelectedText[0] == '#' && Description_TextBox.SelectedText[1] == '#')
+            if (Description_TextBox.Text != null && Description_TextBox.Text != "" && Description_TextBox.SelectedText != null && Description_TextBox.SelectedText != "")
             {
-                newString = Description_TextBox.SelectedText.Remove(0, 2);
-                Description_TextBox.SelectedText = newString;
-            }
-            else
-            {
-                Description_TextBox.SelectedText = "#" + "#" + Description_TextBox.SelectedText;
+                if (Description_TextBox.SelectedText[0] == '#' && Description_TextBox.SelectedText[1] == '#')
+                {
+                    newString = Description_TextBox.SelectedText.Remove(0, 2);
+                    Description_TextBox.SelectedText = newString;
+                }
+                else
+                {
+                    Description_TextBox.SelectedText = "#" + "#" + Description_TextBox.SelectedText;
+                }
             }
         }
         #endregion
