@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Pc_parts_lister.bin;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -59,6 +61,12 @@ namespace Pc_parts_lister
         {
             DataStorage.SaveComponents(Components);
             DataStorage.SaveParameters(PossibleParameters);
+        }
+
+        private void ParameterButton_Click(object sender, RoutedEventArgs e)
+        {
+            Edit_Parameters_window parameter_edit_window = new Edit_Parameters_window(PossibleParameters);
+            parameter_edit_window.Show();
         }
     }
 
@@ -130,7 +138,9 @@ namespace Pc_parts_lister
     public class PossibleParameter : Parameter
     {
         // Nastavení pravidel
-
+        public bool list { get; set; }
+        public bool customWriting { get; set; }
+        public string intAfterFix { get; set; }
         public List<string> values { get; set; }
         public string requiredType { get; set; }
         public List<PossibleParameter> reuiredParameters { get; set; }

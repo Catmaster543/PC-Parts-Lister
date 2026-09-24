@@ -104,6 +104,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Edit_Parameters_window.xaml.cs">
+      <DependentUpon>Edit_Parameters_window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Edit_Parameter_window.xaml.cs">
+      <DependentUpon>Edit_Parameter_window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Filter_window.xaml.cs">
       <DependentUpon>Filter_window.xaml</DependentUpon>
     </Compile>
@@ -114,7 +120,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Edit_Parameters_window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Edit_Parameter_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +287,9 @@
   <ItemGroup>
     <Resource Include="header2_button.png" />
     <Resource Include="header_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="parameters_button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
         mc:Ignorable="d"
-        Title="PC Parts Lister" Height="450" Width="800"
+        Title="PC Parts Lister" Height="600" Width="800"
         Closing="Window_Closing" ResizeMode="CanMinimize">
 
     <Grid Margin="10">
@@ -13,7 +13,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
         <TextBlock Text="Přidat součástku" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" Foreground="#FF3C3C3C" VerticalAlignment="Top" Grid.Column="0"/>
         <Button Click="Pridat" Height="300" Width="300" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
@@ -28,5 +31,14 @@
                 <ImageBrush ImageSource="/search_button.png"/>
             </Button.Background>
         </Button>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Parametry" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="#FF3C3C3C"/>
+            <Button Name="Parameter_Button" Click="ParameterButton_Click" Width="100" Height="100" BorderThickness="0">
+                <Button.Background>
+                    <ImageBrush ImageSource="/parameters_button.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>
