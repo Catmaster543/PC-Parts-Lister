@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,14 @@ namespace Pc_parts_lister
     public partial class Edit_Parameter_window : Window
     {
         public PossibleParameter kParameter;
+        public ICollectionView ValuesView { get; }
         public Edit_Parameter_window(PossibleParameter parameter)
         {
             InitializeComponent();
 
             kParameter = parameter;
+
+            ValuesView = CollectionViewSource.GetDefaultView(parameter.values);
 
             Name_Box.Text = parameter.Name;
             ID_Box.Text = parameter.ID;
@@ -33,16 +37,20 @@ namespace Pc_parts_lister
             content.Add(PossibleParameter.Type.Number.ToString());
             Type_Box.ItemsSource = content;
             Type_Box.SelectedItem = parameter.type.ToString();
+
+            DataContext = this;
         }
 
         private void List_String_CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             kParameter.list = false;
+            Values_Panel.Visibility = Visibility.Hidden;
         }
 
         private void List_String_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             kParameter.list = true;
+            Values_Panel.Visibility = Visibility.Visible;
         }
         private void Custom_String_CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -77,12 +85,50 @@ namespace Pc_parts_lister
             }
         }
 
+        private void ValuesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox box = sender as ListBox;
+            if (box.SelectedItem != null)
+            {
+                Value_Box.Text = box.SelectedItem.ToString();
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+
+            string value = (string)button.DataContext;
+
+            kParameter.values.Remove(value);
+            ValuesView.Refresh();
+        }
+
+        private void AddValue_Click(object sender, RoutedEventArgs e)
+        {
+            string newValue = "Nová hodnota";
+            kParameter.values.Add(newValue);
+            ValuesView.Refresh();
+            ValuesListBox.SelectedItem = newValue;
+        }
+
+        private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
+        {
+            kParameter.values.Remove(ValuesListBox.SelectedItem.ToString());
+            kParameter.values.Add(Value_Box.Text);
+            ValuesView.Refresh();
+            ValuesListBox.SelectedItem = Value_Box.Text;
+            Value_Box.Text = string.Empty;
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (CustomAfterFix_panel.Visibility == Visibility.Visible && CustomAfterFix_Box.Text != "")
             {
                 kParameter.intAfterFix = CustomAfterFix_Box.Text;
-            } 
+            }
+            this.DialogResult = true;
+            this.Close();
         }
     }
 }

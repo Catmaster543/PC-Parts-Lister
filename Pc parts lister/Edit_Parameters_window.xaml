@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Edit_Parameters_window" Height="450" Width="450">
     <Grid>
-        <DataGrid ItemsSource="{Binding ParametersView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="50" Name="Component_grid">
+        <DataGrid ItemsSource="{Binding ParametersView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,30,0,0" Name="Parameters_grid">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>

@@ -34,6 +34,41 @@
                         <CheckBox Checked="Custom_String_CheckBox_Checked" Unchecked="Custom_String_CheckBox_Unchecked"/>
                         <TextBlock FontSize="10" Text="Povolit vlastní hodnotu" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
+                    <StackPanel Name="Values_Panel" Orientation="Horizontal" Visibility="Hidden">
+                        <ListBox Name="ValuesListBox" ItemsSource="{Binding ValuesView}" SelectionChanged="ValuesListBox_SelectionChanged" MaxHeight="100">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Click="DeleteButton_Click" Grid.Column="1" Margin="5,0,0,0" Width="17" Height="17">
+                                            <Button.Background>
+                                                <ImageBrush ImageSource="/cancel_button.png"/>
+                                            </Button.Background>
+                                        </Button>
+                                        <TextBlock Text="{Binding}" FontSize="12" FontWeight="SemiBold" Grid.Column="0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel>
+                            <Button Click="AddValue_Click" Margin="5" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/add_button.png"/>
+                                </Button.Background>
+                            </Button>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Name="Value_Box" FontSize="16" MinWidth="20" BorderThickness="0,0,0,2" Margin="5,10,0,0" VerticalAlignment="Top" MaxWidth="120"/>
+                                <Button Name="ConfirmEditButton" Click="ConfirmEditButton_Click" Margin="10" Width="20" Height="20" VerticalAlignment="Top">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/edit_button.png"/>
+                                    </Button.Background>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
                 <StackPanel Name="Int_Option_Panel" Margin="10" Visibility="Hidden">
                     <StackPanel Orientation="Horizontal">
