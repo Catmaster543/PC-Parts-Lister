@@ -140,7 +140,7 @@ namespace Pc_parts_lister
         // Nastavení pravidel
         public bool list { get; set; }
         public bool customWriting { get; set; }
-        public string intAfterFix { get; set; }
+        public string intSufix { get; set; }
         public List<string> values { get; set; }
         public string requiredType { get; set; }
         public List<PossibleParameter> reuiredParameters { get; set; }
@@ -160,6 +160,8 @@ namespace Pc_parts_lister
             typeParameter.values.Add("Case");
             typeParameter.values.Add("Jiné");
             typeParameter.type = Parameter.Type.String;
+            typeParameter.customWriting = false;
+            typeParameter.list = true;
             parameters.Add(typeParameter);
 
             PossibleParameter countParameter = new PossibleParameter();
@@ -178,6 +180,8 @@ namespace Pc_parts_lister
             statusParameter.values.Add("Nefunkční");
             statusParameter.values.Add("Opravený");
             statusParameter.type = PossibleParameter.Type.String;
+            statusParameter.customWriting = false;
+            statusParameter.list = true;
             parameters.Add(statusParameter);
 
             PossibleParameter manuParameter = new PossibleParameter();

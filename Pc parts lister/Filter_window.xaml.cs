@@ -34,23 +34,6 @@ namespace Pc_parts_lister
 
             PossibleParameters = possibleParameters;
 
-            #region Hiding
-            /*
-            SerText.Visibility = Visibility.Collapsed;
-            SerBox.Visibility = Visibility.Collapsed;
-            SubSerText.Visibility = Visibility.Collapsed;
-            SubSerBox.Visibility = Visibility.Collapsed;
-            ModelText.Visibility = Visibility.Collapsed;
-            ModelBox.Visibility = Visibility.Collapsed;
-            Powertext.Visibility = Visibility.Collapsed;
-            PowerGrid.Visibility = Visibility.Collapsed;
-            CapacityText.Visibility = Visibility.Collapsed;
-            CapacityGrid.Visibility = Visibility.Collapsed;
-            TypeText2.Visibility = Visibility.Collapsed;
-            TypeBox2.Visibility = Visibility.Collapsed;
-            */
-            #endregion
-
             ChangeButtonBg(Favorite_Button, "pack://application:,,,/favorite_button.png");
             filterFav = true;
 
@@ -179,6 +162,9 @@ namespace Pc_parts_lister
             filterParameter.Name = parameter.Name;
             filterParameter.ID = parameter.ID;
             filterParameter.type = parameter.type;
+            filterParameter.customWriting = parameter.customWriting;
+            filterParameter.intSufix = parameter.intSufix;
+            filterParameter.list = parameter.list;
 
             panel.Tag = filterParameter;
             panel.Margin = new Thickness(0, 10, 0, 0);
@@ -204,15 +190,37 @@ namespace Pc_parts_lister
 
             if (parameter.type == Parameter.Type.String)
             {
-                ComboBox comboBox = new ComboBox();
-                comboBox.ItemsSource = parameter.values;
-                comboBox.BorderThickness = new Thickness(0);
-                comboBox.Tag = filterParameter;
-                comboBox.SelectionChanged += ComboBox_Selection_Changed;
-                filterParameter.comboBox = comboBox;
-
                 panel.Children.Add(cancelButton);
-                panel.Children.Add(comboBox);
+                if (parameter.list)
+                {
+                    ComboBox comboBox = new ComboBox();
+                    comboBox.ItemsSource = parameter.values;
+                    comboBox.Margin = new Thickness(10, 0, 0, 0);
+                    comboBox.BorderThickness = new Thickness(0);
+                    //comboBox.FontSize = 20;
+                    comboBox.Tag = filterParameter;
+                    comboBox.SelectionChanged += ComboBox_Selection_Changed;
+                    filterParameter.comboBox = comboBox;
+                    if (parameter.customWriting)
+                    {
+                        comboBox.IsEditable = true;
+                        comboBox.BorderThickness = new Thickness(0, 0, 0, 2);
+                        comboBox.MinWidth = 15;
+                    }
+
+                    panel.Children.Add(comboBox);
+                }
+                else
+                {
+                    TextBox textBox = new TextBox();
+                    textBox.BorderThickness = new Thickness(0, 0, 0, 2);
+                    textBox.Margin = new Thickness(10, 0, 0, 0);
+                    textBox.MinWidth = 15;
+                    //textBox.FontSize = 20;
+                    textBox.Tag = filterParameter;
+
+                    panel.Children.Add(textBox);
+                }
 
                 return panel;
             }
@@ -1303,47 +1311,87 @@ namespace Pc_parts_lister
                 {
                     if (panel.Name != "FavoriteButton_StackPanel")
                     {
-                        Parameter currentParameter = (Parameter)panel.Tag;
+                        FilterParameter currentParameter = (FilterParameter)panel.Tag;
                         if (currentParameter.type == Parameter.Type.String)
                         {
+                            if (currentParameter.list)
+                            {
+                                ComboBox comboBox = (ComboBox)panel.Children[2];
+                                if (comboBox.SelectedItem != null)
+                                {
+                                    currentParameter.Value = comboBox.SelectedItem.ToString();
+                                    filterParameters.Add(currentParameter);
+                                }
+                                else
+                                {
+                                    //Komponenta.parameters.Remove(currentParameter);
+                                }
+                            }
+                            else
+                            {
+                                TextBox textBox = (TextBox)panel.Children[2];
+                                if (textBox.Text != null &&  textBox.Text.Length > 0)
+                                {
+                                    currentParameter.Value = textBox.Text;
+                                    filterParameters.Add(currentParameter);
+                                }
+                            }
+                            /*
                             ComboBox comboBox = (ComboBox)panel.Children[2];
                             if (comboBox.SelectedItem != null)
                             {
                                 currentParameter.Value = comboBox.SelectedItem.ToString();
                                 filterParameters.Add((FilterParameter)currentParameter);
                             }
+                            */
                         }
                         else if (currentParameter.type == Parameter.Type.Number)
                         {
                             if (currentParameter.Value != null)
                             {
-                                filterParameters.Add((FilterParameter)currentParameter);
+                                filterParameters.Add(currentParameter);
                             }
                         }
                         else if (currentParameter.type == Parameter.Type.Boolean)
                         {
-
+                            // Nothing
                         }
                     }
                     
                 }
                 foreach (StackPanel panel in Stack_Panel_R.Children)
                 {
-                    Parameter currentParameter = (Parameter)panel.Tag;
+                    FilterParameter currentParameter = (FilterParameter)panel.Tag;
                     if (currentParameter.type == Parameter.Type.String)
                     {
-                        ComboBox comboBox = (ComboBox)panel.Children[2];
-                        if (comboBox.SelectedItem != null)
+                        if (currentParameter.list)
                         {
-                            currentParameter.Value = comboBox.SelectedItem.ToString();
-                            filterParameters.Add((FilterParameter)currentParameter);
+                            ComboBox comboBox = (ComboBox)panel.Children[2];
+                            if (comboBox.SelectedItem != null)
+                            {
+                                currentParameter.Value = comboBox.SelectedItem.ToString();
+                                filterParameters.Add(currentParameter);
+                            }
+                            else
+                            {
+                                //Komponenta.parameters.Remove(currentParameter);
+                            }
+                        }
+                        else
+                        {
+                            TextBox textBox = (TextBox)panel.Children[2];
+                            if (textBox.Text != null && textBox.Text.Length > 0)
+                            {
+                                currentParameter.Value = textBox.Text;
+                                filterParameters.Add(currentParameter);
+                            }
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
                     {
                         if (currentParameter.Value != null)
                         {
-                            filterParameters.Add((FilterParameter)currentParameter);
+                            filterParameters.Add(currentParameter);
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Boolean)
@@ -1474,7 +1522,7 @@ namespace Pc_parts_lister
         }
     }
 
-    public class FilterParameter : Parameter
+    public class FilterParameter : PossibleParameter
     {
         public Button smallerButton;
         public Button biggerButton;

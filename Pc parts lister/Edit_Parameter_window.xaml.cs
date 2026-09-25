@@ -22,6 +22,7 @@ namespace Pc_parts_lister
     {
         public PossibleParameter kParameter;
         public ICollectionView ValuesView { get; }
+        private Parameter.Type selectedType;
         public Edit_Parameter_window(PossibleParameter parameter)
         {
             InitializeComponent();
@@ -38,6 +39,16 @@ namespace Pc_parts_lister
             Type_Box.ItemsSource = content;
             Type_Box.SelectedItem = parameter.type.ToString();
 
+            if (parameter.list)
+            {
+                ListString_CheckBox.IsChecked = true;
+
+                if (parameter.customWriting)
+                {
+                    CustomString_CheckBox.IsChecked = true;
+                } 
+            }
+
             DataContext = this;
         }
 
@@ -45,12 +56,15 @@ namespace Pc_parts_lister
         {
             kParameter.list = false;
             Values_Panel.Visibility = Visibility.Hidden;
+            kParameter.customWriting = false;
+            CustomStringAllowed_Panel.Visibility = Visibility.Hidden;
         }
 
         private void List_String_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             kParameter.list = true;
             Values_Panel.Visibility = Visibility.Visible;
+            CustomStringAllowed_Panel.Visibility = Visibility.Visible;
         }
         private void Custom_String_CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -77,11 +91,15 @@ namespace Pc_parts_lister
             {
                 String_Option_Panel.Visibility = Visibility.Visible;
                 Int_Option_Panel.Visibility = Visibility.Hidden;
+
+                selectedType = Parameter.Type.String;
             }
             else if (comboBox.SelectedItem.ToString() == "Number")
             {
                 Int_Option_Panel.Visibility = Visibility.Visible;
                 String_Option_Panel.Visibility = Visibility.Hidden;
+
+                selectedType = Parameter.Type.Number;
             }
         }
 
@@ -125,8 +143,12 @@ namespace Pc_parts_lister
         {
             if (CustomAfterFix_panel.Visibility == Visibility.Visible && CustomAfterFix_Box.Text != "")
             {
-                kParameter.intAfterFix = CustomAfterFix_Box.Text;
+                kParameter.intSufix = CustomAfterFix_Box.Text;
             }
+            kParameter.Name = Name_Box.Text;
+            kParameter.ID = ID_Box.Text;
+            kParameter.type = selectedType;
+            // Custom parameters for string & booleans are handled in their respective checkboxes separately.
             this.DialogResult = true;
             this.Close();
         }

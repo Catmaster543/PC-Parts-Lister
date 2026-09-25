@@ -152,22 +152,42 @@ namespace Pc_parts_lister
             panel.Children.Add(textBlock);
             if (parameter.type == Parameter.Type.String)
             {
-                ComboBox comboBox = new ComboBox();
-                bool found = false;
-                foreach (Parameter kparameter in Komponenta.parameters)
+                if (parameter.list)
                 {
-                    if (kparameter.ID == parameter.ID)
+                    ComboBox comboBox = new ComboBox();
+                    comboBox.ItemsSource = parameter.values;
+                    comboBox.Margin = new Thickness(10, 0, 0, 0);
+                    comboBox.BorderThickness = new Thickness(0);
+                    comboBox.FontSize = 20;
+                    bool found = false;
+                    foreach (Parameter kparameter in Komponenta.parameters)
                     {
-                        found = true;
-                        comboBox.SelectedItem = kparameter.Value;
+                        if (kparameter.ID == parameter.ID)
+                        {
+                            found = true;
+                            comboBox.SelectedItem = kparameter.Value;
+                        }
                     }
-                }
-                comboBox.ItemsSource = parameter.values;
-                comboBox.Margin = new Thickness(10, 0, 0, 0);
-                comboBox.BorderThickness = new Thickness(0);
-                comboBox.FontSize = 20;
+                    if (parameter.customWriting)
+                    {
+                        comboBox.IsEditable = true;
+                        comboBox.BorderThickness = new Thickness(0, 0, 0, 2);
+                        comboBox.MinWidth = 15;
+                    }
 
-                panel.Children.Add(comboBox);
+                    panel.Children.Add(comboBox);
+                }
+                else
+                {
+                    TextBox textBox = new TextBox();
+                    textBox.BorderThickness = new Thickness(0, 0, 0, 2);
+                    textBox.Margin = new Thickness(10, 0, 0, 0);
+                    textBox.MinWidth = 15;
+                    textBox.FontSize = 20;
+                    textBox.Tag = parameter;
+
+                    panel.Children.Add(textBox);
+                }
 
                 return panel;
             }
@@ -200,6 +220,16 @@ namespace Pc_parts_lister
                 }
 
                 panel.Children.Add(box);
+
+                if (parameter.intSufix != null)
+                {
+                    TextBlock sufixBox = new TextBlock();
+                    sufixBox.Text = parameter.intSufix;
+                    sufixBox.FontSize = 20;
+                    sufixBox.Margin = new Thickness(5, 0, 0, 0);
+
+                    panel.Children.Add(sufixBox);
+                }
 
                 return panel;
             }
@@ -260,39 +290,60 @@ namespace Pc_parts_lister
             Komponenta.parameters.Clear();
             foreach (StackPanel panel in Parameters_Panel.Children)
             {
-                PossibleParameter parameter = (PossibleParameter)panel.Tag;
-                if (parameter.type == Parameter.Type.String)
+                PossibleParameter currentParameter = (PossibleParameter)panel.Tag;
+                if (currentParameter.type == Parameter.Type.String)
                 {
-                    ComboBox comboBox = (ComboBox)panel.Children[1];
-                    if (comboBox.SelectedItem != null)
+                    if (currentParameter.list)
                     {
-                        //Clearing the placeholder parameter in favor of the new one
-                        Komponenta.parameters.Remove(parameter);
+                        ComboBox comboBox = (ComboBox)panel.Children[1];
+                        if (comboBox.SelectedItem != null)
+                        {
+                            //Clearing the placeholder parameter in favor of the new one
+                            Komponenta.parameters.Remove(currentParameter);
 
-                        parameter.Value = comboBox.SelectedItem.ToString();
+                            Parameter parameter = new Parameter();
+                            parameter.type = currentParameter.type;
+                            parameter.ID = currentParameter.ID;
+                            parameter.Name = currentParameter.Name;
 
-                        Komponenta.parameters.Add(parameter);
+                            parameter.Value = comboBox.SelectedItem.ToString();
+
+                            Komponenta.parameters.Add(parameter);
+                        }
+                        else
+                        {
+                            Komponenta.parameters.Remove(currentParameter);
+                        }
                     }
                     else
                     {
-                        Komponenta.parameters.Remove(parameter);
+                        TextBox textBox = (TextBox)panel.Children[1];
+                        if (textBox.Text != null && textBox.Text.Length > 0)
+                        {
+                            Parameter parameter = new Parameter();
+                            parameter.type = currentParameter.type;
+                            parameter.ID = currentParameter.ID;
+                            parameter.Name = currentParameter.Name;
+                            parameter.Value = textBox.Text;
+                            Komponenta.parameters.Add(parameter);
+                        }
                     }
                 }
-                else if (parameter.type == Parameter.Type.Number)
+                else if (currentParameter.type == Parameter.Type.Number)
                 {
                     TextBox textBox = (TextBox)panel.Children[1];
                     if (textBox.Text != null && textBox.Text.Length > 0)
                     {
-                        parameter.Value = textBox.Text;
+                        currentParameter.Value = textBox.Text;
 
-                        Komponenta.parameters.Remove(parameter);
-                        Komponenta.parameters.Add(parameter);
+                        Komponenta.parameters.Remove(currentParameter);
+                        Komponenta.parameters.Add(currentParameter);
                     }
                 }
                 else
                 {
-                    Komponenta.parameters.Remove(parameter);
-                    Komponenta.parameters.Add(parameter);
+                    Komponenta.parameters.Remove(currentParameter);
+                    Komponenta.parameters.Add(currentParameter);
                 }
             }
             Komponenta.Description = Description_TextBox.Text;

@@ -42,6 +42,8 @@ namespace Pc_parts_lister.bin
             ParametersView.Refresh();
             Edit_Parameter_window Ewindow = new Edit_Parameter_window(possibleParameter);
             Ewindow.ShowDialog();
+
+            ParametersView.Refresh();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -50,6 +52,8 @@ namespace Pc_parts_lister.bin
             {
                 Edit_Parameter_window Ewindow = new Edit_Parameter_window(parameter);
                 Ewindow.ShowDialog();
+                
+                ParametersView.Refresh();
             }
         }
 

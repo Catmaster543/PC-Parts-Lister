@@ -25,35 +25,9 @@ namespace Pc_parts_lister
 
         public Component Komponenta = new Component();
 
-        
-
         public Add_part(ObservableCollection<PossibleParameter> possibleParameters)
         {
             InitializeComponent();
-
-            //Intitial hiding of everything
-
-            #region Hiding
-            
-            /*
-            Manufacturertext.Visibility = Visibility.Collapsed;
-            ManufacturerBox.Visibility = Visibility.Collapsed;
-            SerText.Visibility = Visibility.Collapsed;
-            SerBox.Visibility = Visibility.Collapsed;
-            SubSerText.Visibility= Visibility.Collapsed;
-            SubSerBox.Visibility = Visibility.Collapsed;
-            ModelText.Visibility = Visibility.Collapsed;
-            ModelBox.Visibility = Visibility.Collapsed;
-            Powertext.Visibility = Visibility.Collapsed;
-            PowerBox.Visibility = Visibility.Collapsed;
-            CapacityText.Visibility = Visibility.Collapsed;
-            CapacityBox.Visibility = Visibility.Collapsed;
-            TypeText2.Visibility = Visibility.Collapsed;
-            TypeBox2.Visibility = Visibility.Collapsed;
-            */
-            #endregion
-
-            //Default options for what is it
 
             bool isA = true;
             foreach (PossibleParameter parameter in possibleParameters)
@@ -92,17 +66,6 @@ namespace Pc_parts_lister
                     StackPanel1.Children.Insert(1, panel);
                 }
             }
-
-            /*
-            StatusBox.ItemsSource = new[]
-            {
-                "Funkční",
-                "Ok",
-                "Kritický",
-                "Nefunkční",
-                "Opravený"
-            };
-            */
         }
 
         public StackPanel CreatePanel(PossibleParameter parameter)
@@ -118,13 +81,33 @@ namespace Pc_parts_lister
             panel.Children.Add(textBlock);
             if (parameter.type == Parameter.Type.String)
             {
-                ComboBox comboBox = new ComboBox();
-                comboBox.ItemsSource = parameter.values;
-                comboBox.Margin = new Thickness(10,0,0,0);
-                comboBox.BorderThickness = new Thickness(0);
-                comboBox.FontSize = 20;
+                if (parameter.list)
+                {
+                    ComboBox comboBox = new ComboBox();
+                    comboBox.ItemsSource = parameter.values;
+                    comboBox.Margin = new Thickness(10, 0, 0, 0);
+                    comboBox.BorderThickness = new Thickness(0);
+                    comboBox.FontSize = 20;
+                    if (parameter.customWriting)
+                    {
+                        comboBox.IsEditable = true;
+                        comboBox.BorderThickness = new Thickness(0,0,0,2);
+                        comboBox.MinWidth = 15;
+                    }
 
-                panel.Children.Add(comboBox);
+                    panel.Children.Add(comboBox);
+                }
+                else
+                {
+                    TextBox textBox = new TextBox();
+                    textBox.BorderThickness = new Thickness(0, 0, 0, 2);
+                    textBox.Margin = new Thickness(10, 0, 0, 0);
+                    textBox.MinWidth = 15;
+                    textBox.FontSize = 20;
+                    textBox.Tag = parameter;
+
+                    panel.Children.Add(textBox);
+                }
 
                 return panel;
             }
@@ -147,6 +130,16 @@ namespace Pc_parts_lister
                 box.SelectionChanged += Check_Int_Validation;
 
                 panel.Children.Add(box);
+
+                if (parameter.intSufix != null)
+                {
+                    TextBlock sufixBox = new TextBlock();
+                    sufixBox.Text = parameter.intSufix;
+                    sufixBox.FontSize = 20;
+                    sufixBox.Margin = new Thickness(5,0,0,0);
+
+                    panel.Children.Add(sufixBox);
+                }
 
                 return panel;
             }
@@ -221,17 +214,6 @@ namespace Pc_parts_lister
                 button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button.png")));
             }
                 
-        }
-
-        private Parameter convertPossibleToParameter(PossibleParameter possibleParameter)
-        {
-            Parameter parameter = new Parameter();
-            parameter.Name = possibleParameter.Name;
-            parameter.Value = possibleParameter.Value;
-            parameter.type = possibleParameter.type;
-            parameter.ID = possibleParameter.ID;
-
-            return parameter;
         }
 
         /*
@@ -747,22 +729,43 @@ namespace Pc_parts_lister
             {
                 foreach (StackPanel stackPanel in Parameter_Column_A.Children)
                 {
-                    Parameter currentParameter = (Parameter)stackPanel.Tag;
+                    PossibleParameter currentParameter = (PossibleParameter)stackPanel.Tag;
                     if (currentParameter.type == Parameter.Type.String)
                     {
-                        ComboBox comboBox = (ComboBox)stackPanel.Children[1];
-                        if (comboBox.SelectedItem != null)
+                        if (currentParameter.list)
                         {
-                            //Clearing the placeholder parameter in favor of the new one
-                            Komponenta.parameters.Remove(currentParameter);
+                            ComboBox comboBox = (ComboBox)stackPanel.Children[1];
+                            if (comboBox.SelectedItem != null)
+                            {
+                                //Clearing the placeholder parameter in favor of the new one
+                                Komponenta.parameters.Remove(currentParameter);
 
-                            currentParameter.Value = comboBox.SelectedItem.ToString();
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
 
-                            Komponenta.parameters.Add(currentParameter);
+                                parameter.Value = comboBox.SelectedItem.ToString();
+
+                                Komponenta.parameters.Add(parameter);
+                            }
+                            else
+                            {
+                                Komponenta.parameters.Remove(currentParameter);
+                            }
                         }
                         else
                         {
-                            Komponenta.parameters.Remove(currentParameter);
+                            TextBox textBox = (TextBox)stackPanel.Children[1];
+                            if (textBox.Text != null && textBox.Text.Length > 0)
+                            {
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
+                                parameter.Value = textBox.Text;
+                                Komponenta.parameters.Add(parameter);
+                            }
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
@@ -770,10 +773,15 @@ namespace Pc_parts_lister
                         TextBox textBox = (TextBox)stackPanel.Children[1];
                         if (textBox.Text != null && textBox.Text.Length > 0)
                         {
-                            currentParameter.Value = textBox.Text;
+                            Parameter parameter = new Parameter();
+                            parameter.type = currentParameter.type;
+                            parameter.ID = currentParameter.ID;
+                            parameter.Name = currentParameter.Name;
+                            parameter.Value = textBox.Text;
+                            parameter.Value = textBox.Text;
 
                             Komponenta.parameters.Remove(currentParameter);
-                            Komponenta.parameters.Add(currentParameter);
+                            Komponenta.parameters.Add(parameter);
                         }
                     }
                     else
@@ -785,23 +793,43 @@ namespace Pc_parts_lister
 
                 foreach (StackPanel stackPanel in Parameter_Column_B.Children)
                 {
-                    Parameter currentParameter = (Parameter)stackPanel.Tag;
-
+                    PossibleParameter currentParameter = (PossibleParameter)stackPanel.Tag;
                     if (currentParameter.type == Parameter.Type.String)
                     {
-                        ComboBox comboBox = (ComboBox)stackPanel.Children[1];
-                        if (comboBox.SelectedItem != null)
+                        if (currentParameter.list)
                         {
-                            //Clearing the placeholder parameter in favor of the new one
-                            Komponenta.parameters.Remove(currentParameter);
+                            ComboBox comboBox = (ComboBox)stackPanel.Children[1];
+                            if (comboBox.SelectedItem != null)
+                            {
+                                //Clearing the placeholder parameter in favor of the new one
+                                Komponenta.parameters.Remove(currentParameter);
 
-                            currentParameter.Value = comboBox.SelectedItem.ToString();
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
 
-                            Komponenta.parameters.Add(currentParameter);
+                                parameter.Value = comboBox.SelectedItem.ToString();
+
+                                Komponenta.parameters.Add(parameter);
+                            }
+                            else
+                            {
+                                Komponenta.parameters.Remove(currentParameter);
+                            }
                         }
                         else
                         {
-                            Komponenta.parameters.Remove(currentParameter);
+                            TextBox textBox = (TextBox)stackPanel.Children[1];
+                            if (textBox.Text != null && textBox.Text.Length > 0)
+                            {
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
+                                parameter.Value = textBox.Text;
+                                Komponenta.parameters.Add(parameter);
+                            }
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
@@ -809,10 +837,15 @@ namespace Pc_parts_lister
                         TextBox textBox = (TextBox)stackPanel.Children[1];
                         if (textBox.Text != null && textBox.Text.Length > 0)
                         {
-                            currentParameter.Value = textBox.Text;
+                            Parameter parameter = new Parameter();
+                            parameter.type = currentParameter.type;
+                            parameter.ID = currentParameter.ID;
+                            parameter.Name = currentParameter.Name;
+                            parameter.Value = textBox.Text;
+                            parameter.Value = textBox.Text;
 
                             Komponenta.parameters.Remove(currentParameter);
-                            Komponenta.parameters.Add(currentParameter);
+                            Komponenta.parameters.Add(parameter);
                         }
                     }
                     else
@@ -824,22 +857,43 @@ namespace Pc_parts_lister
 
                 foreach (StackPanel stackPanel in StackPanel1.Children)
                 {
-                    Parameter currentParameter = (Parameter)stackPanel.Tag;
+                    PossibleParameter currentParameter = (PossibleParameter)stackPanel.Tag;
                     if (currentParameter.type == Parameter.Type.String)
                     {
-                        ComboBox comboBox = (ComboBox)stackPanel.Children[1];
-                        if (comboBox.SelectedItem != null)
+                        if (currentParameter.list)
                         {
-                            //Clearing the placeholder parameter in favor of the new one
-                            Komponenta.parameters.Remove(currentParameter);
+                            ComboBox comboBox = (ComboBox)stackPanel.Children[1];
+                            if (comboBox.SelectedItem != null)
+                            {
+                                //Clearing the placeholder parameter in favor of the new one
+                                Komponenta.parameters.Remove(currentParameter);
 
-                            currentParameter.Value = comboBox.SelectedItem.ToString();
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
 
-                            Komponenta.parameters.Add(currentParameter);
+                                parameter.Value = comboBox.SelectedItem.ToString();
+
+                                Komponenta.parameters.Add(parameter);
+                            }
+                            else
+                            {
+                                Komponenta.parameters.Remove(currentParameter);
+                            }
                         }
                         else
                         {
-                            Komponenta.parameters.Remove(currentParameter);
+                            TextBox textBox = (TextBox)stackPanel.Children[1];
+                            if (textBox.Text != null && textBox.Text.Length > 0)
+                            {
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
+                                parameter.Value = textBox.Text;
+                                Komponenta.parameters.Add(parameter);
+                            }
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
@@ -847,10 +901,15 @@ namespace Pc_parts_lister
                         TextBox textBox = (TextBox)stackPanel.Children[1];
                         if (textBox.Text != null && textBox.Text.Length > 0)
                         {
-                            currentParameter.Value = textBox.Text;
+                            Parameter parameter = new Parameter();
+                            parameter.type = currentParameter.type;
+                            parameter.ID = currentParameter.ID;
+                            parameter.Name = currentParameter.Name;
+                            parameter.Value = textBox.Text;
+                            parameter.Value = textBox.Text;
 
                             Komponenta.parameters.Remove(currentParameter);
-                            Komponenta.parameters.Add(currentParameter);
+                            Komponenta.parameters.Add(parameter);
                         }
                     }
                     else
@@ -862,22 +921,43 @@ namespace Pc_parts_lister
 
                 foreach (StackPanel stackPanel in StackPanel2.Children)
                 {
-                    Parameter currentParameter = (Parameter)stackPanel.Tag;
+                    PossibleParameter currentParameter = (PossibleParameter)stackPanel.Tag;
                     if (currentParameter.type == Parameter.Type.String)
                     {
-                        ComboBox comboBox = (ComboBox)stackPanel.Children[1];
-                        if (comboBox.SelectedItem != null)
+                        if (currentParameter.list)
                         {
-                            //Clearing the placeholder parameter in favor of the new one
-                            Komponenta.parameters.Remove(currentParameter);
+                            ComboBox comboBox = (ComboBox)stackPanel.Children[1];
+                            if (comboBox.SelectedItem != null)
+                            {
+                                //Clearing the placeholder parameter in favor of the new one
+                                Komponenta.parameters.Remove(currentParameter);
 
-                            currentParameter.Value = comboBox.SelectedItem.ToString();
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
 
-                            Komponenta.parameters.Add(currentParameter);
+                                parameter.Value = comboBox.SelectedItem.ToString();
+
+                                Komponenta.parameters.Add(parameter);
+                            }
+                            else
+                            {
+                                Komponenta.parameters.Remove(currentParameter);
+                            }
                         }
                         else
                         {
-                            Komponenta.parameters.Remove(currentParameter);
+                            TextBox textBox = (TextBox)stackPanel.Children[1];
+                            if (textBox.Text != null && textBox.Text.Length > 0)
+                            {
+                                Parameter parameter = new Parameter();
+                                parameter.type = currentParameter.type;
+                                parameter.ID = currentParameter.ID;
+                                parameter.Name = currentParameter.Name;
+                                parameter.Value = textBox.Text;
+                                Komponenta.parameters.Add(parameter);
+                            }
                         }
                     }
                     else if (currentParameter.type == Parameter.Type.Number)
@@ -885,10 +965,15 @@ namespace Pc_parts_lister
                         TextBox textBox = (TextBox)stackPanel.Children[1];
                         if (textBox.Text != null && textBox.Text.Length > 0)
                         {
-                            currentParameter.Value = textBox.Text;
+                            Parameter parameter = new Parameter();
+                            parameter.type = currentParameter.type;
+                            parameter.ID = currentParameter.ID;
+                            parameter.Name = currentParameter.Name;
+                            parameter.Value = textBox.Text;
+                            parameter.Value = textBox.Text;
 
                             Komponenta.parameters.Remove(currentParameter);
-                            Komponenta.parameters.Add(currentParameter);
+                            Komponenta.parameters.Add(parameter);
                         }
                     }
                     else

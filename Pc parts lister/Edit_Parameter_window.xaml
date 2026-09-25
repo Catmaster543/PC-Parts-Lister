@@ -27,11 +27,11 @@
             <Grid>
                 <StackPanel Name="String_Option_Panel" Margin="10" Visibility="Hidden">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Checked="List_String_CheckBox_Checked" Unchecked="List_String_CheckBox_Unchecked"/>
+                        <CheckBox Name="ListString_CheckBox" Checked="List_String_CheckBox_Checked" Unchecked="List_String_CheckBox_Unchecked"/>
                         <TextBlock FontSize="10" Text="Seznam položek" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Checked="Custom_String_CheckBox_Checked" Unchecked="Custom_String_CheckBox_Unchecked"/>
+                    <StackPanel Name="CustomStringAllowed_Panel" Orientation="Horizontal" Visibility="Hidden">
+                        <CheckBox Name="CustomString_CheckBox" Checked="Custom_String_CheckBox_Checked" Unchecked="Custom_String_CheckBox_Unchecked"/>
                         <TextBlock FontSize="10" Text="Povolit vlastní hodnotu" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
                     <StackPanel Name="Values_Panel" Orientation="Horizontal" Visibility="Hidden">
