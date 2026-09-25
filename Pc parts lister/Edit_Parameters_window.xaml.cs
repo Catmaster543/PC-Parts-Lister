@@ -33,6 +33,17 @@ namespace Pc_parts_lister.bin
             DataContext = this;
         }
 
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            PossibleParameter possibleParameter = new PossibleParameter();
+            possibleParameter.Name = "Nový parametr";
+            possibleParameter.values = new List<string>();
+            PossibleParameters.Add(possibleParameter);
+            ParametersView.Refresh();
+            Edit_Parameter_window Ewindow = new Edit_Parameter_window(possibleParameter);
+            Ewindow.ShowDialog();
+        }
+
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.DataContext is PossibleParameter parameter)

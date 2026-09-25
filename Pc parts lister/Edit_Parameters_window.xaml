@@ -7,7 +7,12 @@
         mc:Ignorable="d"
         Title="Edit_Parameters_window" Height="450" Width="450">
     <Grid>
-        <DataGrid ItemsSource="{Binding ParametersView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,30,0,0" Name="Parameters_grid">
+        <Button Click="AddButton_Click" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" Height="30" Width="30">
+            <Button.Background>
+                <ImageBrush ImageSource="/add_button.png"/>
+            </Button.Background>
+        </Button>
+        <DataGrid ItemsSource="{Binding ParametersView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,50,0,0" Name="Parameters_grid">
             <DataGrid.Columns>
 
                 <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
