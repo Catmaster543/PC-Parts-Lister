@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pc_parts_lister.Resources;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Eventing.Reader;

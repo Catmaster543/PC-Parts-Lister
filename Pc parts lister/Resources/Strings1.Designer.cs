@@ -113,14 +113,5 @@ namespace Pc_parts_lister.Resources {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Vyhledá lokalizovaný řetězec podobný Unable to save the .
-        /// </summary>
-        internal static string SavingError {
-            get {
-                return ResourceManager.GetString("SavingError", resourceCulture);
-            }
-        }
     }
 }

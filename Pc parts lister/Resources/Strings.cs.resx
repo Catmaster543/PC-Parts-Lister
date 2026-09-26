@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddComponent" xml:space="preserve">
-    <value>Add Component</value>
+    <value>Přidat Komponentu</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Zrušit</value>
   </data>
   <data name="ConfirmDeletion" xml:space="preserve">
-    <value>Are you sure you want to delete</value>
+    <value>Opravdu chceš smazat</value>
   </data>
   <data name="DeleteConfirmWindow" xml:space="preserve">
-    <value>Confirm deletion</value>
+    <value>Potvrzení smazání</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Uložit</value>
   </data>
   <data name="DeletionWarning" xml:space="preserve">
-    <value>There is no going back afterwards.</value>
+    <value>Po smazání již není cesty zpět.</value>
   </data>
 </root>
