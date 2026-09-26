@@ -1,0 +1,22 @@
+﻿<Window x:Class="Pc_parts_lister.Settings_window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
+        mc:Ignorable="d"
+        Title="Settings_window" Height="400" Width="400">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="{x:Static properties:Strings.Settings}" FontSize="20" FontWeight="Bold"/>
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <TextBlock Text="{x:Static properties:Strings.Lang}" FontSize="16" FontWeight="Bold"/>
+                <ComboBox x:Name="LanguageComboBox" SelectionChanged="LangSelectionChanged" FontSize="16" FontWeight="SemiBold" Width="100" Height="30" Margin="10,0,0,0" HorizontalAlignment="Left">
+                    <ComboBoxItem Tag="cs">Čeština</ComboBoxItem>
+                    <ComboBoxItem Tag="en">English</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

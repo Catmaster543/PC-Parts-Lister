@@ -68,6 +68,12 @@ namespace Pc_parts_lister
             Edit_Parameters_window parameter_edit_window = new Edit_Parameters_window(PossibleParameters);
             parameter_edit_window.Show();
         }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Settings_window settings_window = new Settings_window();
+            settings_window.Show();
+        }
     }
 
     public class Component

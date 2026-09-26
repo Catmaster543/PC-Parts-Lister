@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Pc_parts_lister.Resources;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
@@ -33,6 +35,8 @@ namespace Pc_parts_lister
             InitializeComponent();
 
             PossibleParameters = possibleParameters;
+
+            //CultureInfo.CurrentUICulture = new CultureInfo("en");
 
             Components = components;
             ComponentsView = CollectionViewSource.GetDefaultView(Components);
@@ -521,8 +525,8 @@ namespace Pc_parts_lister
             if (sender is Button button && button.DataContext is Component komponenta)
             {
                 var result = MessageBox.Show(
-                $"Opravdu chceš smazat {komponenta.Name}?",
-                "Potvrzení smazání",
+                $"{Strings.ConfirmDeletion} {komponenta.Name}? \n{Strings.DeletionWarning}",
+                Strings.DeleteConfirmWindow,
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
 

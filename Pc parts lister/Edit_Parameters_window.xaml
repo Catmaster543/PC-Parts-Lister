@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister.bin"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="Edit_Parameters_window" Height="450" Width="450">
     <Grid>
@@ -15,22 +16,21 @@
         <DataGrid ItemsSource="{Binding ParametersView}" AutoGenerateColumns="False" CanUserAddRows="False" Margin="0,50,0,0" Name="Parameters_grid">
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static properties:Strings.Name}" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static properties:Strings.ID}" Binding="{Binding ID}" IsReadOnly="True"/>
 
                 <!-- Tlačítka -->
-                <DataGridTemplateColumn Header="Akce">
+                <DataGridTemplateColumn Header="{x:Static properties:Strings.Actions}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="Upravit" Margin="2" Background="DarkBlue" Foreground="White" Click="EditButton_Click"/>
+                                <Button Content="{x:Static properties:Strings.Edit}" Margin="2" Background="DarkBlue" Foreground="White" Click="EditButton_Click"/>
 
-                                <Button Content="Smazat" Margin="2" Background="DarkRed" Foreground="White" Click="DeleteButton_Click"/>
+                                <Button Content="{x:Static properties:Strings.Delete}" Margin="2" Background="DarkRed" Foreground="White" Click="DeleteButton_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

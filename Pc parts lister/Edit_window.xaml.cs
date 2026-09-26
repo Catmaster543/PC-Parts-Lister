@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Pc_parts_lister.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -504,7 +505,7 @@ namespace Pc_parts_lister
         void EditMainPic()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+            dialog.Filter = $"{Strings.Pictures} (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
 
             if (Komponenta.FullImagePath != null)
             {
@@ -614,7 +615,7 @@ namespace Pc_parts_lister
         void AddImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Obrázky (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+            dialog.Filter = $"{Strings.Pictures} (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
 
             if (dialog.ShowDialog() == true)
             {

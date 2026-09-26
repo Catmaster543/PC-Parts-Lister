@@ -121,6 +121,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings_window.xaml.cs">
+      <DependentUpon>Settings_window.xaml</DependentUpon>
+    </Compile>
     <Page Include="Add_part.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Settings_window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Photo_View.xaml.cs">
@@ -199,7 +206,7 @@
     <EmbeddedResource Include="Resources\Strings.cs.resx" />
     <EmbeddedResource Include="Resources\Strings.en.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -301,6 +308,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="parameters_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="settings_button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
