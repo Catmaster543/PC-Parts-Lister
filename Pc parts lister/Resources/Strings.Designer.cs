@@ -250,6 +250,24 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Info.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Language.
+        /// </summary>
+        public static string Lang {
+            get {
+                return ResourceManager.GetString("Lang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný List.
         /// </summary>
         public static string List {
@@ -354,6 +372,15 @@ namespace Pc_parts_lister.Resources {
         public static string RAMs {
             get {
                 return ResourceManager.GetString("RAMs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný These settings will be applied after restarting the app..
+        /// </summary>
+        public static string RestartRequest {
+            get {
+                return ResourceManager.GetString("RestartRequest", resourceCulture);
             }
         }
         

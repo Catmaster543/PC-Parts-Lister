@@ -234,4 +234,13 @@
   <data name="Sufix" xml:space="preserve">
     <value>Koncovka</value>
   </data>
+  <data name="Lang" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="RestartRequest" xml:space="preserve">
+    <value>Tato nastavení se projeví až po restartu aplikace.</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
 </root>

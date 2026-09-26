@@ -234,4 +234,13 @@
   <data name="Sufix" xml:space="preserve">
     <value>Sufix</value>
   </data>
+  <data name="Lang" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="RestartRequest" xml:space="preserve">
+    <value>These settings will be applied after restarting the app.</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
 </root>

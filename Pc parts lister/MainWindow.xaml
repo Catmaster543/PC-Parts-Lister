@@ -41,5 +41,14 @@
                 </Button.Background>
             </Button>
         </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="{x:Static properties:Strings.Settings}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="#FF3C3C3C"/>
+            <Button Name="Settings_Button" Click="SettingsButton_Click" Width="100" Height="100" BorderThickness="0">
+                <Button.Background>
+                    <ImageBrush ImageSource="/settings_button.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>
