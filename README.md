@@ -34,7 +34,8 @@ And don't worry, you can delete your photos of the components after you've added
 On the bottom of this window, you will find a 
 ### **Mark-down style editor**
 In which you can write custom descriptions for your components. You write on the left and see how the text will look like on the right. [Image]
-Now in case you don't really know how to write in Mark-down, you can use the built-in buttons just above the description box. Just select the text you wish to make changes to and click on any of the buttons. [Gif]
+Now in case you don't really know how to write in Mark-down, you can use the built-in buttons just above the description box. Just select the text you wish to make changes to and click on any of the buttons. <img width="380" height="129" alt="Markdown showdown" src="https://github.com/user-attachments/assets/cf9842cf-234e-44f4-a9e3-7608ca61b86b" />
+
 Currently the app supports: **Bold**, *Italic*, ***Bold Italic*** and two Headings styles.
 The descriptions will be rendered in the Detail window as well.
 
