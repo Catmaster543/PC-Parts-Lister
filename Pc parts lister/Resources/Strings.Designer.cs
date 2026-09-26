@@ -22,7 +22,7 @@ namespace Pc_parts_lister.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Pc_parts_lister.Resources {
         ///   Vrací instanci ResourceManager uloženou v mezipaměti použitou touto třídou.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Pc_parts_lister.Resources.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace Pc_parts_lister.Resources {
         ///   vyhledání prostředků pomocí třídy prostředků se silnými typy.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,36 +61,108 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Actions.
+        /// </summary>
+        public static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Add Component.
         /// </summary>
-        internal static string AddComponent {
+        public static string AddComponent {
             get {
                 return ResourceManager.GetString("AddComponent", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Allow custom entries.
+        /// </summary>
+        public static string AllowCustomEntries {
+            get {
+                return ResourceManager.GetString("AllowCustomEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Cases.
+        /// </summary>
+        public static string Cases {
+            get {
+                return ResourceManager.GetString("Cases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Select picture.
+        /// </summary>
+        public static string ChoosePic {
+            get {
+                return ResourceManager.GetString("ChoosePic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný No pictures have been added yet..
+        /// </summary>
+        public static string CompLackPhotos {
+            get {
+                return ResourceManager.GetString("CompLackPhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Are you sure you want to delete.
         /// </summary>
-        internal static string ConfirmDeletion {
+        public static string ConfirmDeletion {
             get {
                 return ResourceManager.GetString("ConfirmDeletion", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný CPUs.
+        /// </summary>
+        public static string CPUs {
+            get {
+                return ResourceManager.GetString("CPUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Custom sufix.
+        /// </summary>
+        public static string CustomSufix {
+            get {
+                return ResourceManager.GetString("CustomSufix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Confirm deletion.
         /// </summary>
-        internal static string DeleteConfirmWindow {
+        public static string DeleteConfirmWindow {
             get {
                 return ResourceManager.GetString("DeleteConfirmWindow", resourceCulture);
             }
@@ -99,18 +171,243 @@ namespace Pc_parts_lister.Resources {
         /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný There is no going back afterwards..
         /// </summary>
-        internal static string DeletionWarning {
+        public static string DeletionWarning {
             get {
                 return ResourceManager.GetString("DeletionWarning", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Details.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Discs.
+        /// </summary>
+        public static string Discs {
+            get {
+                return ResourceManager.GetString("Discs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Unable to save the filters; please check the entered values..
+        /// </summary>
+        public static string FilterSaveError {
+            get {
+                return ResourceManager.GetString("FilterSaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Find Component.
+        /// </summary>
+        public static string FindComponent {
+            get {
+                return ResourceManager.GetString("FindComponent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný GPUs.
+        /// </summary>
+        public static string GPUs {
+            get {
+                return ResourceManager.GetString("GPUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný ID.
+        /// </summary>
+        public static string ID {
+            get {
+                return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný List.
+        /// </summary>
+        public static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Motherboards.
+        /// </summary>
+        public static string Mbs {
+            get {
+                return ResourceManager.GetString("Mbs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný New parameter.
+        /// </summary>
+        public static string NewParameter {
+            get {
+                return ResourceManager.GetString("NewParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný New value.
+        /// </summary>
+        public static string NewValue {
+            get {
+                return ResourceManager.GetString("NewValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný No photo selected..
+        /// </summary>
+        public static string NoCompPhoto {
+            get {
+                return ResourceManager.GetString("NoCompPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Nothing found..
+        /// </summary>
+        public static string NoResult {
+            get {
+                return ResourceManager.GetString("NoResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Others.
+        /// </summary>
+        public static string Others {
+            get {
+                return ResourceManager.GetString("Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Parameters.
+        /// </summary>
+        public static string Parameters {
+            get {
+                return ResourceManager.GetString("Parameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Pictures.
+        /// </summary>
+        public static string Pictures {
+            get {
+                return ResourceManager.GetString("Pictures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Power supplies.
+        /// </summary>
+        public static string PSUs {
+            get {
+                return ResourceManager.GetString("PSUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný RAMs.
+        /// </summary>
+        public static string RAMs {
+            get {
+                return ResourceManager.GetString("RAMs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Save.
         /// </summary>
-        internal static string Save {
+        public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Save filter.
+        /// </summary>
+        public static string SaveFilter {
+            get {
+                return ResourceManager.GetString("SaveFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Unable to save the component. Please check the entered parameters..
+        /// </summary>
+        public static string SavingError {
+            get {
+                return ResourceManager.GetString("SavingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Sufix.
+        /// </summary>
+        public static string Sufix {
+            get {
+                return ResourceManager.GetString("Sufix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
     }

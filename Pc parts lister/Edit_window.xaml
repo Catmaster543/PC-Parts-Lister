@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="Edit Window" Height="900" Width="800">
     
@@ -39,7 +40,7 @@
             <Button x:Name="MainPicButton" Height="270" Tag="{Binding FullImagePath}" BorderThickness="0" Background="{x:Null}">
                 <Image Name="Main_Pic" Source="{Binding FullImagePath}" Stretch="Uniform"/>
             </Button>
-            <Button Name="SelectMainPic_Button" Content="Vybrat obrázek" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold" Height="29"/>
+            <Button Name="SelectMainPic_Button" Content="{x:Static properties:Strings.ChoosePic}" Click="SelectImage_Click" BorderThickness="0,0,0,0" FontSize="20" FontWeight="Bold" Height="29"/>
         </StackPanel>
         <Button Name="EditMainPic_Button" Click="EditMainPic_Click" Grid.Column="0" Grid.Row="1" Margin="7" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="0" FontSize="20" FontWeight="Bold" Visibility="Collapsed">
             <Button.Background>
@@ -95,7 +96,7 @@
         <FlowDocumentScrollViewer Name="Preview_FlowDoc" Margin="10" Grid.Row="3" Grid.Column="1" Width="auto" Height="auto"/>
 
         <StackPanel Grid.ColumnSpan="2" Grid.Row="4">
-            <Button Content="Uložit" Name="Save_Button" Margin="5" Click="Save_Click" FontWeight="Bold" FontSize="25" Background="SpringGreen"/>
+            <Button Content="{x:Static properties:Strings.Save}" Name="Save_Button" Margin="5" Click="Save_Click" FontWeight="Bold" FontSize="25" Background="SpringGreen"/>
         </StackPanel>
 
         <StackPanel x:Name="ErrorPanel" Grid.Row="5" Grid.ColumnSpan="2">

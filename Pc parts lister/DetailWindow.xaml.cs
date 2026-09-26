@@ -415,5 +415,3 @@ namespace Pc_parts_lister
         }
     }
 }
-
-

@@ -989,8 +989,8 @@ namespace Pc_parts_lister
             else
             {
                 var result = MessageBox.Show(
-                $"Nelze uložit komponentu; zkontrolujte zadané parametry",
-                "Chyba",
+                Strings.SavingError,
+                Strings.Error,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
                 return;

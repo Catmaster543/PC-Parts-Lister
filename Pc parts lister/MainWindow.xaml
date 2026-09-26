@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="PC Parts Lister" Height="600" Width="800"
         Closing="Window_Closing" ResizeMode="CanMinimize">
@@ -18,14 +19,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Přidat součástku" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" Foreground="#FF3C3C3C" VerticalAlignment="Top" Grid.Column="0"/>
+        <TextBlock Text="{x:Static properties:Strings.AddComponent}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" Foreground="#FF3C3C3C" VerticalAlignment="Top" Grid.Column="0"/>
         <Button Click="Pridat" Height="300" Width="300" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
             <Button.Background>
                 <ImageBrush ImageSource="/add_button.png"/>
             </Button.Background>
         </Button>
 
-        <TextBlock Text="Najít součástku" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" Foreground="#FF3C3C3C" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBlock Text="{x:Static properties:Strings.FindComponent}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" Foreground="#FF3C3C3C" VerticalAlignment="Top" Grid.Column="1"/>
         <Button Click="Hledat" Height="300" Width="300" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1">
             <Button.Background>
                 <ImageBrush ImageSource="/search_button.png"/>
@@ -33,7 +34,7 @@
         </Button>
 
         <StackPanel Grid.Row="1">
-            <TextBlock Text="Parametry" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="#FF3C3C3C"/>
+            <TextBlock Text="{x:Static properties:Strings.Parameters}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="24" Foreground="#FF3C3C3C"/>
             <Button Name="Parameter_Button" Click="ParameterButton_Click" Width="100" Height="100" BorderThickness="0">
                 <Button.Background>
                     <ImageBrush ImageSource="/parameters_button.png"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pc_parts_lister.Resources;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -36,7 +37,7 @@ namespace Pc_parts_lister.bin
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             PossibleParameter possibleParameter = new PossibleParameter();
-            possibleParameter.Name = "Nový parametr";
+            possibleParameter.Name = Strings.NewParameter;
             possibleParameter.values = new List<string>();
             PossibleParameters.Add(possibleParameter);
             ParametersView.Refresh();

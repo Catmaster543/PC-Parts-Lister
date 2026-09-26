@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="Add Part" Height="500" Width="1000" ResizeMode="NoResize">
     <Grid Margin="10">
@@ -76,40 +77,10 @@
             </StackPanel>
 
             <StackPanel Name="Parameter_Column_B" Margin="5" Grid.Column="1" Grid.Row="0">
-                
+
             </StackPanel>
-            
-            <!--TextBlock x:Name="TypeText" Text="Typ:"/>
-            <ComboBox x:Name="TypeBox" SelectionChanged="TypeBox_SelectionChanged" Text="Vyber, nebo napiš vlastní"/>
 
-            <TextBlock x:Name="TypeText2" Text="Typ:"/>
-            <ComboBox x:Name="TypeBox2" SelectionChanged="TypeBox2_SelectionChanged" IsEditable="False" Text="Vyber, nebo napiš vlastní"/>
-
-            <TextBlock x:Name="StatusText" Text="Stav:"/>
-            <ComboBox x:Name="StatusBox" SelectionChanged="StatusBox_SelectionChanged" IsEditable="False" Text="Vyber"/>
-
-            <TextBlock x:Name="Manufacturertext" Text="Výrobce:"/>
-            <ComboBox x:Name="ManufacturerBox" SelectionChanged="ManufacturerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
-
-            <TextBlock x:Name="SerText" Text="Série:"/>
-            <ComboBox x:Name="SerBox" SelectionChanged="SerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
-
-            <TextBlock x:Name="SubSerText" Text="Řada:"/>
-            <ComboBox x:Name="SubSerBox" SelectionChanged="SubSerBox_SelectionChanged" IsEditable="True" Text="Vyber, nebo napiš vlastní"/>
-
-            <TextBlock x:Name="ModelText" Text="Model:"/>
-            <TextBox x:Name="ModelBox"/>
-
-            <TextBlock x:Name="CapacityText" Text="Velikost v GB:"/>
-            <TextBox x:Name="CapacityBox" TextChanged="Capacity_TextChanged"/>
-
-            <TextBlock x:Name="Powertext" Text="Výkon (W):"/>
-            <TextBox x:Name="PowerBox" TextChanged="Power_TextChanged"/>
-
-            <TextBlock x:Name="Qttext" Text="Množství:"/>
-            <TextBox x:Name="QtBox" TextChanged="Count_TextChanged"/!-->
-
-            <Button Name="Save_Button" Content="Uložit" Click="Save_Click" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="SpringGreen" FontSize="12" FontWeight="Bold"/>
+            <Button Name="Save_Button" Content="{x:Static properties:Strings.Save}" Click="Save_Click" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="SpringGreen" FontSize="12" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

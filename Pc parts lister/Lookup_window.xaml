@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="Component lookup" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Grid>
@@ -25,7 +26,7 @@
                                 <ImageBrush ImageSource="/cpu_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Procesory" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.CPUs}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Margin="30">
                         <Button Click="Ram_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
@@ -33,7 +34,7 @@
                                 <ImageBrush ImageSource="/ram_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="RAMky" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.RAMs}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Margin="30">
                         <Button Click="Mb_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
@@ -41,7 +42,7 @@
                                 <ImageBrush ImageSource="/mb_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Základní desky" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.Mbs}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Margin="30">
                         <Button Click="Gpu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
@@ -49,7 +50,7 @@
                                 <ImageBrush ImageSource="/gpu_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Grafické karty" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.GPUs}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="20,0,20,0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -59,7 +60,7 @@
                                 <ImageBrush ImageSource="/disk_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Disky" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.Discs}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Margin="30">
                         <Button Click="Psu_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
@@ -67,7 +68,7 @@
                                 <ImageBrush ImageSource="/psu_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Zdroje" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.PSUs}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Margin="30">
                         <Button Click="Case_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
@@ -75,7 +76,7 @@
                                 <ImageBrush ImageSource="/case_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Skříně" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.Cases}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Margin="30">
                         <Button Click="Other_click" Height="100" Width="100" BorderThickness="0,0,0,0" FontWeight="Bold" FontSize="36" Margin="20,20,20,0">
@@ -83,7 +84,7 @@
                                 <ImageBrush ImageSource="/other_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="Ostatní" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{x:Static properties:Strings.Others}" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -124,29 +125,28 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Name}" Binding="{Binding Name}" IsReadOnly="True"/>
 
                     <!-- Tlačítka -->
-                    <DataGridTemplateColumn Header="Akce">
+                    <DataGridTemplateColumn Header="{x:Static properties:Strings.Actions}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="Detail"
+                                    <Button Content="{x:Static properties:Strings.Detail}"
                                     Margin="2"
                                     Click="DetailButton_Click"/>
 
-                                    <Button Content="Upravit"
+                                    <Button Content="{x:Static properties:Strings.Edit}"
                                     Margin="2"
                                     Background="DarkBlue"
                                     Foreground="White"
                                     Click="EditButton_Click"/>
 
-                                    <Button Content="Smazat"
+                                    <Button Content="{x:Static properties:Strings.Delete}"
                                     Margin="2"
                                     Background="DarkRed"
                                     Foreground="White"
                                     Click="DeleteButton_Click"/>
-
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -154,7 +154,7 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock Text="Nic takového tu není." Name="EmptyGrid_Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBlock Text="{x:Static properties:Strings.NoResult}" Name="EmptyGrid_Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

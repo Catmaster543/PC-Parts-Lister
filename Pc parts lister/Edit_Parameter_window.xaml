@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="Edit_Parameter_window" Height="400" Width="300">
     <Grid>
@@ -13,26 +14,26 @@
         </Grid.RowDefinitions>
         <StackPanel Name="Main_Panel" Margin="10">
             <StackPanel Name="Name_panel" Margin="10" Orientation="Horizontal">
-                <TextBlock FontSize="16" Text="Jméno" FontWeight="Bold"/>
+                <TextBlock FontSize="16" Text="{x:Static properties:Strings.Name}" FontWeight="Bold"/>
                 <TextBox Name="Name_Box" FontSize="16" MinWidth="20" BorderThickness="0,0,0,2" Margin="5,0,0,0"/>
             </StackPanel>
             <StackPanel Name="ID_panel" Margin="10" Orientation="Horizontal">
-                <TextBlock FontSize="16" Text="ID" FontWeight="Bold"/>
+                <TextBlock FontSize="16" Text="{x:Static properties:Strings.ID}" FontWeight="Bold"/>
                 <TextBox Name="ID_Box" FontSize="16" MinWidth="20" BorderThickness="0,0,0,2" Margin="5,0,0,0"/>
             </StackPanel>
             <StackPanel Name="Type_panel" Margin="10" Orientation="Horizontal">
-                <TextBlock FontSize="16" Text="Typ" FontWeight="Bold"/>
+                <TextBlock FontSize="16" Text="{x:Static properties:Strings.Type}" FontWeight="Bold"/>
                 <ComboBox Name="Type_Box" FontSize="16" MinWidth="20" BorderThickness="0,0,0,2" Margin="5,0,0,0" SelectionChanged="TypeBox_SelectionChanged"/>
             </StackPanel>
             <Grid>
                 <StackPanel Name="String_Option_Panel" Margin="10" Visibility="Hidden">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Name="ListString_CheckBox" Checked="List_String_CheckBox_Checked" Unchecked="List_String_CheckBox_Unchecked"/>
-                        <TextBlock FontSize="10" Text="Seznam položek" FontWeight="Bold" Margin="3,0,0,0"/>
+                        <TextBlock FontSize="10" Text="{x:Static properties:Strings.List}" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
                     <StackPanel Name="CustomStringAllowed_Panel" Orientation="Horizontal" Visibility="Hidden">
                         <CheckBox Name="CustomString_CheckBox" Checked="Custom_String_CheckBox_Checked" Unchecked="Custom_String_CheckBox_Unchecked"/>
-                        <TextBlock FontSize="10" Text="Povolit vlastní hodnotu" FontWeight="Bold" Margin="3,0,0,0"/>
+                        <TextBlock FontSize="10" Text="{x:Static properties:Strings.AllowCustomEntries}" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
                     <StackPanel Name="Values_Panel" Orientation="Horizontal" Visibility="Hidden">
                         <ListBox Name="ValuesListBox" ItemsSource="{Binding ValuesView}" SelectionChanged="ValuesListBox_SelectionChanged" MaxHeight="100">
@@ -73,17 +74,17 @@
                 <StackPanel Name="Int_Option_Panel" Margin="10" Visibility="Hidden">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Checked="CustomAfterFix_CheckBox_Checked" Unchecked="CustomAfterFix_CheckBox_Unchecked"/>
-                        <TextBlock FontSize="10" Text="Extra koncovka" FontWeight="Bold" Margin="3,0,0,0"/>
+                        <TextBlock FontSize="10" Text="{x:Static properties:Strings.CustomSufix}" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
                     <StackPanel Name="CustomAfterFix_panel" Orientation="Horizontal" Visibility="Hidden">
-                        <TextBlock FontSize="10" Text="Koncovka" FontWeight="Bold"/>
+                        <TextBlock FontSize="10" Text="{x:Static properties:Strings.Sufix}" FontWeight="Bold"/>
                         <TextBox Name="CustomAfterFix_Box" FontSize="10" MinWidth="20" BorderThickness="0,0,0,2" Margin="5,0,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="10">
-            <Button Content="Uložit" Click="Save_Click" FontWeight="Bold" FontSize="16" Background="SpringGreen"/>
+            <Button Content="{x:Static properties:Strings.Save}" Click="Save_Click" FontWeight="Bold" FontSize="16" Background="SpringGreen"/>
         </StackPanel>
     </Grid>
 </Window>

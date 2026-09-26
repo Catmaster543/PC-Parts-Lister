@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddComponent" xml:space="preserve">
-    <value>Přidat Komponentu</value>
+    <value>Přidat Součástku</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Zrušit</value>
@@ -134,5 +134,104 @@
   </data>
   <data name="DeletionWarning" xml:space="preserve">
     <value>Po smazání již není cesty zpět.</value>
+  </data>
+  <data name="SavingError" xml:space="preserve">
+    <value>Nelze uložit komponentu; zkontrolujte zadané parametry</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Chyba</value>
+  </data>
+  <data name="FilterSaveError" xml:space="preserve">
+    <value>Nelze uložit filtry; zkontrolujte zadané parametry</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Obrázky</value>
+  </data>
+  <data name="NewParameter" xml:space="preserve">
+    <value>Nový parametr</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>Nová hodnota</value>
+  </data>
+  <data name="FindComponent" xml:space="preserve">
+    <value>Najít Součástku</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parametry</value>
+  </data>
+  <data name="CPUs" xml:space="preserve">
+    <value>Procesory</value>
+  </data>
+  <data name="RAMs" xml:space="preserve">
+    <value>RAMky</value>
+  </data>
+  <data name="Mbs" xml:space="preserve">
+    <value>Základní desky</value>
+  </data>
+  <data name="GPUs" xml:space="preserve">
+    <value>Grafické karty</value>
+  </data>
+  <data name="Discs" xml:space="preserve">
+    <value>Disky</value>
+  </data>
+  <data name="PSUs" xml:space="preserve">
+    <value>Zdroje</value>
+  </data>
+  <data name="Cases" xml:space="preserve">
+    <value>Skříně</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Ostatní</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Název</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Upravit</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Akce</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Smazat</value>
+  </data>
+  <data name="NoResult" xml:space="preserve">
+    <value>Nic takového tu není.</value>
+  </data>
+  <data name="SaveFilter" xml:space="preserve">
+    <value>Uložit filtr</value>
+  </data>
+  <data name="ChoosePic" xml:space="preserve">
+    <value>Vybrat obrázek</value>
+  </data>
+  <data name="NoCompPhoto" xml:space="preserve">
+    <value>Komponenta nemá fotku.</value>
+  </data>
+  <data name="CompLackPhotos" xml:space="preserve">
+    <value>Součástka zatím nemá fotky.</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Seznam položek</value>
+  </data>
+  <data name="AllowCustomEntries" xml:space="preserve">
+    <value>Povolit vlastní hodnotu</value>
+  </data>
+  <data name="CustomSufix" xml:space="preserve">
+    <value>Extra koncovka</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Nastavení</value>
+  </data>
+  <data name="Sufix" xml:space="preserve">
+    <value>Koncovka</value>
   </data>
 </root>

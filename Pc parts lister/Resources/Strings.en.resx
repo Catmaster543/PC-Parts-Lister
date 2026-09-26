@@ -135,4 +135,103 @@
   <data name="DeletionWarning" xml:space="preserve">
     <value>There is no going back afterwards.</value>
   </data>
+  <data name="SavingError" xml:space="preserve">
+    <value>Unable to save the component. Please check the entered parameters.</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FilterSaveError" xml:space="preserve">
+    <value>Unable to save the filters; please check the entered values.</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Pictures</value>
+  </data>
+  <data name="NewParameter" xml:space="preserve">
+    <value>New parameter</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>New value</value>
+  </data>
+  <data name="FindComponent" xml:space="preserve">
+    <value>Find Component</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="CPUs" xml:space="preserve">
+    <value>CPUs</value>
+  </data>
+  <data name="RAMs" xml:space="preserve">
+    <value>RAMs</value>
+  </data>
+  <data name="Mbs" xml:space="preserve">
+    <value>Motherboards</value>
+  </data>
+  <data name="GPUs" xml:space="preserve">
+    <value>GPUs</value>
+  </data>
+  <data name="Discs" xml:space="preserve">
+    <value>Discs</value>
+  </data>
+  <data name="PSUs" xml:space="preserve">
+    <value>Power supplies</value>
+  </data>
+  <data name="Cases" xml:space="preserve">
+    <value>Cases</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="NoResult" xml:space="preserve">
+    <value>Nothing found.</value>
+  </data>
+  <data name="SaveFilter" xml:space="preserve">
+    <value>Save filter</value>
+  </data>
+  <data name="ChoosePic" xml:space="preserve">
+    <value>Select picture</value>
+  </data>
+  <data name="NoCompPhoto" xml:space="preserve">
+    <value>No photo selected.</value>
+  </data>
+  <data name="CompLackPhotos" xml:space="preserve">
+    <value>No pictures have been added yet.</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="AllowCustomEntries" xml:space="preserve">
+    <value>Allow custom entries</value>
+  </data>
+  <data name="CustomSufix" xml:space="preserve">
+    <value>Custom sufix</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Sufix" xml:space="preserve">
+    <value>Sufix</value>
+  </data>
 </root>

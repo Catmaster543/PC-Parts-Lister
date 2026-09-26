@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pc_parts_lister.Resources;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -1336,14 +1337,6 @@ namespace Pc_parts_lister
                                     filterParameters.Add(currentParameter);
                                 }
                             }
-                            /*
-                            ComboBox comboBox = (ComboBox)panel.Children[2];
-                            if (comboBox.SelectedItem != null)
-                            {
-                                currentParameter.Value = comboBox.SelectedItem.ToString();
-                                filterParameters.Add((FilterParameter)currentParameter);
-                            }
-                            */
                         }
                         else if (currentParameter.type == Parameter.Type.Number)
                         {
@@ -1407,8 +1400,8 @@ namespace Pc_parts_lister
             else
             {
                 var result = MessageBox.Show(
-                $"Nelze uložit filtry; zkontrolujte zadané parametry",
-                "Chyba",
+                Strings.FilterSaveError,
+                Strings.Error,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
                 return;

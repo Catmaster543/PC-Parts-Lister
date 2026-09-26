@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pc_parts_lister.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -124,7 +125,7 @@ namespace Pc_parts_lister
 
         private void AddValue_Click(object sender, RoutedEventArgs e)
         {
-            string newValue = "Nová hodnota";
+            string newValue = Strings.NewValue;
             kParameter.values.Add(newValue);
             ValuesView.Refresh();
             ValuesListBox.SelectedItem = newValue;

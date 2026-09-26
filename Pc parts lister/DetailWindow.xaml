@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pc_parts_lister"
+        xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
         Title="Detail Window" Height="800" Width="600" ResizeMode="NoResize">
     <Grid Margin="10">
@@ -33,7 +34,7 @@
                 <Image Name="Main_Pic" Source="{Binding FullImagePath}" Stretch="Uniform"/>
             </Button>
         </StackPanel>
-        <TextBlock Name="Null_Main_Pic_TextBlock" Text="Komponenta nemá fotku." HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="23"/>
+        <TextBlock Name="Null_Main_Pic_TextBlock" Text="{x:Static properties:Strings.NoCompPhoto}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="23"/>
 
         <ScrollViewer Grid.Column="1" Grid.Row="1" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">
             <StackPanel Name="Parameters_StackPanel" Margin="10">
@@ -44,7 +45,7 @@
         <!-- Původ z Edit window! -->
         <ScrollViewer Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Center">
             <StackPanel Name="ImagesPanel" Margin="7" CanVerticallyScroll="False" Orientation="Horizontal">
-                <TextBlock Name="Null_Photos_TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Text="Součástka zatím nemá fotky." FontWeight="Bold"/>
+                <TextBlock Name="Null_Photos_TextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Text="{x:Static properties:Strings.CompLackPhotos}" FontWeight="Bold"/>
             </StackPanel>
         </ScrollViewer>
 
