@@ -1,16 +1,15 @@
 # ⚪ **Overview**
 **This is a native windows app**, that has got one and only purpose - help you keep a better track of PC Components.
 
+# Downloading
+**You can download the latest version [here](https://github.com/Catmaster543/PC-Parts-Lister/releases)**
+**To run, just unzip the file and run the .exe inside the zip.**
+In case of microsoft smart-screen blocking the app from running, click on "more" and then "run anyway". I promise there is nothing sketchy going on, this warning is caused by digital signature not being present and the reason it's missing, is due to it being a bit costly thing to own.
 
 # Add, View in Detail and Edit your components!
 This app allows you to **create** [Image/Gif]
 **View in Detail** [Gif]
 And **Edit** [Gif]
-
-# Downloading
-**You can download the latest version [here](https://github.com/Catmaster543/PC-Parts-Lister/releases)**
-**To run, just unzip the file and run the .exe inside the zip.**
-In case of microsoft smart-screen blocking the app from running, click on "more" and then "run anyway". I promise there is nothing sketchy going on, this warning is caused by digital signature not being present and the reason it's missing, is due to it being a bit costly thing to own.
 
 ## ➕ Adding components
 You can **add** in **your components using the huge "+" button**, located in the main window, the window shown right after you open the app.
