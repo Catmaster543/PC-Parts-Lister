@@ -1,5 +1,5 @@
 # ⚪ **Overview**
-**This is a native windows app**, that has got one and only purpose - help you keep a better track of PC Components.
+**This is a native windows app**, that has got one and only purpose - help you keep a better track of PC Components. I am sorry in advance if the UI does not feel exactly good-looking, this was my first time ever messing with XAML and in my opinion the result here is not that awful for what it could've been.
 
 # Downloading
 **You can download the latest version [here](https://github.com/Catmaster543/PC-Parts-Lister/releases)**
