@@ -58,17 +58,10 @@ namespace Pc_parts_lister
 
             if (parameter.values == null)
             {
+                parameter.values = new List<string>();
                 EditValue_Panel.Visibility = Visibility.Hidden;
             }
-
-            if (parameter.list)
-            {
-                if (parameter.values == null)
-                {
-                    parameter.values = new List<string>();
-                }
-                ValuesView = CollectionViewSource.GetDefaultView(parameter.values);
-            }
+            ValuesView = CollectionViewSource.GetDefaultView(parameter.values);
 
             DataContext = this;
             this.creatingParameter = creatingParameter;
@@ -85,11 +78,6 @@ namespace Pc_parts_lister
         private void List_String_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             kParameter.list = true;
-            if (kParameter.values == null)
-            {
-                kParameter.values = new List<string>();
-                ValuesView = CollectionViewSource.GetDefaultView(kParameter.values);
-            }
             Values_Panel.Visibility = Visibility.Visible;
             CustomStringAllowed_Panel.Visibility = Visibility.Visible;
         }
