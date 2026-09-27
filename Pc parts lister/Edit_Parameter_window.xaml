@@ -60,7 +60,7 @@
                                     <ImageBrush ImageSource="/add_button.png"/>
                                 </Button.Background>
                             </Button>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Name="EditValue_Panel" Orientation="Horizontal">
                                 <TextBox Name="Value_Box" FontSize="16" MinWidth="20" BorderThickness="0,0,0,2" Margin="5,10,0,0" VerticalAlignment="Top" MaxWidth="120"/>
                                 <Button Name="ConfirmEditButton" Click="ConfirmEditButton_Click" Margin="10" Width="20" Height="20" VerticalAlignment="Top">
                                     <Button.Background>

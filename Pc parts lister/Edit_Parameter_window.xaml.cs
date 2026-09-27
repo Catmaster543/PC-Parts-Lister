@@ -24,15 +24,13 @@ namespace Pc_parts_lister
         public bool creatingParameter;
         bool switchedByCode = true;
         public PossibleParameter kParameter;
-        public ICollectionView ValuesView { get; }
+        public ICollectionView ValuesView { get; set; }
         private Parameter.Type selectedType;
         public Edit_Parameter_window(PossibleParameter parameter, bool creatingParameter)
         {
             InitializeComponent();
 
             kParameter = parameter;
-
-            ValuesView = CollectionViewSource.GetDefaultView(parameter.values);
 
             Name_Box.Text = parameter.Name;
             ID_Box.Text = parameter.ID;
@@ -58,6 +56,20 @@ namespace Pc_parts_lister
                 CustomAfterFix_Box.Text = parameter.intSufix;
             } 
 
+            if (parameter.values == null)
+            {
+                EditValue_Panel.Visibility = Visibility.Hidden;
+            }
+
+            if (parameter.list)
+            {
+                if (parameter.values == null)
+                {
+                    parameter.values = new List<string>();
+                }
+                ValuesView = CollectionViewSource.GetDefaultView(parameter.values);
+            }
+
             DataContext = this;
             this.creatingParameter = creatingParameter;
         }
@@ -73,6 +85,11 @@ namespace Pc_parts_lister
         private void List_String_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             kParameter.list = true;
+            if (kParameter.values == null)
+            {
+                kParameter.values = new List<string>();
+                ValuesView = CollectionViewSource.GetDefaultView(kParameter.values);
+            }
             Values_Panel.Visibility = Visibility.Visible;
             CustomStringAllowed_Panel.Visibility = Visibility.Visible;
         }
@@ -126,12 +143,14 @@ namespace Pc_parts_lister
                         comboBox.SelectedItem = "Number";
                         Int_Option_Panel.Visibility = Visibility.Visible;
                         String_Option_Panel.Visibility = Visibility.Hidden;
+                        selectedType = Parameter.Type.Number;
                     }   
                     else if (comboBox.SelectedItem.ToString() == "Number")
                     {
                         comboBox.SelectedItem = "String";
                         String_Option_Panel.Visibility = Visibility.Visible;
                         Int_Option_Panel.Visibility = Visibility.Hidden;
+                        selectedType = Parameter.Type.String;
                     }
                 }
             }
@@ -159,11 +178,13 @@ namespace Pc_parts_lister
                 {
                     Int_Option_Panel.Visibility = Visibility.Hidden;
                     String_Option_Panel.Visibility = Visibility.Visible;
+                    selectedType = Parameter.Type.String;
                 }
                 else if (comboBox.SelectedItem.ToString() == "Number")
                 {
                     String_Option_Panel.Visibility = Visibility.Hidden;
                     Int_Option_Panel.Visibility = Visibility.Visible;
+                    selectedType = Parameter.Type.Number;
                 }
                 return;
             }
@@ -174,7 +195,12 @@ namespace Pc_parts_lister
             ListBox box = sender as ListBox;
             if (box.SelectedItem != null)
             {
+                EditValue_Panel.Visibility = Visibility.Visible;
                 Value_Box.Text = box.SelectedItem.ToString();
+            }
+            else
+            {
+                EditValue_Panel.Visibility = Visibility.Hidden;
             }
         }
 
@@ -198,11 +224,14 @@ namespace Pc_parts_lister
 
         private void ConfirmEditButton_Click(object sender, RoutedEventArgs e)
         {
-            kParameter.values.Remove(ValuesListBox.SelectedItem.ToString());
-            kParameter.values.Add(Value_Box.Text);
-            ValuesView.Refresh();
-            ValuesListBox.SelectedItem = Value_Box.Text;
-            Value_Box.Text = string.Empty;
+            if (ValuesListBox.SelectedItem != null)
+            {
+                kParameter.values.Remove(ValuesListBox.SelectedItem.ToString());
+                kParameter.values.Add(Value_Box.Text);
+                ValuesView.Refresh();
+                ValuesListBox.SelectedItem = Value_Box.Text;
+                Value_Box.Text = string.Empty;
+            }
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)

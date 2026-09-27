@@ -38,7 +38,8 @@ namespace Pc_parts_lister
             if (!found) 
             {
                 ComboBoxItem comboBoxItem = new ComboBoxItem();
-                comboBoxItem.Name = "English (Default)";
+                comboBoxItem.Content = "English (Default)";
+                comboBoxItem.Tag = "en";
                 LanguageComboBox.Items.Add(comboBoxItem);
                 LanguageComboBox.SelectedItem = comboBoxItem;
             }
