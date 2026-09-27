@@ -159,3 +159,7 @@ It mainly revolves around expandibility and being dynamic. I've introduced this 
 (Mostly included as a joke, the app is super lightweight)
 - **CPU** - Pretty much any cpu that can run atleast Windows 10
 - **RAM** - I've never managed to use more than 250 MB at once, so that should do.
+
+## 🤖 AI usage declaration
+To my knowledge, pretty much **no AI** has been directly used in the making of this project.
+The only exception to this being my silly questions forwarded towards few AI models, but never anything specific to this project, moreover to explain some terms in XAML a little closer, but once again, only in general terms, not specific to this project.
