@@ -21,10 +21,12 @@ namespace Pc_parts_lister
     /// </summary>
     public partial class Edit_Parameter_window : Window
     {
+        public bool creatingParameter;
+        bool switchedByCode = true;
         public PossibleParameter kParameter;
         public ICollectionView ValuesView { get; }
         private Parameter.Type selectedType;
-        public Edit_Parameter_window(PossibleParameter parameter)
+        public Edit_Parameter_window(PossibleParameter parameter, bool creatingParameter)
         {
             InitializeComponent();
 
@@ -47,10 +49,17 @@ namespace Pc_parts_lister
                 if (parameter.customWriting)
                 {
                     CustomString_CheckBox.IsChecked = true;
-                } 
+                }
             }
 
+            if (parameter.intSufix != null && parameter.intSufix != "")
+            {
+                CustomSuffixCheckBox.IsChecked = true;
+                CustomAfterFix_Box.Text = parameter.intSufix;
+            } 
+
             DataContext = this;
+            this.creatingParameter = creatingParameter;
         }
 
         private void List_String_CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -85,22 +94,78 @@ namespace Pc_parts_lister
         {
             CustomAfterFix_panel.Visibility = Visibility.Visible;
         }
+
         private void TypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            if (comboBox.SelectedItem.ToString() == "String")
+            if (!creatingParameter && !switchedByCode)
             {
-                String_Option_Panel.Visibility = Visibility.Visible;
-                Int_Option_Panel.Visibility = Visibility.Hidden;
+                MessageBoxResult result = MessageBox.Show(Strings.TypeSwapWarning, Strings.Warning, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (comboBox.SelectedItem.ToString() == "String")
+                    {
+                        String_Option_Panel.Visibility = Visibility.Visible;
+                        Int_Option_Panel.Visibility = Visibility.Hidden;
 
-                selectedType = Parameter.Type.String;
+                        selectedType = Parameter.Type.String;
+                    }
+                    else if (comboBox.SelectedItem.ToString() == "Number")
+                    {
+                        Int_Option_Panel.Visibility = Visibility.Visible;
+                        String_Option_Panel.Visibility = Visibility.Hidden;
+
+                        selectedType = Parameter.Type.Number;
+                    }
+                }
+                else
+                {
+                    switchedByCode = true;
+                    if (comboBox.SelectedItem.ToString() == "String")
+                    {
+                        comboBox.SelectedItem = "Number";
+                        Int_Option_Panel.Visibility = Visibility.Visible;
+                        String_Option_Panel.Visibility = Visibility.Hidden;
+                    }   
+                    else if (comboBox.SelectedItem.ToString() == "Number")
+                    {
+                        comboBox.SelectedItem = "String";
+                        String_Option_Panel.Visibility = Visibility.Visible;
+                        Int_Option_Panel.Visibility = Visibility.Hidden;
+                    }
+                }
             }
-            else if (comboBox.SelectedItem.ToString() == "Number")
+            else if (creatingParameter)
             {
-                Int_Option_Panel.Visibility = Visibility.Visible;
-                String_Option_Panel.Visibility = Visibility.Hidden;
+                if (comboBox.SelectedItem.ToString() == "String")
+                {
+                    String_Option_Panel.Visibility = Visibility.Visible;
+                    Int_Option_Panel.Visibility = Visibility.Hidden;
 
-                selectedType = Parameter.Type.Number;
+                    selectedType = Parameter.Type.String;
+                }
+                else if (comboBox.SelectedItem.ToString() == "Number")
+                {
+                    Int_Option_Panel.Visibility = Visibility.Visible;
+                    String_Option_Panel.Visibility = Visibility.Hidden;
+
+                    selectedType = Parameter.Type.Number;
+                }
+            }
+            else if (switchedByCode)
+            {
+                switchedByCode = false;
+                if (comboBox.SelectedItem.ToString() == "String")
+                {
+                    Int_Option_Panel.Visibility = Visibility.Hidden;
+                    String_Option_Panel.Visibility = Visibility.Visible;
+                }
+                else if (comboBox.SelectedItem.ToString() == "Number")
+                {
+                    String_Option_Panel.Visibility = Visibility.Hidden;
+                    Int_Option_Panel.Visibility = Visibility.Visible;
+                }
+                return;
             }
         }
 

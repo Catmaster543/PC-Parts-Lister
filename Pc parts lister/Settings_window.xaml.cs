@@ -1,6 +1,7 @@
 ﻿using Pc_parts_lister.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +26,21 @@ namespace Pc_parts_lister
         {
             InitializeComponent();
 
+            bool found = false;
             foreach (ComboBoxItem item in LanguageComboBox.Items)
             {
                 if (item.Tag.ToString() == Properties.Settings.Default.Language)
                 {
+                    found = true;
                     LanguageComboBox.SelectedItem = item;
                 }
+            }
+            if (!found) 
+            {
+                ComboBoxItem comboBoxItem = new ComboBoxItem();
+                comboBoxItem.Name = "English (Default)";
+                LanguageComboBox.Items.Add(comboBoxItem);
+                LanguageComboBox.SelectedItem = comboBoxItem;
             }
             firstRun = false;
         }

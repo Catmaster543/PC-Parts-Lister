@@ -88,11 +88,38 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Broken.
+        /// </summary>
+        public static string Broken {
+            get {
+                return ResourceManager.GetString("Broken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Cancel.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Capacity.
+        /// </summary>
+        public static string Capacity {
+            get {
+                return ResourceManager.GetString("Capacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Case.
+        /// </summary>
+        public static string Case {
+            get {
+                return ResourceManager.GetString("Case", resourceCulture);
             }
         }
         
@@ -133,11 +160,38 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Count.
+        /// </summary>
+        public static string Count {
+            get {
+                return ResourceManager.GetString("Count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný CPU.
+        /// </summary>
+        public static string CPU {
+            get {
+                return ResourceManager.GetString("CPU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný CPUs.
         /// </summary>
         public static string CPUs {
             get {
                 return ResourceManager.GetString("CPUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Critical.
+        /// </summary>
+        public static string Critical {
+            get {
+                return ResourceManager.GetString("Critical", resourceCulture);
             }
         }
         
@@ -187,6 +241,15 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Disc.
+        /// </summary>
+        public static string Disc {
+            get {
+                return ResourceManager.GetString("Disc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Discs.
         /// </summary>
         public static string Discs {
@@ -228,6 +291,24 @@ namespace Pc_parts_lister.Resources {
         public static string FindComponent {
             get {
                 return ResourceManager.GetString("FindComponent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Fixed.
+        /// </summary>
+        public static string Fixed {
+            get {
+                return ResourceManager.GetString("Fixed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný GPU.
+        /// </summary>
+        public static string GPU {
+            get {
+                return ResourceManager.GetString("GPU", resourceCulture);
             }
         }
         
@@ -277,6 +358,24 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Manufacturer.
+        /// </summary>
+        public static string Manufacturer {
+            get {
+                return ResourceManager.GetString("Manufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Mb.
+        /// </summary>
+        public static string Mb {
+            get {
+                return ResourceManager.GetString("Mb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Motherboards.
         /// </summary>
         public static string Mbs {
@@ -286,11 +385,29 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Model.
+        /// </summary>
+        public static string Model {
+            get {
+                return ResourceManager.GetString("Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Name.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Enter component name....
+        /// </summary>
+        public static string NameSuggestion {
+            get {
+                return ResourceManager.GetString("NameSuggestion", resourceCulture);
             }
         }
         
@@ -331,6 +448,51 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Clicking on any of the three symbols will toggle the filtering mode.  .
+        /// </summary>
+        public static string NumberFilteringTooltip {
+            get {
+                return ResourceManager.GetString("NumberFilteringTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Aka. &quot;=&quot; mode will only show components with this parameter having the exact same value you enter..
+        /// </summary>
+        public static string NumberFilteringTooltip2 {
+            get {
+                return ResourceManager.GetString("NumberFilteringTooltip2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný &quot;&lt;&quot; mode will only show components with this parameters value lesser than, or same as your value..
+        /// </summary>
+        public static string NumberFilteringTooltip3 {
+            get {
+                return ResourceManager.GetString("NumberFilteringTooltip3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Other.
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Others.
         /// </summary>
         public static string Others {
@@ -358,11 +520,38 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Power.
+        /// </summary>
+        public static string Power {
+            get {
+                return ResourceManager.GetString("Power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný PSU.
+        /// </summary>
+        public static string PSU {
+            get {
+                return ResourceManager.GetString("PSU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Power supplies.
         /// </summary>
         public static string PSUs {
             get {
                 return ResourceManager.GetString("PSUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný RAM.
+        /// </summary>
+        public static string RAM {
+            get {
+                return ResourceManager.GetString("RAM", resourceCulture);
             }
         }
         
@@ -412,6 +601,15 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Series.
+        /// </summary>
+        public static string Series {
+            get {
+                return ResourceManager.GetString("Series", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Settings.
         /// </summary>
         public static string Settings {
@@ -421,7 +619,34 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
-        ///   Vyhledá lokalizovaný řetězec podobný Sufix.
+        ///   Vyhledá lokalizovaný řetězec podobný Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Subseries.
+        /// </summary>
+        public static string SubSeries {
+            get {
+                return ResourceManager.GetString("SubSeries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Subtype.
+        /// </summary>
+        public static string SubType {
+            get {
+                return ResourceManager.GetString("SubType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Suffix.
         /// </summary>
         public static string Sufix {
             get {
@@ -435,6 +660,42 @@ namespace Pc_parts_lister.Resources {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Do you really want to change this? If there are components with this parameter things WILL break!.
+        /// </summary>
+        public static string TypeSwapWarning {
+            get {
+                return ResourceManager.GetString("TypeSwapWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Are you sure that you want to close this window? All changes will be lost..
+        /// </summary>
+        public static string WindowClosingWarning {
+            get {
+                return ResourceManager.GetString("WindowClosingWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Working.
+        /// </summary>
+        public static string Working {
+            get {
+                return ResourceManager.GetString("Working", resourceCulture);
             }
         }
     }

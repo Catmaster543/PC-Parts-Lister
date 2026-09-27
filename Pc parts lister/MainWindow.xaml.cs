@@ -1,4 +1,5 @@
 ﻿using Pc_parts_lister.bin;
+using Pc_parts_lister.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -154,53 +155,55 @@ namespace Pc_parts_lister
         public void WriteDefaults(ref ObservableCollection<PossibleParameter> parameters)
         {
             PossibleParameter typeParameter = new PossibleParameter();
-            typeParameter.Name = "Typ";
+            typeParameter.Name = Strings.Type;
             typeParameter.ID = "Type";
             typeParameter.values = new List<string>();
-            typeParameter.values.Add("CPU");
-            typeParameter.values.Add("GPU");
-            typeParameter.values.Add("RAM");
-            typeParameter.values.Add("Mb");
-            typeParameter.values.Add("Disk");
-            typeParameter.values.Add("PSU");
-            typeParameter.values.Add("Case");
-            typeParameter.values.Add("Jiné");
+            typeParameter.values.Add(Strings.CPU);
+            typeParameter.values.Add(Strings.GPU);
+            typeParameter.values.Add(Strings.RAM);
+            typeParameter.values.Add(Strings.Mb);
+            typeParameter.values.Add(Strings.Disc);
+            typeParameter.values.Add(Strings.PSU);
+            typeParameter.values.Add(Strings.Case);
+            typeParameter.values.Add(Strings.Other);
             typeParameter.type = Parameter.Type.String;
             typeParameter.customWriting = false;
             typeParameter.list = true;
             parameters.Add(typeParameter);
 
             PossibleParameter countParameter = new PossibleParameter();
-            countParameter.Name = "Počet";
+            countParameter.Name = Strings.Count;
             countParameter.ID = "Count";
             countParameter.type = PossibleParameter.Type.Number;
             parameters.Add(countParameter);
 
             PossibleParameter statusParameter = new PossibleParameter();
-            statusParameter.Name = "Stav";
+            statusParameter.Name = Strings.Status;
             statusParameter.ID = "Status";
             statusParameter.values = new List<string>();
-            statusParameter.values.Add("Funkční");
-            statusParameter.values.Add("Ok");
-            statusParameter.values.Add("Kritický");
-            statusParameter.values.Add("Nefunkční");
-            statusParameter.values.Add("Opravený");
+            statusParameter.values.Add(Strings.Working);
+            statusParameter.values.Add(Strings.Ok);
+            statusParameter.values.Add(Strings.Critical);
+            statusParameter.values.Add(Strings.Broken);
+            statusParameter.values.Add(Strings.Fixed);
             statusParameter.type = PossibleParameter.Type.String;
             statusParameter.customWriting = false;
             statusParameter.list = true;
             parameters.Add(statusParameter);
 
             PossibleParameter manuParameter = new PossibleParameter();
-            manuParameter.Name = "Výrobce";
+            manuParameter.Name = Strings.Manufacturer;
             manuParameter.ID = "Manufacturer";
             manuParameter.values = new List<string>();
             manuParameter.values.Add("MSI");
             manuParameter.values.Add("Gigabyte");
             manuParameter.type = Parameter.Type.String;
+            manuParameter.list = true;
+            manuParameter.customWriting = true;
             parameters.Add(manuParameter);
 
             PossibleParameter serParameter = new PossibleParameter();
-            serParameter.Name = "Série";
+            serParameter.Name = Strings.Series;
             serParameter.ID = "Series";
             serParameter.values = new List<string>();
             serParameter.values.Add("Core");
@@ -209,31 +212,31 @@ namespace Pc_parts_lister
             parameters.Add(serParameter);
 
             PossibleParameter subSerParameter = new PossibleParameter();
-            subSerParameter.Name = "Subsérie";
+            subSerParameter.Name = Strings.SubSeries;
             subSerParameter.ID = "Subseries";
             subSerParameter.type = Parameter.Type.String;
             parameters.Add(subSerParameter);
 
             PossibleParameter modelParameter = new PossibleParameter();
-            modelParameter.Name = "Model";
+            modelParameter.Name = Strings.Model;
             modelParameter.ID = "Model";
             modelParameter.type = Parameter.Type.String;
             parameters.Add(modelParameter);
 
             PossibleParameter capParameter = new PossibleParameter();
-            capParameter.Name = "Kapacita";
+            capParameter.Name = Strings.Capacity;
             capParameter.ID = "Capacity";
-            capParameter.type = Parameter.Type.String;
+            capParameter.type = Parameter.Type.Number;
             parameters.Add(capParameter);
 
             PossibleParameter subTypeParameter = new PossibleParameter();
-            subTypeParameter.Name = "Subtyp";
+            subTypeParameter.Name = Strings.SubType;
             subTypeParameter.ID = "Subtype";
             subTypeParameter.type = Parameter.Type.String;
             parameters.Add(subTypeParameter);
 
             PossibleParameter powerParameter = new PossibleParameter();
-            powerParameter.Name = "Výkon";
+            powerParameter.Name = Strings.Power;
             powerParameter.ID = "Power";
             powerParameter.type = Parameter.Type.Number;
             parameters.Add(powerParameter);

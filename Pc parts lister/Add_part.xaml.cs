@@ -26,6 +26,8 @@ namespace Pc_parts_lister
 
         public Component Komponenta = new Component();
 
+        public bool saved = false;
+
         public Add_part(ObservableCollection<PossibleParameter> possibleParameters)
         {
             InitializeComponent();
@@ -215,6 +217,23 @@ namespace Pc_parts_lister
                 button.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/favorite_button.png")));
             }
                 
+        }
+
+        private void NameBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PlaceHolderNameBox.Visibility = Visibility.Hidden;
+        }
+
+        private void NameBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(NameBox.Text))
+            {
+                PlaceHolderNameBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PlaceHolderNameBox.Visibility = Visibility.Hidden;
+            }
         }
 
         /*
@@ -983,6 +1002,7 @@ namespace Pc_parts_lister
                         Komponenta.parameters.Add(currentParameter);
                     }
                 }
+                saved = true;
                 this.DialogResult = true;
                 this.Close();
             }
@@ -1237,6 +1257,19 @@ namespace Pc_parts_lister
             return null;
         }
         */
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!saved)
+            {
+                MessageBoxResult result = MessageBox.Show(Strings.WindowClosingWarning, Strings.Warning, MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+        }
     }
 
     public class Saveable

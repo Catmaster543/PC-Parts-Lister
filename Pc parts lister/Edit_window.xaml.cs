@@ -352,145 +352,145 @@ namespace Pc_parts_lister
         }
 
         int currentErrorId = 0;
-/*
-        #region Cpu parameters
-        private void SubSerBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
-        {
-            ModelText.Visibility = Visibility.Visible;
-            ModelBox.Visibility = Visibility.Visible;
-        }
-        #endregion
+        /*
+                #region Cpu parameters
+                private void SubSerBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
+                {
+                    ModelText.Visibility = Visibility.Visible;
+                    ModelBox.Visibility = Visibility.Visible;
+                }
+                #endregion
 
-        #region Power section
+                #region Power section
 
-        bool powerIsValid = true;
-        int powerErrorInt = -1;
-        private void Power_TextChanged(object sender, RoutedEventArgs e)
-        {
-            if (int.TryParse(PowerBox.Text, out int pwCislo))
-            {
-                if (powerErrorInt != -1)
+                bool powerIsValid = true;
+                int powerErrorInt = -1;
+                private void Power_TextChanged(object sender, RoutedEventArgs e)
                 {
-                    ClearAnError(ref powerErrorInt);
+                    if (int.TryParse(PowerBox.Text, out int pwCislo))
+                    {
+                        if (powerErrorInt != -1)
+                        {
+                            ClearAnError(ref powerErrorInt);
+                        }
+                        powerIsValid = true;
+                        PowerText.Foreground = new SolidColorBrush(Colors.Black);
+                        PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                    }
+                    else if (PowerBox.Text == null || PowerBox.Text == "")
+                    {
+                        powerIsValid = true;
+                        if (powerErrorInt != -1)
+                        {
+                            ClearAnError(ref powerErrorInt);
+                        }
+                        PowerText.Foreground = new SolidColorBrush(Colors.Black);
+                        PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                    }
+                    else
+                    {
+                        powerIsValid = false;
+                        if (powerErrorInt == -1)
+                        {
+                            powerErrorInt = WriteAnError($"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
+                        }
+                        else if (powerErrorInt != -1)
+                        {
+                            AlterAnError(powerErrorInt, $"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.");
+                        }
+                        PowerText.Foreground = new SolidColorBrush(Colors.Red);
+                        PowerBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    }
                 }
-                powerIsValid = true;
-                PowerText.Foreground = new SolidColorBrush(Colors.Black);
-                PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
-            }
-            else if (PowerBox.Text == null || PowerBox.Text == "")
-            {
-                powerIsValid = true;
-                if (powerErrorInt != -1)
-                {
-                    ClearAnError(ref powerErrorInt);
-                }
-                PowerText.Foreground = new SolidColorBrush(Colors.Black);
-                PowerBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
-            }
-            else
-            {
-                powerIsValid = false;
-                if (powerErrorInt == -1)
-                {
-                    powerErrorInt = WriteAnError($"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
-                }
-                else if (powerErrorInt != -1)
-                {
-                    AlterAnError(powerErrorInt, $"{PowerBox.Text} není platná hodnota počtu, použijte kladné číslo.");
-                }
-                PowerText.Foreground = new SolidColorBrush(Colors.Red);
-                PowerBox.BorderBrush = new SolidColorBrush(Colors.Red);
-            }
-        }
-        #endregion
+                #endregion
 
-        #region Count region
-        bool countIsValid = true;
-        int countErrorInt = -1;
-        private void Count_TextChanged(object sender, RoutedEventArgs e)
-        {
-            if (int.TryParse(CountBox.Text, out int ctCislo))
-            {
-                if (countErrorInt != -1)
+                #region Count region
+                bool countIsValid = true;
+                int countErrorInt = -1;
+                private void Count_TextChanged(object sender, RoutedEventArgs e)
                 {
-                    ClearAnError(ref countErrorInt);
+                    if (int.TryParse(CountBox.Text, out int ctCislo))
+                    {
+                        if (countErrorInt != -1)
+                        {
+                            ClearAnError(ref countErrorInt);
+                        }
+                        countIsValid = true;
+                        CountText.Foreground = new SolidColorBrush(Colors.Black);
+                        CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                    }
+                    else if (CountBox.Text == null || CountBox.Text == "")
+                    {
+                        if (countErrorInt != -1)
+                        {
+                            ClearAnError(ref countErrorInt);
+                        }
+                        countIsValid = true;
+                        CountText.Foreground = new SolidColorBrush(Colors.Black);
+                        CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                    }
+                    else
+                    {
+                        countIsValid = false;
+                        if (countErrorInt == -1)
+                        {
+                            countErrorInt = WriteAnError($"{CountBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
+                        }
+                        else if (countErrorInt != -1)
+                        {
+                            AlterAnError(countErrorInt, $"{CountBox.Text} není platná hodnota počtu, použijte kladné číslo.");
+                        }
+                        CountText.Foreground = new SolidColorBrush(Colors.Red);
+                        CountBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    }
                 }
-                countIsValid = true;
-                CountText.Foreground = new SolidColorBrush(Colors.Black);
-                CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
-            }
-            else if (CountBox.Text == null || CountBox.Text == "")
-            {
-                if (countErrorInt != -1)
-                {
-                    ClearAnError(ref countErrorInt);
-                }
-                countIsValid = true;
-                CountText.Foreground = new SolidColorBrush(Colors.Black);
-                CountBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
-            }
-            else
-            {
-                countIsValid = false;
-                if (countErrorInt == -1)
-                {
-                    countErrorInt = WriteAnError($"{CountBox.Text} není platná hodnota počtu, použijte kladné číslo.", Colors.Red);
-                }
-                else if (countErrorInt != -1)
-                {
-                    AlterAnError(countErrorInt, $"{CountBox.Text} není platná hodnota počtu, použijte kladné číslo.");
-                }
-                CountText.Foreground = new SolidColorBrush(Colors.Red);
-                CountBox.BorderBrush = new SolidColorBrush(Colors.Red);
-            }
-        }
-        #endregion
+                #endregion
 
-        #region Capacity section
+                #region Capacity section
 
         
-        bool capacityIsValid = true;
-        int capacityErrorInt = -1;
-        private void Capacity_TextChanged(object sender, RoutedEventArgs e)
-        {
-            if (int.TryParse(CapacityBox.Text, out int cpCislo))
-            {
-                if (capacityErrorInt != -1)
+                bool capacityIsValid = true;
+                int capacityErrorInt = -1;
+                private void Capacity_TextChanged(object sender, RoutedEventArgs e)
                 {
-                    ClearAnError(ref capacityErrorInt);
+                    if (int.TryParse(CapacityBox.Text, out int cpCislo))
+                    {
+                        if (capacityErrorInt != -1)
+                        {
+                            ClearAnError(ref capacityErrorInt);
+                        }
+                        capacityIsValid = true;
+                        CapacityText.Foreground = new SolidColorBrush(Colors.Black);
+                        CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                    }
+                    else if (CapacityBox.Text == null || CapacityBox.Text == "")
+                    {
+                        capacityIsValid = true;
+                        if (capacityErrorInt != -1)
+                        {
+                            ClearAnError(ref capacityErrorInt);
+                        }
+                        CapacityText.Foreground = new SolidColorBrush(Colors.Black);
+                        CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
+                    }
+                    else
+                    {
+                        capacityIsValid = false;
+                        if (capacityErrorInt == -1)
+                        {
+                            capacityErrorInt = WriteAnError($"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.", Colors.Red);
+                        }
+                        else if (capacityErrorInt != -1)
+                        {
+                            AlterAnError(capacityErrorInt, $"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.");
+                        }
+                        CapacityText.Foreground = new SolidColorBrush(Colors.Red);
+                        CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                    }
                 }
-                capacityIsValid = true;
-                CapacityText.Foreground = new SolidColorBrush(Colors.Black);
-                CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
-            }
-            else if (CapacityBox.Text == null || CapacityBox.Text == "")
-            {
-                capacityIsValid = true;
-                if (capacityErrorInt != -1)
-                {
-                    ClearAnError(ref capacityErrorInt);
-                }
-                CapacityText.Foreground = new SolidColorBrush(Colors.Black);
-                CapacityBox.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
-            }
-            else
-            {
-                capacityIsValid = false;
-                if (capacityErrorInt == -1)
-                {
-                    capacityErrorInt = WriteAnError($"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.", Colors.Red);
-                }
-                else if (capacityErrorInt != -1)
-                {
-                    AlterAnError(capacityErrorInt, $"{CapacityBox.Text} není platná hodnota místa v GB, použijte kladné číslo.");
-                }
-                CapacityText.Foreground = new SolidColorBrush(Colors.Red);
-                CapacityBox.BorderBrush = new SolidColorBrush(Colors.Red);
-            }
-        }
         
-        #endregion
-*/
+                #endregion
+        */
         #region Picture Methods
         private void SelectImage_Click(object sender, RoutedEventArgs e)
         {
@@ -745,6 +745,16 @@ namespace Pc_parts_lister
             return bitmap;
         }
         #endregion
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(Strings.WindowClosingWarning, Strings.Warning, MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+                return;
+            }
+        }
 
         #region MarkDown Editor
         DispatcherTimer timer = new DispatcherTimer();

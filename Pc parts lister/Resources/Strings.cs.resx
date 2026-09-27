@@ -243,4 +243,91 @@
   <data name="Info" xml:space="preserve">
     <value>Info</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>Počet</value>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="GPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Mb" xml:space="preserve">
+    <value>Mb</value>
+  </data>
+  <data name="Disc" xml:space="preserve">
+    <value>Disk</value>
+  </data>
+  <data name="PSU" xml:space="preserve">
+    <value>Zdroj</value>
+  </data>
+  <data name="Case" xml:space="preserve">
+    <value>Case</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Jiné</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Working" xml:space="preserve">
+    <value>Funkční</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Critical" xml:space="preserve">
+    <value>Kritický</value>
+  </data>
+  <data name="Broken" xml:space="preserve">
+    <value>Nefunkční</value>
+  </data>
+  <data name="Fixed" xml:space="preserve">
+    <value>Opravený</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Výrobce</value>
+  </data>
+  <data name="Capacity" xml:space="preserve">
+    <value>Kapacita</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>Výkon</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Series" xml:space="preserve">
+    <value>Série</value>
+  </data>
+  <data name="SubSeries" xml:space="preserve">
+    <value>SubSérie</value>
+  </data>
+  <data name="SubType" xml:space="preserve">
+    <value>Subtyp</value>
+  </data>
+  <data name="WindowClosingWarning" xml:space="preserve">
+    <value>Opravdu chcete zavřít okno? Zavřením budou všechny změny zahozeny.</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Upozornění</value>
+  </data>
+  <data name="TypeSwapWarning" xml:space="preserve">
+    <value>Opravdu chcete tohle nastavení změnit? Pokud mají některé komponenty přiřazený tento parametr tak dojde k problémům!</value>
+  </data>
+  <data name="NumberFilteringTooltip" xml:space="preserve">
+    <value>Zakliknutím jakéhokoliv ze tří tlačítek nastavíte režim při filtrování.  </value>
+  </data>
+  <data name="NumberFilteringTooltip2" xml:space="preserve">
+    <value>Např. "=" režim vám vyfiltruje pouze komponenty s tímto parametrem, které mají stejnou hodnotu jako vámi zadaná.</value>
+  </data>
+  <data name="NumberFilteringTooltip3" xml:space="preserve">
+    <value>"&lt;" režim vyfiltruje pouze komponenty s tímto parameterem s menší, nebo stejnou hodnotou jako jste zadali.</value>
+  </data>
+  <data name="NameSuggestion" xml:space="preserve">
+    <value>Název součástky...</value>
+  </data>
 </root>

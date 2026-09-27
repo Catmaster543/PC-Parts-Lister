@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Pc_parts_lister"
         xmlns:properties="clr-namespace:Pc_parts_lister.Resources"
         mc:Ignorable="d"
+        Closing="Window_Closing"
         Title="Add Part" Height="500" Width="1000" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -17,7 +18,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="5" Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBox Name="NameBox" FontWeight="Bold" FontSize="25" BorderThickness="0,0,0,2"/>
+            <Grid>
+                <TextBox Name="NameBox" GotFocus="NameBox_GotFocus" LostFocus="NameBox_LostFocus" FontWeight="Bold" FontSize="25" BorderThickness="0,0,0,2"/>
+                <TextBox Name="PlaceHolderNameBox" Text="{x:Static properties:Strings.NameSuggestion}" Foreground="Gray" FontSize="25" IsHitTestVisible="False" BorderThickness="0,0,0,2"/>
+            </Grid>
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

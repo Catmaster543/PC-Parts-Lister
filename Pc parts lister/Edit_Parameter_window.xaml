@@ -73,7 +73,7 @@
                 </StackPanel>
                 <StackPanel Name="Int_Option_Panel" Margin="10" Visibility="Hidden">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Checked="CustomAfterFix_CheckBox_Checked" Unchecked="CustomAfterFix_CheckBox_Unchecked"/>
+                        <CheckBox Name="CustomSuffixCheckBox" Checked="CustomAfterFix_CheckBox_Checked" Unchecked="CustomAfterFix_CheckBox_Unchecked"/>
                         <TextBlock FontSize="10" Text="{x:Static properties:Strings.CustomSufix}" FontWeight="Bold" Margin="3,0,0,0"/>
                     </StackPanel>
                     <StackPanel Name="CustomAfterFix_panel" Orientation="Horizontal" Visibility="Hidden">

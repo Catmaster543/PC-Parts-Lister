@@ -232,7 +232,7 @@
     <value>Settings</value>
   </data>
   <data name="Sufix" xml:space="preserve">
-    <value>Sufix</value>
+    <value>Suffix</value>
   </data>
   <data name="Lang" xml:space="preserve">
     <value>Language</value>
@@ -242,5 +242,92 @@
   </data>
   <data name="Info" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="CPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="GPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="RAM" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Mb" xml:space="preserve">
+    <value>Mb</value>
+  </data>
+  <data name="Disc" xml:space="preserve">
+    <value>Disc</value>
+  </data>
+  <data name="PSU" xml:space="preserve">
+    <value>PSU</value>
+  </data>
+  <data name="Case" xml:space="preserve">
+    <value>Case</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Working" xml:space="preserve">
+    <value>Working</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Critical" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="Broken" xml:space="preserve">
+    <value>Broken</value>
+  </data>
+  <data name="Fixed" xml:space="preserve">
+    <value>Fixed</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="Capacity" xml:space="preserve">
+    <value>Capacity</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="Model" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="Series" xml:space="preserve">
+    <value>Series</value>
+  </data>
+  <data name="SubSeries" xml:space="preserve">
+    <value>Subseries</value>
+  </data>
+  <data name="SubType" xml:space="preserve">
+    <value>Subtype</value>
+  </data>
+  <data name="WindowClosingWarning" xml:space="preserve">
+    <value>Are you sure that you want to close this window? All changes will be lost.</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="TypeSwapWarning" xml:space="preserve">
+    <value>Do you really want to change this? If there are components with this parameter things WILL break!</value>
+  </data>
+  <data name="NumberFilteringTooltip" xml:space="preserve">
+    <value>Clicking on any of the three symbols will toggle the filtering mode.</value>
+  </data>
+  <data name="NumberFilteringTooltip2" xml:space="preserve">
+    <value>Aka. "=" mode will only show components with this parameter having the exact same value you enter.</value>
+  </data>
+  <data name="NumberFilteringTooltip3" xml:space="preserve">
+    <value>"&lt;" mode will only show components with this parameters value lesser than, or same as your value.</value>
+  </data>
+  <data name="NameSuggestion" xml:space="preserve">
+    <value>Enter component name...</value>
   </data>
 </root>

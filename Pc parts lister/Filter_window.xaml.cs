@@ -256,6 +256,21 @@ namespace Pc_parts_lister
                 writeColumnDefinition.Width = new GridLength(1, GridUnitType.Star);
                 grid.ColumnDefinitions.Add(writeColumnDefinition);
 
+                StackPanel tipPanel = new StackPanel();
+                TextBlock tipBlock1 = new TextBlock();
+                tipBlock1.Text = Strings.NumberFilteringTooltip;
+                tipPanel.Children.Add(tipBlock1);
+
+                TextBlock tipBlock2 = new TextBlock();
+                tipBlock2.Text = Strings.NumberFilteringTooltip2;
+                tipPanel.Children.Add(tipBlock2);
+
+                TextBlock tipBlock3 = new TextBlock();
+                tipBlock3.Text = Strings.NumberFilteringTooltip3;
+                tipPanel.Children.Add(tipBlock3);
+
+                grid.ToolTip = tipPanel;
+
                 Button smallerButton = new Button();
                 smallerButton.BorderThickness = new Thickness(1);
                 smallerButton.Tag = filterParameter;

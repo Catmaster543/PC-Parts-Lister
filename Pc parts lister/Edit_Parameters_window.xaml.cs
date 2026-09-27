@@ -41,7 +41,7 @@ namespace Pc_parts_lister.bin
             possibleParameter.values = new List<string>();
             PossibleParameters.Add(possibleParameter);
             ParametersView.Refresh();
-            Edit_Parameter_window Ewindow = new Edit_Parameter_window(possibleParameter);
+            Edit_Parameter_window Ewindow = new Edit_Parameter_window(possibleParameter, true);
             Ewindow.ShowDialog();
 
             ParametersView.Refresh();
@@ -51,7 +51,7 @@ namespace Pc_parts_lister.bin
         {
             if (sender is Button button && button.DataContext is PossibleParameter parameter)
             {
-                Edit_Parameter_window Ewindow = new Edit_Parameter_window(parameter);
+                Edit_Parameter_window Ewindow = new Edit_Parameter_window(parameter, false);
                 Ewindow.ShowDialog();
                 
                 ParametersView.Refresh();
@@ -60,10 +60,14 @@ namespace Pc_parts_lister.bin
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            // Pop-up
             Button button = (Button)sender;
             PossibleParameter parameter = (PossibleParameter)button.DataContext;
-            PossibleParameters.Remove(parameter);
+            MessageBoxResult result = MessageBox.Show($"{Strings.ConfirmDeletion} {parameter.Name}? \n{Strings.DeletionWarning}", Strings.DeleteConfirmWindow, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            
+            if (result == MessageBoxResult.Yes)
+            {
+                PossibleParameters.Remove(parameter);
+            }
         }
     }
 }
