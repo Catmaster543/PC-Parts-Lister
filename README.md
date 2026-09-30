@@ -1,7 +1,7 @@
-## 🌟 Information for Stardance shipwrights!
+## Information for Stardance shipwrights!
 This README, nor any other aspect of this app contains none and I mean **NO generative AI output**. Not this README either, which I've been rejected for three times now. Here are timelapses proving me actually writing this README file, please consider that when reviewing this project! (https://lapse.hackclub.com/timelapse/eBmPFACLvyr3 , https://lapse.hackclub.com/timelapse/4YA5Yj6Cf3Ig)
 In the case of a lot of the commented-out code - this has to do with the projects history itself - back in its initial days the entire system has been built on fixed-values for every single thing possible, aka. Component class had a fixed value for Count, Name, etc. About a month ago or so I've rewrote the entire code BY MYSELF to the new dynamic system, which works on a completely different base, so now Component has a list of Parameters that may, or may not contain a specific parameter with a specific value. When I was painstakingly rebuilding the entire thing from scratch I commented out all of the old code, so I would be aware of all the features that have been previously present. As far as anyone can say this there's literaly 0% AI usage listed on my hackatime under this project!!
-# ⚪ **Overview**
+# **Overview**
 **This is a native windows app**, that has got one and only purpose - help you keep a better track of PC Components. I am sorry in advance if the UI does not feel exactly good-looking, this was my first time ever messing with XAML and in my opinion the result here is not that awful for what it could've been.
 
 # Downloading
@@ -14,7 +14,7 @@ This app allows you to **create**
 **View in Detail**
 And **Edit** your components!
 
-## ➕ Adding components
+## Adding components
 You can **add** in **your components using the huge "+" button**, located in the main window, the window shown right after you open the app.
 
 <p><img width="184" height="171" alt="Snímek obrazovky 2026-09-26 174225" src="https://github.com/user-attachments/assets/2aacef75-16b5-46e0-825c-85d2fe2399e2"/><p/>
@@ -24,7 +24,7 @@ With that done, **assign any parameters** you like **to the** new **component**.
 Literaly, as you can make your own parameters too.
 After you're done assigning the values to your component, you can click Save to save the component.
 
-## 🔍 Viewing Components in Detail
+## Viewing Components in Detail
 Now that a component is there, you can **view it by clicking on Find parameter button** in the main window.
 
 <p><img width="162" height="162" alt="Snímek obrazovky 2026-09-26 175116" src="https://github.com/user-attachments/assets/66f09798-2648-4584-ae30-6ff1971f1dfe"/><p/>
@@ -36,7 +36,7 @@ This will show you all of the components you've added so far, as well as a few o
  
 This will take you to the Detail window, from where you can view all of the details of the component you clicked on.
 
-## ✏️ Editing Components
+## Editing Components
 Enjoyed looking at your Components but noticed something off? Not to worry, the "Edit" button is here to save the day. 
 
 <p><img width="53" height="32" alt="Snímek obrazovky 2026-09-26 180025" src="https://github.com/user-attachments/assets/0c7e22b4-499c-4a3f-8014-77b35016b3a2"/> <p/> 
@@ -64,11 +64,11 @@ Now in case you don't really know how to write in Mark-down, you can use the bui
 Currently the app supports: **Bold**, *Italic*, ***Bold Italic*** and two Headings styles.
 The descriptions will be rendered in the Detail window as well.
 
-## ❌ Deleting Components
+## Deleting Components
 You can of course **delete your components**, using the conveniently placed delete button next to the edit and detail buttons.
 Now I'm sure you weren't expecting this one, but deleting a component will delete it. What a shocker, I know.
 
-# 🔎 Finding and Filtering components
+# Finding and Filtering components
 In case you actually want to use this app and have already added a bazzilion components and now cannot find your desired component, it's time to use the built-in search and filtering.
 ### Searching components
 This is the first and simpler way to find components. In the window that contains the list of all your components, just click on the search bar and start typing what component you're in search for. The app will then search through all your components and check if their name matches. 
@@ -89,24 +89,24 @@ When we were at clearing filters, you can click the big red X in the window wher
 Now when it comes to **number type parameters**, such as the "Capacity" parameter you will see **three different** icons next to the type bar. These will toggle the **filtering mode** for that parameter, of which there are three in total. These are: **Equals, Bigger and Smaller**. If you set the value (for example here) of "Capacity" to 500 and choose the Equals mode, then only components with capacity of 500 will show up. If you choose the bigger mode, only components whose capacity is greater than 500 or same will be shown. The smaller mode works the exact same way, just as a direct opposite. And if you choose none, the equals mode will be used by default.
 You can also filter out your..
 
-## 💗 Favorite components
+## Favorite components
 You can toggle the little heart icon next to your components, which will make them "favorited". This does nothing extra on its own, it's an indicator purely for you.
 The only thing changed is, that you can filter your components by favorite, which will hide all non-favorited components.
 
-# 🖼️ Photo gallery
+# Photo gallery
 As funny as this sounds, yes this app has a tiny and simple built in photo-gallery to it. Whenever you **click on any of the components photos** a new Photo window will pop-up. On the sides of this window you can click the arrows to cycle through photos of the component.
 
 <><img width="574" height="377" alt="photo gallery show down" src="https://github.com/user-attachments/assets/6cfa033d-9d43-4105-b324-f1ca5b7bdf93" /></p>
 
 # Adding, editing and managing Parameters
-## ➕ Adding a Parameter
+## Adding a Parameter
 Got tired of the basic pre-generated parameters I've included? You can add in any and as many as you like parameters to the app. This was the whole purpose of the Expandible system I've built in the app. To start, go ahead and open the Parameters window, using the button I've place in the main window. 
 
 <p><img width="153" height="146" alt="image" src="https://github.com/user-attachments/assets/9f3fb9b2-d7dd-4279-ab03-fd5c839f0dff" /><p/>
 
 From there the Parameters window will pop-up. In here you can mess around with the pre-generated parameters, as well as your own.
 To make a new Parameter, just click on the "+" button you'll see there. This will add in a new parameter and open the window used to..
-## 🖊️ Edit a Parameter
+## Edit a Parameter
 Opened, when making a new parameter, or clicking the "Edit" button in the Parameters list.
 You can **change**:
 - **Name** of the parameter
@@ -128,18 +128,18 @@ Or just **delete** a value entirely, by clicking the red x next to it.
 
 <p><img width="164" height="149" alt="Values operations show down" src="https://github.com/user-attachments/assets/ff9c7cea-e954-4373-89b4-2ec16279b119" /><p/>
 
-## 🗑️ Delete a parameter
+## Delete a parameter
 Now if you get tired of some parameter, no longer use it, or just don't want it, you can **get rid of them**.
 Just **press the "Delete" button** in the parameters list and it's gone for good.
 
-# 🏳️ Languages
+# Languages
 **Newly introduced** you can switch out the language between:
 - **English**
 - **Čeština**
 
 (What an insane amount of choices, I know). If you know any other language and would want to I would love to add more languages! So be sure to let me know in some way if you'd want to add in a bit of your own work.
 
-# ⚙️ Technicalities
+# Technicalities
 ## Components and Parameters saving
 **Components and Parameters are saved**, so closing the app WILL NOT erase your data. You can locate the files location under `C:/Users/YourUser/AppData/Roaming/Pc_Parts_Lister`
 **Components are stored in the `components.json` file and Possible parameters in `parameters.json`**
@@ -163,6 +163,6 @@ It mainly revolves around expandibility and being dynamic. I've introduced this 
 - **CPU** - Pretty much any cpu that can run atleast Windows 10
 - **RAM** - I've never managed to use more than 250 MB at once, so that should do.
 
-## 🤖 AI usage declaration
+## AI usage declaration
 **This README has NOT BEEN WRITTEN BY AI! Please refer to the top chunk if you happen to think otherwise, there are timelapses of ME writing the README manually!** To my knowledge, pretty much **no AI** has been directly used in the making of this project.
 The only exception to this being my silly questions forwarded towards few AI models, but never anything specific to this project, moreover to explain some terms in XAML a little closer, but once again, only in general terms, not specific to this project.
