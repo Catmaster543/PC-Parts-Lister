@@ -150,9 +150,6 @@
   <data name="NewParameter" xml:space="preserve">
     <value>Nový parametr</value>
   </data>
-  <data name="NewValue" xml:space="preserve">
-    <value>Nová hodnota</value>
-  </data>
   <data name="FindComponent" xml:space="preserve">
     <value>Najít Součástku</value>
   </data>
@@ -329,5 +326,20 @@
   </data>
   <data name="NameSuggestion" xml:space="preserve">
     <value>Název součástky...</value>
+  </data>
+  <data name="EditRules" xml:space="preserve">
+    <value>Upravit pravidla</value>
+  </data>
+  <data name="NewRule" xml:space="preserve">
+    <value>Nové pravidlo</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>Nová hodnota</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Hodnota</value>
+  </data>
+  <data name="Parameter" xml:space="preserve">
+    <value>Parametr</value>
   </data>
 </root>

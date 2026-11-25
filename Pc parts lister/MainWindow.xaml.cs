@@ -150,7 +150,7 @@ namespace Pc_parts_lister
         public string intSufix { get; set; }
         public List<string> values { get; set; }
         public string requiredType { get; set; }
-        public List<PossibleParameter> reuiredParameters { get; set; }
+        public List<PossibleParameter> requiredParameters { get; set; }
 
         public void WriteDefaults(ref ObservableCollection<PossibleParameter> parameters)
         {
@@ -241,6 +241,11 @@ namespace Pc_parts_lister
             powerParameter.type = Parameter.Type.Number;
             parameters.Add(powerParameter);
         }
+    }
+
+    public class ParameterRule
+    {
+        public Parameter dependentParameter;
     }
 
     public static class DataStorage

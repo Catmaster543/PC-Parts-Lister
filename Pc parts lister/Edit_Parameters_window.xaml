@@ -26,6 +26,8 @@
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Content="{x:Static properties:Strings.Edit}" Margin="2" Background="DarkBlue" Foreground="White" Click="EditButton_Click"/>
 
+                                <Button Content="{x:Static properties:Strings.EditRules}" Margin="2" Background="Blue" Foreground="White" Click="EditRules_Click"/>
+                                
                                 <Button Content="{x:Static properties:Strings.Delete}" Margin="2" Background="DarkRed" Foreground="White" Click="DeleteButton_Click"/>
                             </StackPanel>
                         </DataTemplate>

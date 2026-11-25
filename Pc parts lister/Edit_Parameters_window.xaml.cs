@@ -69,5 +69,14 @@ namespace Pc_parts_lister.bin
                 PossibleParameters.Remove(parameter);
             }
         }
+
+        private void EditRules_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            PossibleParameter parameter = (PossibleParameter)button.DataContext;
+
+            Parameter_Rules_window PRwindow = new Parameter_Rules_window(PossibleParameters, parameter);
+            PRwindow.ShowDialog();
+        }
     }
 }

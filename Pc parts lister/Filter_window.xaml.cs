@@ -411,7 +411,7 @@ namespace Pc_parts_lister
             button.Visibility = Visibility.Hidden;
         }
 
-        /*
+        /* Old part of the code, before expandindibility system was made. Kept for future me to re-implement some of the original features that were sadly dropped during the migration.
 
         private void TypeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

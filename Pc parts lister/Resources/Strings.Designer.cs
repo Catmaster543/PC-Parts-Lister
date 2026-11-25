@@ -268,6 +268,15 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Edit rules.
+        /// </summary>
+        public static string EditRules {
+            get {
+                return ResourceManager.GetString("EditRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný Error.
         /// </summary>
         public static string Error {
@@ -421,6 +430,15 @@ namespace Pc_parts_lister.Resources {
         }
         
         /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný New rule.
+        /// </summary>
+        public static string NewRule {
+            get {
+                return ResourceManager.GetString("NewRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Vyhledá lokalizovaný řetězec podobný New value.
         /// </summary>
         public static string NewValue {
@@ -498,6 +516,15 @@ namespace Pc_parts_lister.Resources {
         public static string Others {
             get {
                 return ResourceManager.GetString("Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Parameter.
+        /// </summary>
+        public static string Parameter {
+            get {
+                return ResourceManager.GetString("Parameter", resourceCulture);
             }
         }
         
@@ -669,6 +696,15 @@ namespace Pc_parts_lister.Resources {
         public static string TypeSwapWarning {
             get {
                 return ResourceManager.GetString("TypeSwapWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vyhledá lokalizovaný řetězec podobný Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         
