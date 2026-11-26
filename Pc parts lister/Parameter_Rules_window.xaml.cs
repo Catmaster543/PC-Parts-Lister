@@ -59,10 +59,30 @@ namespace Pc_parts_lister
             ComboBox box = (ComboBox)sender;
             if (box.SelectedItem != null)
             {
+                ParameterRule newRule = ValuesListBox.SelectedItem as ParameterRule;
+                newRule.dependentParameter = box.SelectedItem as PossibleParameter;
                 Value_Panel.Visibility = Visibility.Visible;
                 PossibleParameter parameter = box.SelectedItem as PossibleParameter;
-                Value_ComboBox.ItemsSource = parameter.values;
-                Value_ComboBox.Tag = parameter;
+                if (parameter.type == Parameter.Type.String)
+                {
+                    ComboBoxPType_Panel.Visibility = Visibility.Visible;
+                    TextPType_Panel.Visibility = Visibility.Collapsed;
+                    if (parameter.customWriting)
+                    {
+                        Value_ComboBox.IsEditable = true;
+                    }
+                    else
+                    {
+                        Value_ComboBox.IsEditable = false;
+                    }
+                    Value_ComboBox.ItemsSource = parameter.values;
+                    Value_ComboBox.Tag = parameter;
+                }
+                else if (parameter.type == Parameter.Type.Number)
+                {
+                    TextPType_Panel.Visibility = Visibility.Visible;
+                    ComboBoxPType_Panel.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
@@ -73,9 +93,27 @@ namespace Pc_parts_lister
         public void ValueComboBox_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
             ComboBox box = (ComboBox)sender;
-            foreach (ParameterRule rule in parameterRules)
+            ParameterRule rule = ValuesListBox.SelectedItem as ParameterRule;
+            if (rule.dependentParameter.type == Parameter.Type.String)
             {
-                
+                rule.value = box.SelectedItem.ToString();
+            }
+        }
+
+        public void ValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox box = (TextBox)sender;
+            ParameterRule rule = ValuesListBox.SelectedItem as ParameterRule;
+            if (int.TryParse(box.Text, out int result))
+            {
+                rule.value = box.Text;
+                box.BorderBrush = new SolidColorBrush(Colors.Black);
+                box.Foreground = new SolidColorBrush(Colors.Black);
+            }
+            else
+            {
+                box.BorderBrush = new SolidColorBrush(Colors.Red);
+                box.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
 

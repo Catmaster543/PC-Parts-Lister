@@ -70,9 +70,24 @@
                 <TextBlock Text="{x:Static properties:Strings.Parameter}" FontWeight="SemiBold"/>
                 <ComboBox Name="Parameter_ComboBox" SelectionChanged="ParameterComboBox_SelectionChanged" BorderThickness="0"/>
             </StackPanel>
-            <StackPanel Visibility="Collapsed" Name="Value_Panel" Grid.Column="1" Margin="10">
+            <StackPanel Visibility="Hidden" Name="Value_Panel" Grid.Column="1" Margin="10">
                 <TextBlock Text="{x:Static properties:Strings.Value}" FontWeight="SemiBold"/>
-                <ComboBox Name="Value_ComboBox" SelectionChanged="ValueComboBox_SelectionChanged" BorderThickness="0"/>
+                <StackPanel Visibility="Collapsed" Name="ComboBoxPType_Panel" Orientation="Horizontal">
+                    <ComboBox Name="Value_ComboBox" SelectionChanged="ValueComboBox_SelectionChanged" BorderThickness="0"/>
+                    <Button Margin="20,0,0,0" HorizontalAlignment="Right" Width="20" Height="20" BorderThickness="0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/cancel_button.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+                <StackPanel Visibility="Collapsed" Name="TextPType_Panel" Orientation="Horizontal">
+                    <TextBox Name="Value_TextBox" TextChanged="ValueTextBox_TextChanged" MinWidth="50" BorderThickness="0,0,0,2"/>
+                    <Button Margin="20,0,0,0" HorizontalAlignment="Right" Width="20" Height="20" BorderThickness="0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/cancel_button.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
     </Grid>

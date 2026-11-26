@@ -246,6 +246,7 @@ namespace Pc_parts_lister
     public class ParameterRule
     {
         public Parameter dependentParameter;
+        public string value;
     }
 
     public static class DataStorage
