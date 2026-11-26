@@ -31,7 +31,7 @@
                                 <ImageBrush ImageSource="/cancel_button.png"/>
                             </Button.Background>
                         </Button>
-                        <TextBlock Text="{Binding}" FontSize="12" FontWeight="SemiBold" Grid.Column="0"/>
+                        <TextBlock Text="{Binding dependentParameter.Name}" FontSize="12" FontWeight="SemiBold" Grid.Column="0"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

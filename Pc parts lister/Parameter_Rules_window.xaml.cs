@@ -22,20 +22,34 @@ namespace Pc_parts_lister
     /// </summary>
     public partial class Parameter_Rules_window : Window
     {
-        public ObservableCollection<ParameterRule> parameterRules = new ObservableCollection<ParameterRule>();
-        public ObservableCollection<PossibleParameter> possibleParameters = new ObservableCollection<PossibleParameter>();
+        public List<ParameterRule> parameterRules;
+        public ObservableCollection<PossibleParameter> possibleParameters;
+        public PossibleParameter parameter;
 
         public ICollectionView ParameterRulesView { get; }
-        public Parameter_Rules_window(ObservableCollection<PossibleParameter> PossibleParameters, PossibleParameter parameter)
+        public Parameter_Rules_window(ObservableCollection<PossibleParameter> PossibleParameters, PossibleParameter Parameter)
         {
             InitializeComponent();
 
             possibleParameters = PossibleParameters;
+            parameter = Parameter;
+
+            if (parameter.parameterRules != null)
+            {
+                parameterRules = parameter.parameterRules;
+            }
+            else
+            {
+                parameter.parameterRules = new List<ParameterRule>();
+                parameterRules = parameter.parameterRules;
+            }
 
             ParameterRulesView = CollectionViewSource.GetDefaultView(parameterRules);
 
             Parameter_ComboBox.ItemsSource = possibleParameters;
             Parameter_ComboBox.DisplayMemberPath = "Name";
+
+            
 
             DataContext = this;
         }
@@ -52,6 +66,31 @@ namespace Pc_parts_lister
         {
             Button button = (Button)sender;
             parameterRules.Remove(button.DataContext as ParameterRule);
+            ParameterRulesView.Refresh();
+        }
+
+        public void RulesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox box = (ListBox)sender;
+            if (box.SelectedItem != null)
+            {
+                Edit_Grid.Visibility = Visibility.Visible;
+                ParameterRule selectedRule = box.SelectedItem as ParameterRule;
+                if (selectedRule.dependentParameter != null)
+                {
+                    foreach (PossibleParameter possibleParameter in Parameter_ComboBox.Items)
+                    {
+                        if (possibleParameter.ID == selectedRule.dependentParameter.ID)
+                        {
+                            Parameter_ComboBox.SelectedItem = possibleParameter;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Edit_Grid.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void ParameterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -62,12 +101,15 @@ namespace Pc_parts_lister
                 ParameterRule newRule = ValuesListBox.SelectedItem as ParameterRule;
                 newRule.dependentParameter = box.SelectedItem as PossibleParameter;
                 Value_Panel.Visibility = Visibility.Visible;
-                PossibleParameter parameter = box.SelectedItem as PossibleParameter;
-                if (parameter.type == Parameter.Type.String)
+                PossibleParameter selectedParameter = box.SelectedItem as PossibleParameter;
+                if (selectedParameter.type == Parameter.Type.String)
                 {
                     ComboBoxPType_Panel.Visibility = Visibility.Visible;
                     TextPType_Panel.Visibility = Visibility.Collapsed;
-                    if (parameter.customWriting)
+
+                    Value_ComboBox.ItemsSource = selectedParameter.values;
+
+                    if (selectedParameter.customWriting)
                     {
                         Value_ComboBox.IsEditable = true;
                     }
@@ -75,13 +117,23 @@ namespace Pc_parts_lister
                     {
                         Value_ComboBox.IsEditable = false;
                     }
-                    Value_ComboBox.ItemsSource = parameter.values;
-                    Value_ComboBox.Tag = parameter;
+
+                    if (newRule.value != null && newRule.value.Length > 0)
+                    {
+                        Value_ComboBox.SelectedItem = newRule.value;
+                    }
+                    
+                    Value_ComboBox.Tag = selectedParameter;
                 }
-                else if (parameter.type == Parameter.Type.Number)
+                else if (selectedParameter.type == Parameter.Type.Number)
                 {
                     TextPType_Panel.Visibility = Visibility.Visible;
                     ComboBoxPType_Panel.Visibility = Visibility.Collapsed;
+
+                    if (newRule.value != null && newRule.value.Length > 0)
+                    {
+                        Value_TextBox.Text = newRule.value;
+                    }
                 }
             }
             else
@@ -107,26 +159,13 @@ namespace Pc_parts_lister
             if (int.TryParse(box.Text, out int result))
             {
                 rule.value = box.Text;
-                box.BorderBrush = new SolidColorBrush(Colors.Black);
+                box.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB3ABAB"));
                 box.Foreground = new SolidColorBrush(Colors.Black);
             }
             else
             {
                 box.BorderBrush = new SolidColorBrush(Colors.Red);
                 box.Foreground = new SolidColorBrush(Colors.Red);
-            }
-        }
-
-        public void RulesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListBox box = (ListBox)sender;
-            if (box.SelectedItem != null)
-            {
-                Edit_Grid.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Edit_Grid.Visibility = Visibility.Collapsed;
             }
         }
     }

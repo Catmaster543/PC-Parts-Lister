@@ -54,7 +54,6 @@ namespace Pc_parts_lister
         private void Hledat(object sender, RoutedEventArgs e)
         {
             Lookup_window window = new Lookup_window(Components, PossibleParameters);
-            //window.DataContext = Components;
             window.Show();
         }
 
@@ -150,7 +149,7 @@ namespace Pc_parts_lister
         public string intSufix { get; set; }
         public List<string> values { get; set; }
         public string requiredType { get; set; }
-        public List<PossibleParameter> requiredParameters { get; set; }
+        public List<ParameterRule> parameterRules { get; set; }
 
         public void WriteDefaults(ref ObservableCollection<PossibleParameter> parameters)
         {
@@ -245,8 +244,8 @@ namespace Pc_parts_lister
 
     public class ParameterRule
     {
-        public Parameter dependentParameter;
-        public string value;
+        public Parameter dependentParameter { get; set; }
+        public string value { get; set; }
     }
 
     public static class DataStorage
@@ -299,7 +298,6 @@ namespace Pc_parts_lister
                 return parameters;
             }
             
-
             var json = File.ReadAllText(ParametersFilePath);
             return JsonSerializer.Deserialize<ObservableCollection<PossibleParameter>>(json) ?? new ObservableCollection<PossibleParameter>();
         }
