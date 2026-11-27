@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,9 @@ namespace Pc_parts_lister
     {
         public List<Saveable> boolChecks = new List<Saveable>();
 
+        public ObservableCollection<PossibleParameter> displayedParameters = new ObservableCollection<PossibleParameter>();
+        public List<PossibleParameter> selectedParameters = new List<PossibleParameter>();
+
         public Component Komponenta = new Component();
 
         public bool saved = false;
@@ -32,6 +36,15 @@ namespace Pc_parts_lister
         {
             InitializeComponent();
 
+            RulesJudge rulesJudge = new RulesJudge();
+
+            displayedParameters = rulesJudge.EvaluateRules(possibleParameters, selectedParameters);
+
+            BuildPanels(displayedParameters);
+        }
+
+        public void BuildPanels(ObservableCollection<PossibleParameter> possibleParameters)
+        {
             bool isA = true;
             foreach (PossibleParameter parameter in possibleParameters)
             {
@@ -98,6 +111,8 @@ namespace Pc_parts_lister
                         comboBox.MinWidth = 15;
                     }
 
+                    comboBox.SelectionChanged += Panel_Updated;
+
                     panel.Children.Add(comboBox);
                 }
                 else
@@ -108,6 +123,7 @@ namespace Pc_parts_lister
                     textBox.MinWidth = 15;
                     textBox.FontSize = 20;
                     textBox.Tag = parameter;
+                    textBox.TextChanged += Panel_Updated;
 
                     panel.Children.Add(textBox);
                 }
@@ -131,6 +147,7 @@ namespace Pc_parts_lister
                 box.FontSize = 20;
                 box.Tag = parameter;
                 box.SelectionChanged += Check_Int_Validation;
+                box.SelectionChanged += Panel_Updated;
 
                 panel.Children.Add(box);
 
@@ -147,6 +164,11 @@ namespace Pc_parts_lister
                 return panel;
             }
             else return null;
+        }
+
+        private void Panel_Updated(object sender, EventArgs e)
+        {
+            BuildPanels(displayedParameters);
         }
 
         private void Check_Int_Validation(Object sender, RoutedEventArgs e)

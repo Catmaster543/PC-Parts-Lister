@@ -248,6 +248,60 @@ namespace Pc_parts_lister
         public string value { get; set; }
     }
 
+    public class RulesJudge
+    {
+        ObservableCollection<ParameterRule> rules;
+        public ObservableCollection<PossibleParameter> EvaluateRules(ObservableCollection<PossibleParameter> possibleParameters, List<PossibleParameter> selectedParameters)
+        {
+            ObservableCollection<PossibleParameter> returnParameters = new ObservableCollection<PossibleParameter>();
+            foreach (PossibleParameter possibleParameter in possibleParameters)
+            {
+                bool foundDependent = false;
+                //Check if the parameter EVEN has rules
+                if (possibleParameter.parameterRules != null && possibleParameter.parameterRules.Count > 0)
+                {
+                    foreach (ParameterRule parameterRule in possibleParameter.parameterRules)
+                    {
+                        if (parameterRule.dependentParameter == possibleParameter)
+                        {
+                            //Checking if the parameter rule has a set value that it needs
+                            if (parameterRule.value != null && parameterRule.value.Length != 0)
+                            {
+                                foreach (PossibleParameter selectedParameter in selectedParameters)
+                                {
+                                    //Checking if the parameter value matches the one of selected ones
+                                    if (selectedParameter.ID == parameterRule.dependentParameter.ID)
+                                    {
+                                        if (selectedParameter.Value == parameterRule.value)
+                                        {
+                                            foundDependent = true;
+                                            returnParameters.Add(possibleParameter);
+                                        }
+                                    }
+                                } 
+                            }
+                            else
+                            {
+                                foundDependent = true;
+                                returnParameters.Add(possibleParameter);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foundDependent = true;
+                    returnParameters.Add(possibleParameter);
+                }
+                if (!foundDependent)
+                {
+                    break;
+                }
+            }
+            return returnParameters;
+        } 
+    }
+
     public static class DataStorage
     {
         private static string FolderPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Pc_Parts_Lister");
