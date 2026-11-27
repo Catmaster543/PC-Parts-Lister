@@ -25,6 +25,7 @@ namespace Pc_parts_lister
     {
         public List<Saveable> boolChecks = new List<Saveable>();
 
+        public ObservableCollection<PossibleParameter> possibleParameters = new ObservableCollection<PossibleParameter>();
         public ObservableCollection<PossibleParameter> displayedParameters = new ObservableCollection<PossibleParameter>();
         public List<PossibleParameter> selectedParameters = new List<PossibleParameter>();
 
@@ -32,12 +33,14 @@ namespace Pc_parts_lister
 
         public bool saved = false;
 
-        public Add_part(ObservableCollection<PossibleParameter> possibleParameters)
+        public Add_part(ObservableCollection<PossibleParameter> PossibleParameters)
         {
             InitializeComponent();
 
-            RulesJudge rulesJudge = new RulesJudge();
+            possibleParameters = PossibleParameters;
 
+            RulesJudge rulesJudge = new RulesJudge();
+            displayedParameters.Clear();
             displayedParameters = rulesJudge.EvaluateRules(possibleParameters, selectedParameters);
 
             BuildPanels(displayedParameters);
@@ -45,6 +48,10 @@ namespace Pc_parts_lister
 
         public void BuildPanels(ObservableCollection<PossibleParameter> possibleParameters)
         {
+            RulesJudge rulesJudge = new RulesJudge();
+            //displayedParameters.Clear();
+            possibleParameters = rulesJudge.EvaluateRules(possibleParameters, selectedParameters);
+
             bool isA = true;
             foreach (PossibleParameter parameter in possibleParameters)
             {
@@ -110,7 +117,7 @@ namespace Pc_parts_lister
                         comboBox.BorderThickness = new Thickness(0,0,0,2);
                         comboBox.MinWidth = 15;
                     }
-
+                    comboBox.Tag = parameter;
                     comboBox.SelectionChanged += Panel_Updated;
 
                     panel.Children.Add(comboBox);
@@ -168,7 +175,21 @@ namespace Pc_parts_lister
 
         private void Panel_Updated(object sender, EventArgs e)
         {
-            BuildPanels(displayedParameters);
+            FrameworkElement element = sender as FrameworkElement;
+            PossibleParameter parameter = new PossibleParameter();
+            parameter = element.Tag as PossibleParameter;
+            if (sender is ComboBox)
+            {
+                ComboBox comboBox = sender as ComboBox;
+                parameter.Value = comboBox.SelectedItem.ToString();
+            }
+            else if (sender is TextBox)
+            {
+                TextBox textBox = sender as TextBox;
+                parameter.Value = textBox.Text;
+            }
+            selectedParameters.Add(parameter);
+            BuildPanels(possibleParameters);
         }
 
         private void Check_Int_Validation(Object sender, RoutedEventArgs e)

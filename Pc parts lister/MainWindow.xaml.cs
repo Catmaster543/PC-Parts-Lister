@@ -260,10 +260,12 @@ namespace Pc_parts_lister
                 //Check if the parameter EVEN has rules
                 if (possibleParameter.parameterRules != null && possibleParameter.parameterRules.Count > 0)
                 {
+                    //Foreach parameter rule within the currently checked parameter
                     foreach (ParameterRule parameterRule in possibleParameter.parameterRules)
                     {
-                        if (parameterRule.dependentParameter == possibleParameter)
-                        {
+                        //If the dependent parameter is equal to the currently checked parameter
+                        //if (parameterRule.dependentParameter == possibleParameter)
+                        //{
                             //Checking if the parameter rule has a set value that it needs
                             if (parameterRule.value != null && parameterRule.value.Length != 0)
                             {
@@ -285,7 +287,7 @@ namespace Pc_parts_lister
                                 foundDependent = true;
                                 returnParameters.Add(possibleParameter);
                             }
-                        }
+                        //}
                     }
                 }
                 else
