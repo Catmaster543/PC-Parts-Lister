@@ -6,6 +6,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -43,10 +44,10 @@ namespace Pc_parts_lister
             displayedParameters.Clear();
             displayedParameters = rulesJudge.EvaluateRules(possibleParameters, selectedParameters);
 
-            BuildPanels(displayedParameters);
+            BuildPanels(displayedParameters, true);
         }
 
-        public void BuildPanels(ObservableCollection<PossibleParameter> possibleParameters)
+        public void BuildPanels(ObservableCollection<PossibleParameter> possibleParameters, bool firstRun = false)
         {
             RulesJudge rulesJudge = new RulesJudge();
             //displayedParameters.Clear();
@@ -55,38 +56,101 @@ namespace Pc_parts_lister
             bool isA = true;
             foreach (PossibleParameter parameter in possibleParameters)
             {
-                if (isA && parameter.ID != "Type" && parameter.ID != "Count" && parameter.ID != "Status")
+                bool found = false;
+                foreach (StackPanel panel in Parameter_Column_A.Children)
                 {
-                    Parameter_Column_A.Children.Add(CreatePanel(parameter));
-                    isA = false;
+                    if (panel.Tag == parameter)
+                    {
+                        found = true;
+                    }
                 }
-                else if (!isA && parameter.ID != "Type" && parameter.ID != "Count" && parameter.ID != "Status")
+                foreach (StackPanel panel in Parameter_Column_B.Children)
                 {
-                    Parameter_Column_B.Children.Add(CreatePanel(parameter));
-                    isA = true;
+                    if (panel.Tag == parameter)
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    if (isA && parameter.ID != "Type" && parameter.ID != "Count" && parameter.ID != "Status")
+                    {
+                        Parameter_Column_A.Children.Add(CreatePanel(parameter));
+                        isA = false;
+                    }
+                    else if (!isA && parameter.ID != "Type" && parameter.ID != "Count" && parameter.ID != "Status")
+                    {
+                        Parameter_Column_B.Children.Add(CreatePanel(parameter));
+                        isA = true;
+                    }
                 }
             }
 
-            foreach (PossibleParameter parameter in possibleParameters)
+            List<StackPanel> panelsToRemoveA = new List<StackPanel>();
+            List<StackPanel> panelsToRemoveB = new List<StackPanel>();
+            foreach (StackPanel panel in Parameter_Column_A.Children)
             {
-                if (parameter.ID == "Type")
+                bool found = false;
+                foreach (PossibleParameter possibleParameter in possibleParameters)
                 {
-                    StackPanel panel = CreatePanel(parameter);
-                    ComboBox comboBox = (ComboBox)panel.Children[1];
-                    comboBox.ItemsSource = parameter.values;
-                    StackPanel1.Children.Insert(0, panel);
+                    if (panel.Tag == possibleParameter)
+                    {
+                        found = true;
+                    }
                 }
-                else if (parameter.ID == "Count")
+                if (!found)
                 {
-                    StackPanel panel = CreatePanel(parameter);
-                    StackPanel2.Children.Insert(0, panel);
+                    panelsToRemoveA.Add(panel);
                 }
-                else if (parameter.ID == "Status")
+            }
+            foreach (StackPanel panel in Parameter_Column_B.Children)
+            {
+                bool found = false;
+                foreach (PossibleParameter possibleParameter in possibleParameters)
                 {
-                    StackPanel panel = CreatePanel(parameter);
-                    ComboBox comboBox = (ComboBox)panel.Children[1];
-                    comboBox.ItemsSource = parameter.values;
-                    StackPanel1.Children.Insert(1, panel);
+                    if (panel.Tag == possibleParameter)
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    panelsToRemoveB.Add(panel);
+                }
+            }
+
+            foreach (StackPanel panel in panelsToRemoveA)
+            {
+                Parameter_Column_A.Children.Remove(panel);
+            } 
+            foreach (StackPanel panel in panelsToRemoveB)
+            {
+                Parameter_Column_B.Children.Remove(panel);
+            }
+
+            if (firstRun)
+            {
+                foreach (PossibleParameter parameter in possibleParameters)
+                {
+                    if (parameter.ID == "Type")
+                    {
+                        StackPanel panel = CreatePanel(parameter);
+                        ComboBox comboBox = (ComboBox)panel.Children[1];
+                        comboBox.ItemsSource = parameter.values;
+                        StackPanel1.Children.Insert(0, panel);
+                    }
+                    else if (parameter.ID == "Count")
+                    {
+                        StackPanel panel = CreatePanel(parameter);
+                        StackPanel2.Children.Insert(0, panel);
+                    }
+                    else if (parameter.ID == "Status")
+                    {
+                        StackPanel panel = CreatePanel(parameter);
+                        ComboBox comboBox = (ComboBox)panel.Children[1];
+                        comboBox.ItemsSource = parameter.values;
+                        StackPanel1.Children.Insert(1, panel);
+                    }
                 }
             }
         }
@@ -181,7 +245,14 @@ namespace Pc_parts_lister
             if (sender is ComboBox)
             {
                 ComboBox comboBox = sender as ComboBox;
-                parameter.Value = comboBox.SelectedItem.ToString();
+                if (comboBox.SelectedItem != null && comboBox.SelectedItem.ToString().Length > 0)
+                {
+                    parameter.Value = comboBox.SelectedItem.ToString();
+                }
+                else
+                {
+                    return;
+                }
             }
             else if (sender is TextBox)
             {
