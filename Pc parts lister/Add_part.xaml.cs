@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Common;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
@@ -50,8 +51,7 @@ namespace Pc_parts_lister
         public void BuildPanels(ObservableCollection<PossibleParameter> possibleParameters, bool firstRun = false)
         {
             RulesJudge rulesJudge = new RulesJudge();
-            //displayedParameters.Clear();
-            possibleParameters = rulesJudge.EvaluateRules(possibleParameters, selectedParameters);
+            possibleParameters = rulesJudge.EvaluateRules(this.possibleParameters, selectedParameters);
 
             bool isA = true;
             foreach (PossibleParameter parameter in possibleParameters)
@@ -240,8 +240,15 @@ namespace Pc_parts_lister
         private void Panel_Updated(object sender, EventArgs e)
         {
             FrameworkElement element = sender as FrameworkElement;
+            PossibleParameter senderParameter = element.Tag as PossibleParameter;
             PossibleParameter parameter = new PossibleParameter();
-            parameter = element.Tag as PossibleParameter;
+            parameter.Name = senderParameter.Name;
+            parameter.ID = senderParameter.ID;
+            parameter.type = senderParameter.type;
+            parameter.parameterRules = senderParameter.parameterRules;
+            parameter.list = senderParameter.list;
+            parameter.customWriting = senderParameter.customWriting;
+            parameter.values = senderParameter.values;
             if (sender is ComboBox)
             {
                 ComboBox comboBox = sender as ComboBox;
@@ -259,7 +266,25 @@ namespace Pc_parts_lister
                 TextBox textBox = sender as TextBox;
                 parameter.Value = textBox.Text;
             }
-            selectedParameters.Add(parameter);
+            bool found = false;
+            PossibleParameter pParaToRemove = new PossibleParameter();
+            foreach (PossibleParameter pParameter in selectedParameters)
+            {
+                if (pParameter.ID == parameter.ID)
+                {
+                    pParaToRemove = pParameter;
+                    found = true;
+                }
+            }
+            if (found)
+            {
+                selectedParameters.Remove(pParaToRemove);
+                selectedParameters.Add(parameter);
+            }
+            else
+            {
+                selectedParameters.Add(parameter);
+            }
             BuildPanels(possibleParameters);
         }
 

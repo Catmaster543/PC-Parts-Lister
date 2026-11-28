@@ -274,7 +274,7 @@ namespace Pc_parts_lister
                                     //Checking if the parameter value matches the one of selected ones
                                     if (selectedParameter.ID == parameterRule.dependentParameter.ID)
                                     {
-                                        if (selectedParameter.Value == parameterRule.value)
+                                        if (selectedParameter.Value == parameterRule.value && !returnParameters.Contains(selectedParameter))
                                         {
                                             foundDependent = true;
                                             returnParameters.Add(possibleParameter);
